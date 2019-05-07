@@ -1,0 +1,11 @@
+<html><head><title>Dashboard</title>
+<bod>
+    <p id="data">Data goes here</p>
+</bod>
+<script src="/dependencies/jquery.js"></script>
+<script>
+    const token = localStorage.getItem('token');
+    $.post('/tokendata', {token: token}, (user) => {
+        document.getElementById('data').innerHTML = JSON.stringify(user);
+    });
+</script></head>

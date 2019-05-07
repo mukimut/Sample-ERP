@@ -5,12 +5,12 @@
         <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="keywords" content="Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements">
-        <link rel="stylesheet" href="./css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="/styles/style.css" type="text/css" media="all">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     </head>
 
     <body>
-        <script src="./js/jquery.min.js.download"></script>
+        <script src="/dependencies/jquery.js"></script>
         <div class="main-bg">
             <div class="sub-main-w3">
                 <div class="image-style"></div>
@@ -22,19 +22,18 @@
                             <span class="fa fa-user-circle" aria-hidden="true"></span>Login
                         </label>
                         <article>
-                            <form action="#" method="post">
+                            <!-- <form> -->
                                 <h3 class="legend">Login Here</h3>
                                 <div class="input">
-                                    <span class="fa fa-envelope-o" aria-hidden="true"></span>
-                                    <input type="email" placeholder="Email" name="email" required="">
+                                    <input type="text" id="loginName" placeholder="Username" name="username" required="">
                                 </div>
                                 <div class="input">
                                     <span class="fa fa-key"></span>
-                                    <input type="password" placeholder="Password" name="password" required="">
+                                    <input type="password" placeholder="Password" name="password" required="" id="loginPass">
                                 </div>
-                                <button type="submit" class="btn submit">Login</button>
+                                <button class="btn submit" onclick="login()">Login</button>
                                 <a href="#" class="bottom-text-w3ls">Forgot Password?</a>
-                            </form>
+                            <!-- </form> -->
                         </article>
                     </div>
                     <div id="section2" class="section-w3ls">
@@ -42,22 +41,22 @@
                         <label for="option2" class="icon-left-w3pvt"><span class="fa fa-pencil-square"
                                                                            aria-hidden="true"></span>Register</label>
                         <article>
-                            <form action="#" method="post">
+                            <!-- <form action="#" method="post"> -->
                                 <h3 class="legend">Register Here</h3>
                                 <div class="input">
                                     <span class="fa fa-user-o" aria-hidden="true"></span>
-                                    <input type="text" placeholder="Username" name="name" required="">
+                                    <input type="text" id="registerName" placeholder="Username" name="name" required="">
                                 </div>
                                 <div class="input">
                                     <span class="fa fa-key" aria-hidden="true"></span>
-                                    <input type="password" placeholder="Password" name="password" required="">
+                                    <input type="password" id="registerPass1" placeholder="Password" name="password" required="">
                                 </div>
                                 <div class="input">
                                     <span class="fa fa-key" aria-hidden="true"></span>
-                                    <input type="password" placeholder="Confirm Password" name="password" required="">
+                                    <input type="password" id="registerPass2" placeholder="Confirm Password" name="password" required="">
                                 </div>
-                                <button type="submit" class="btn submit">Register</button>
-                            </form>
+                                <button onclick="register()" class="btn submit">Register</button>
+                            <!-- </form> -->
                         </article>
                     </div>
                     <div id="section3" class="section-w3ls">
@@ -91,4 +90,47 @@
             </div>
         </div>
     </body>
+    <script>
+		function login() {
+		const data = {username: getIdData('loginName'), password: getIdData('loginPass')};
+        
+			$.post('/login', data, (res) => {
+					if(!res.found) console.log(res.message);
+					else {
+						storeToken(res.token);
+						openDashboard();
+					};
+			});
+    }
+
+    function register() {
+			const pass = getIdData('registerPass1');
+			if (pass === getIdData('registerPass2')){
+				const data = {username: getIdData('registerName'), password: pass};
+
+				$.post('/register', data, (res) => {
+					if(res.found) console.log('Username already exists');
+					else {
+						storeToken(res.token);
+						openDashboard();
+					}
+				});
+			}
+			else {
+				console.log('Passwords Mismatch');
+			}
+    }
+
+    function getIdData(id) {
+        return document.getElementById(id).value;
+		}
+		
+		function storeToken(token) {
+			localStorage.setItem('token', token);
+		}
+
+		function openDashboard() {
+			window.open('/dashboard', '_slf');
+		}
+    </script>
 </html>
