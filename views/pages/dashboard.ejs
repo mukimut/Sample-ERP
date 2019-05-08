@@ -1,11 +1,18 @@
 <html><head><title>Dashboard</title>
-<bod>
+<body>
+    <button onclick="logout()">Log out</button>
     <p id="data">Data goes here</p>
-</bod>
+</body>
 <script src="/dependencies/jquery.js"></script>
 <script>
-    const token = localStorage.getItem('token');
-    $.post('/tokendata', {token: token}, (user) => {
-        document.getElementById('data').innerHTML = JSON.stringify(user);
-    });
+	const token = localStorage.getItem('token');
+	$.post('/tokendata', {token: token}, (data) => {
+		if(data.user.access === 0) window.open('/admin', '_self');
+		document.getElementById('data').innerHTML = JSON.stringify(data);
+	});
+
+	function logout() {
+		localStorage.removeItem('token');
+		window.open('/login', '_self');
+	}
 </script></head>

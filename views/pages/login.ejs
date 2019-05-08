@@ -31,6 +31,7 @@
                                     <span class="fa fa-key"></span>
                                     <input type="password" placeholder="Password" name="password" required="" id="loginPass">
                                 </div>
+                                <p id="loginMessage"></p>
                                 <button class="btn submit" onclick="login()">Login</button>
                                 <a href="#" class="bottom-text-w3ls">Forgot Password?</a>
                             <!-- </form> -->
@@ -55,6 +56,7 @@
                                     <span class="fa fa-key" aria-hidden="true"></span>
                                     <input type="password" id="registerPass2" placeholder="Confirm Password" name="password" required="">
                                 </div>
+                                <p id="registerMessage"></p>
                                 <button onclick="register()" class="btn submit">Register</button>
                             <!-- </form> -->
                         </article>
@@ -91,34 +93,41 @@
         </div>
     </body>
     <script>
-		function login() {
+        const token  = localStorage.getItem('token');
+        if(token) {
+            $.post('/tokendata', {token: token}, (data) => {
+                if(data.found) openDashboard();
+            });
+        }
+
+	function login() {
 		const data = {username: getIdData('loginName'), password: getIdData('loginPass')};
         
-			$.post('/login', data, (res) => {
-					if(!res.found) console.log(res.message);
-					else {
-						storeToken(res.token);
-						openDashboard();
-					};
-			});
+        $.post('/login', data, (res) => {
+            if(!res.found) showMessage(res.message, 'loginMessage');
+            else {
+                storeToken(res.token);
+                openDashboard();
+            };
+        });
     }
 
     function register() {
-			const pass = getIdData('registerPass1');
-			if (pass === getIdData('registerPass2')){
-				const data = {username: getIdData('registerName'), password: pass};
+        const pass = getIdData('registerPass1');
+        if (pass === getIdData('registerPass2')){
+            const data = {username: getIdData('registerName'), password: pass};
 
-				$.post('/register', data, (res) => {
-					if(res.found) console.log('Username already exists');
-					else {
-						storeToken(res.token);
-						openDashboard();
-					}
-				});
-			}
-			else {
-				console.log('Passwords Mismatch');
-			}
+            $.post('/register', data, (res) => {
+                if(res.found) showMessage('Username already exists', 'registerMessage');
+                else {
+                    storeToken(res.token);
+                    openDashboard();
+                }
+            });
+        }
+        else {
+            showMessage('Passwords Mismatch', 'registerMessage');
+        }
     }
 
     function getIdData(id) {
@@ -130,7 +139,11 @@
 		}
 
 		function openDashboard() {
-			window.open('/dashboard', '_slf');
+			window.open('/dashboard', '_self');
 		}
+
+        function showMessage(message, id) {
+            document.getElementById(id).innerHTML = message;
+        }
     </script>
 </html>

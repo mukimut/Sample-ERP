@@ -1,0 +1,26 @@
+<html><head><title>Dashboard</title>
+<body>
+	<button onclick="logout()">Log out</button><br>
+	<p id="data">Data goes here</p>
+	<p>Create new user</p><br>
+	Username: <input type="text" id="username"><br>
+	Password: <input type="password" id="password"> Confirm password: <input type="password" id="pass2"><br>
+	Role: <input type="number" id="access"><br>
+	Full Name: <input type="text" id="fullName"><br>
+	Address: <input type="text" id="address"><br>
+	Department: <input type="text" id="dept"><br>
+	Company Email: <input type="email" id="email"><br>
+	<button onclick="submit()">Submit</button>
+</body>
+<script src="/dependencies/jquery.js"></script>
+<script>
+	const token = localStorage.getItem('token');
+	$.post('/tokendata', {token: token}, (user) => {
+		document.getElementById('data').innerHTML = JSON.stringify(user);
+	});
+
+	function logout() {
+		localStorage.removeItem('token');
+		window.open('/login', '_self');
+	}
+</script></head>
