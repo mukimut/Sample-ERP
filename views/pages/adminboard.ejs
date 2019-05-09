@@ -2,15 +2,17 @@
 <body>
 	<button onclick="logout()">Log out</button><br>
 	<p id="data">Data goes here</p>
-	<p>Create new user</p><br>
+
+	<p style="margin:12px">Create new user</p><br>
 	Username: <input type="text" id="username"><br>
 	Password: <input type="password" id="password"> Confirm password: <input type="password" id="pass2"><br>
 	Role: <input type="number" id="access"><br>
-	Full Name: <input type="text" id="fullName"><br>
-	Address: <input type="text" id="address"><br>
-	Department: <input type="text" id="dept"><br>
-	Company Email: <input type="email" id="email"><br>
 	<button onclick="submit()">Submit</button>
+
+	<ul style="padding: 8px" id="userlist">
+		<li>Random data 1</li>
+		<li>Random data 2</li>
+	</ul>
 </body>
 <script src="/dependencies/jquery.js"></script>
 <script>
@@ -18,6 +20,47 @@
 	$.post('/tokendata', {token: token}, (user) => {
 		document.getElementById('data').innerHTML = JSON.stringify(user);
 	});
+
+	getUser();
+
+	function submit() {
+		datalist = ['username', 'password', 'access'];
+		length = 3;
+		success = true;
+		data = {}
+
+		for(let i=0; i < length; i++) {
+			const currentValue = document.getElementById(datalist[i]).value;
+			if(!currentValue) {
+				success = false;
+				alert('Enter value for ' + datalist[i]);
+				break;
+			}
+			data[datalist[i]] = currentValue;
+		}
+
+		if(!success) return;
+
+		if(data.password != document.getElementById('pass2').value){
+			alert('Password mismatch');
+			return;
+		}
+
+		$.post('/register', data, (res) => {
+			if(!res.unique) alert('Username already exists');
+			else getUser();
+		});
+	}
+
+	function getUser() {
+		let listData = '';
+		$.get('/getUser', (data) => {
+			data.forEach(element => {
+				listData += '<li>' + JSON.stringify(element) + '</li>';
+			});
+			document.getElementById('userlist').innerHTML = listData;
+		});
+	}
 
 	function logout() {
 		localStorage.removeItem('token');

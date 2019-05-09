@@ -26,7 +26,8 @@ module.exports.routes = {
   'post /register': {action: 'signup'},
   'get /dashboard': {view: 'pages/dashboard'},
   'post /tokendata': {action: 'tokendata'},
-  'get /admin': {view: 'pages/adminboard'}
+  'get /admin': {view: 'pages/adminboard'},
+  'get /getUser': {action: 'alluser'}
 
 
   /***************************************************************************
