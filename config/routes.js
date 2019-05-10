@@ -27,7 +27,9 @@ module.exports.routes = {
   'get /dashboard': {view: 'pages/dashboard'},
   'post /tokendata': {action: 'tokendata'},
   'get /admin': {view: 'pages/adminboard'},
-  'get /getUser': {action: 'alluser'}
+  'get /getUser': {action: 'alluser'},
+  'put /editUser': {action: 'signup'},
+  'delete /deleteUser': {action: 'deleteuser'}
 
 
   /***************************************************************************

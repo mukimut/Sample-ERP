@@ -1,4 +1,4 @@
-<html><head><title>Dashboard</title>
+<html><head><title>Dashboard</title></html></head>
 <body>
 	<button onclick="logout()">Log out</button><br>
 	<p id="data">Data goes here</p>
@@ -7,7 +7,7 @@
 	Username: <input type="text" id="username"><br>
 	Password: <input type="password" id="password"> Confirm password: <input type="password" id="pass2"><br>
 	Role: <input type="number" id="access"><br>
-	<button onclick="submit()">Submit</button>
+	<button onclick="submit()">Submit</button> <button onclick="edit()" disabled id="submitEdit">Edit</button>
 
 	<ul style="padding: 8px" id="userlist">
 		<li>Random data 1</li>
@@ -22,12 +22,58 @@
 	});
 
 	getUser();
+	const datalist = ['username', 'password', 'access'];
+	let userList = [];
+	let selectedUserId;
 
 	function submit() {
-		datalist = ['username', 'password', 'access'];
+		const data = getInputData();
+		if(!data) return; 
+
+		$.post('/register', data, (res) => {
+			if(!res.unique) alert('Username already exists');
+			else getUser();
+		});
+	}
+
+	function getUser() {
+		let listData = '';
+		$.get('/getUser', (data) => {
+			data.forEach((element, index) => {
+				listData += '<li>' + JSON.stringify(element) + '<button onclick="editEntry('+index+')">Edit</button><button onclick="deleteEntry('+index+')">Delete</button></li>';
+			});
+			document.getElementById('userlist').innerHTML = listData;
+			userList = data;
+		});
+	}
+
+	function logout() {
+		localStorage.removeItem('token');
+		window.open('/login', '_self');
+	}
+
+	function editEntry(index) {
+		document.getElementById('submitEdit').disabled = false;
+
+		datalist.forEach(element => {
+			document.getElementById(element).value = userList[index][element]
+		});
+		document.getElementById('pass2').value = userList[index].password;
+		selectedUserId = userList[index].id;
+	}
+
+	function deleteEntry(index) {
+		$.ajax({
+			url: '/deleteUser', method: 'DELETE', data: {userid: userList[index].id}, success: res => {
+				if(res.update) getUser();
+			}
+		});
+	}
+
+	function getInputData() {
+		data = {};
 		length = 3;
 		success = true;
-		data = {}
 
 		for(let i=0; i < length; i++) {
 			const currentValue = document.getElementById(datalist[i]).value;
@@ -39,31 +85,28 @@
 			data[datalist[i]] = currentValue;
 		}
 
-		if(!success) return;
+		if(!success) return false;
 
 		if(data.password != document.getElementById('pass2').value){
 			alert('Password mismatch');
-			return;
+			return false;
 		}
 
-		$.post('/register', data, (res) => {
-			if(!res.unique) alert('Username already exists');
-			else getUser();
+		return data;
+	}
+
+	function edit() {
+		const data = getInputData();
+		if(!data) return;
+
+		data.userid = selectedUserId;
+		
+		$.ajax({
+			url: '/editUser', method: 'PUT', data: data, success: res => {
+				if(res.update) getUser();
+			}
 		});
 	}
 
-	function getUser() {
-		let listData = '';
-		$.get('/getUser', (data) => {
-			data.forEach(element => {
-				listData += '<li>' + JSON.stringify(element) + '</li>';
-			});
-			document.getElementById('userlist').innerHTML = listData;
-		});
-	}
 
-	function logout() {
-		localStorage.removeItem('token');
-		window.open('/login', '_self');
-	}
-</script></head>
+</script></html>
