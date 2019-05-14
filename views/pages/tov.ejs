@@ -1,0 +1,55 @@
+<html><head><title>All Values</title></head>
+<body>
+	<span id="allData"></span>
+	<p>New Entry: <input type="text" id="newType"><button onclick="newEntry()">Create</button></p>
+</body><script src="/dependencies/jquery.js"></script>
+<script>
+	let allData = [];
+	getValue();
+	
+	function getValue() {
+		$.get('/tov', (data) => {
+			allData = data;
+			data.forEach((element, i) => createEntry(element.id, element.values, i));
+		});
+	}
+
+	function newEntry() {
+		const title = dataFromInput('newType');
+		if(title) {
+			$.post('/TOV', {id: title}, (res) => {
+				if(res) createEntry(title, [], allData.length);
+			})
+		}
+	}
+
+	function createEntry(title, values, serial) {
+		if(!values) values = [];
+		let string = document.getElementById('allData').innerHTML;
+		string += '<p>' + title + '<input type="text" id="values'+serial+'" value="'+ values.join()+'" size="70">';
+		string += '<button onclick="edit('+serial+')">Edit</button></p>';
+		document.getElementById('allData').innerHTML = string;
+	}
+
+	function edit(index) {
+		const data = dataFromInput('values' + index).split(',').map(element => element.trim());
+		const title = allData[index].id
+		
+		$.ajax({
+			url: '/addunit', method: 'PUT', data: {type: title, values: data}, success: res => {
+				if(res) console.log('done');
+			}
+		});
+	}
+
+	function postValue() {
+		const data = document.getElementById('newValue').value;
+		$.post('/addunit', {newValue: data}, (res) => {
+			if(res) getValue();
+		});
+	}
+
+	function dataFromInput(id) {
+		return document.getElementById(id).value;
+	}
+</script></html>

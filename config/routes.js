@@ -29,7 +29,10 @@ module.exports.routes = {
   'get /admin': {view: 'pages/adminboard'},
   'get /getUser': {action: 'alluser'},
   'put /editUser': {action: 'signup'},
-  'delete /deleteUser': {action: 'deleteuser'}
+  'delete /deleteUser': {action: 'deleteuser'},
+  'get /tov': {action: 'getTov'},
+  'get /tovpage': {view: 'pages/tov'},
+  'put /addunit': {action: 'update-tov'}
 
 
   /***************************************************************************
