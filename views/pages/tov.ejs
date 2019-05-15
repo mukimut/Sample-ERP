@@ -29,6 +29,7 @@
 		string += '<p>' + title + '<input type="text" id="values'+serial+'" value="'+ values.join()+'" size="70">';
 		string += '<button onclick="edit('+serial+')">Edit</button></p>';
 		document.getElementById('allData').innerHTML = string;
+		allData.push({id: title, values: values});
 	}
 
 	function edit(index) {
