@@ -14,7 +14,8 @@ module.exports = async function signup(req, res) {
             res.send({update: true});
         }
         else {
-            userData.token = await sails.helpers.tokenSource();
+            const token = await sails.helpers.tokenSource();
+            userData.token = token;
             await User.create(userData);
             update = true;
             res.send({unique: true, token: token}); 
