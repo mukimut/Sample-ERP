@@ -19,7 +19,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/dashboard' },
+  '/': { view: 'pages/login' },
   'get /signup': {view: 'pages/signup'},
   'get /login': {view: 'pages/login'},
   'post /login': {action: 'login'},
