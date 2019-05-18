@@ -19,12 +19,12 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/login' },
+  '/': { view: 'pages/login', locals:{layout: 'layouts/login'}  },
   'get /signup': {view: 'pages/signup'},
   'get /login': {view: 'pages/login'},
-  'post /login': {action: 'login'},
+  'post /login': {action: 'login', locals:{layout: 'layouts/login'}  },
   'post /register': {action: 'signup'},
-  'get /dashboard': {view: 'pages/dashboard'},
+  'get /dashboard': {view: 'pages/dashboard', locals:{layout: 'layouts/dashboard'} },
   'post /tokendata': {action: 'tokendata'},
   'get /admin': {view: 'pages/adminboard'},
   'get /getUser': {action: 'alluser'},
