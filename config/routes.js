@@ -31,7 +31,7 @@ module.exports.routes = {
   'put /editUser': {action: 'signup'},
   'delete /deleteUser': {action: 'deleteuser'},
   'get /tov': {action: 'getTov'},
-  'get /tovpage': {view: 'pages/tov'},
+  'get /tovpage': {view: 'pages/tov', locals:{layout: 'layouts/dashboard'}},
   'put /addunit': {action: 'update-tov'}
 
 
