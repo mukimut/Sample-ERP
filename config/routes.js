@@ -20,18 +20,19 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/login', locals:{layout: 'layouts/login'}  },
-  'get /signup': {view: 'pages/signup'},
-  'get /login': {view: 'pages/login'},
-  'post /login': {action: 'login', locals:{layout: 'layouts/login'}  },
-  'post /register': {action: 'signup'},
+  'get /signup': {view: 'pages/signup', locals:{layout: 'layouts/login'}},
+  'get /login': {view: 'pages/login', locals:{layout: 'layouts/login'}},
   'get /dashboard': {view: 'pages/dashboard', locals:{layout: 'layouts/dashboard'} },
+  'get /tovpage': {view: 'pages/tov', locals:{layout: 'layouts/dashboard'}},
+  'get /company': {view: 'pages/company', locals:{layout: 'layouts/dashboard'}},
+  'post /login': {action: 'login'  },
+  'post /register': {action: 'signup'},
   'post /tokendata': {action: 'tokendata'},
   'get /admin': {view: 'pages/adminboard'},
   'get /getUser': {action: 'alluser'},
   'put /editUser': {action: 'signup'},
   'delete /deleteUser': {action: 'deleteuser'},
   'get /tov': {action: 'getTov'},
-  'get /tovpage': {view: 'pages/tov', locals:{layout: 'layouts/dashboard'}},
   'put /addunit': {action: 'update-tov'}
 
 
