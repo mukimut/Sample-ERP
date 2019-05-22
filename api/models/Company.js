@@ -18,6 +18,8 @@ tableName: 'company'
 
 
 /*
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO www;
+
 CREATE TABLE public.company
 (
     companyid bigserial,

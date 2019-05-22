@@ -33,7 +33,9 @@ module.exports.routes = {
   'put /editUser': {action: 'signup'},
   'delete /deleteUser': {action: 'deleteuser'},
   'get /tov': {action: 'getTov'},
-  'put /addunit': {action: 'update-tov'}
+  'put /addunit': {action: 'update-tov'},
+  'post /company': {action: 'company/update-company'},
+  'get /api/companies': {action: 'company/get-companies'}
 
 
   /***************************************************************************
