@@ -69,11 +69,6 @@
 
 <script src="/dependencies/jquery.js"></script>
 <script>
-    const token = localStorage.getItem('token');
-    $.post('/tokendata', { token: token }, (data) => {
-        document.getElementById('username').innerHTML = data.user.username;
-    });
-
     getUser();
     const datalist = ['username', 'password', 'access'];
     let userList = [];

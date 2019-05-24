@@ -463,5 +463,11 @@
     <div class="control-sidebar-bg"></div>
   </div>
 </body>
+<script>
+const token = localStorage.getItem('token');
+$.post('/tokendata', { token: token }, (data) => {
+    document.getElementById('username').innerHTML = data.user.username;
+});
+</script>
 
 </html>
