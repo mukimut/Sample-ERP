@@ -82,7 +82,7 @@
                     <li>
                       <a href="#">
                         <div class="pull-left">
-                          <img src="dist/img/avatar3.png" class="img-circle" alt="User Image">
+                          <img src="/styles/dist/img/avatar5.png" class="img-circle" alt="User Image">
                         </div>
                         <h4>
                           Support Teamsmall><i class="fa fa-clock-o"></i> 5 mins</small>
@@ -145,12 +145,12 @@
             </li>
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="dist/img/avatar3.png" class="user-image" alt="User Image">
-                <span class="hidden-xs">Nilufar</span>
+                <img src="/styles/dist/img/avatar5.png" class="user-image" alt="User Image">
+                <span class="hidden-xs" id="username">Username</span>
               </a>
               <ul class="dropdown-menu">
                 <li class="user-header">
-                  <img src="dist/img/avatar3.png" class="img-circle" alt="User Image">
+                  <img src="/styles/dist/img/avatar5.png" class="img-circle" alt="User Image">
                   <p>Nilufar - Web Developer<small>Member since Nov. 2012</small></p>
                 </li>
                 <li class="user-footer">
@@ -172,10 +172,10 @@
       <section class="sidebar">
         <div class="user-panel">
           <div class="pull-left image">
-            <img src="dist/img/avatar3.png" class="img-circle" alt="User Image">
+            <img src="/styles/dist/img/avatar5.png" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p id="username">Nilufar</p>
+            <p id="username">Username</p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
         </div>
@@ -260,75 +260,6 @@
     <script src="/dependencies/jquery.js"></script>
 
     <%- body %>
-
-
-
-    <!--
-        Client-side Templates
-        ========================
-
-        HTML templates are important prerequisites of modern, rich client applications.
-        To work their magic, frameworks like React, Vue.js, Angular, Ember, and Backbone
-        require that you load these templates client-side.
-
-        By default, your Gruntfile is configured to automatically load and precompile
-        client-side JST templates in your `assets/templates` folder, then
-        include them here automatically (between TEMPLATES and TEMPLATES END).
-
-        To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
-        For example, here are a few things you could do:
-
-            + Import templates from other directories
-            + Use a different view engine (handlebars, dust, pug/jade, etc.)
-            + Internationalize your client-side templates using a server-side
-              stringfile before they're served.
-    -->
-
-    <!--TEMPLATES-->
-    
-    <!--TEMPLATES END-->
-
-
-    <!--
-        Server-side View Locals
-        ========================
-
-        Sometimes, it's convenient to get access to your server-side view locals from
-        client-side JavaScript.  This can improve page load times, remove the need for
-        extra AJAX requests, and make your client-side code easier to understand and
-        to maintain.  Sails provides a simple mechanism for accessing dynamic view
-        locals: the "exposeLocalsToBrowser()" view partial.
-
-        For more information on using this built-in feature, see:
-        https://sailsjs.com/docs/concepts/views/locals#?escaping-untrusted-data-using-exposelocalstobrowser
-
-    -->
-
-
-    <!--
-
-      Client-side Javascript
-      ========================
-
-      You can always bring in JS files manually with `script` tags, or asynchronously
-      on the client using a solution like AMD (RequireJS).  Or, if you like, you can
-      take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-      By default, files in your `assets/js` folder are included here
-      automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
-      CoffeeScript (.coffee) are supported. In production, your scripts will be minified
-      and concatenated into a single file.
-
-      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
-      For example, here are a few things you could do:
-
-          + Change the order of your scripts
-          + Import scripts from other directories
-          + Use a different preprocessor, like TypeScript
-
-    -->
-
-
 
     <!--SCRIPTS-->
     <script src="/dependencies/sails.io.js"></script>
