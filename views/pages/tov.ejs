@@ -1,27 +1,22 @@
 
 <div class="content-wrapper">
-    <section class="content-header">
-        <h1>Dashboard<small>Control panel</small></h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
-        </ol>
-    </section>
-    <section class="content">
-        <div class="row">
-            <p style="margin:12px">New Entry: <input type="text" id="newType"><button onclick="newEntry()">Create</button></p><br>
-            <span id="allData"></span>
-        </div>
-    </section>
+	<section class="content-header">
+		<h1>Dashboard<small>Control panel</small></h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li class="active">Dashboard</li>
+		</ol>
+	</section>
+	<section class="content">
+		<div class="row">
+			<p style="margin:12px">New Entry: <input type="text" id="newType"><button onclick="newEntry()">Create</button></p><br>
+			<span id="allData"></span>
+		</div>
+	</section>
 </div>
 <div class="control-sidebar-bg"></div>
-
 <script src="/dependencies/jquery.js"></script>
 <script>
-    const token = localStorage.getItem('token');
-    $.post('/tokendata', {token: token}, (data) => {
-        document.getElementById('username').innerHTML = data.user.username;
-    });
 	let allData = [];
 	getValue();
 	
