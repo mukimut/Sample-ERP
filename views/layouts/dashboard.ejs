@@ -403,16 +403,12 @@
   const token = localStorage.getItem('token');
   $.post('/tokendata', { token: token }, (data) => {
     document.getElementById('username').innerHTML = data.user.username;
-<<<<<<< HEAD
 });
 
 function logout() {
   localStorage.removeItem('token');
   window.open('/login', '_self');
 }
-=======
-  });
->>>>>>> e928e838251b44dc43ca16975b5c038d62de5df9
 </script>
 
 </html>
