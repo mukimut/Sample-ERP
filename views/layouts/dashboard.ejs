@@ -158,7 +158,7 @@
                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                   </div>
                   <div class="pull-right">
-                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <span class="btn btn-default btn-flat" onclick="logout()">Sign out</a>
                   </div>
                 </li>
               </ul>
@@ -399,6 +399,11 @@ const token = localStorage.getItem('token');
 $.post('/tokendata', { token: token }, (data) => {
     document.getElementById('username').innerHTML = data.user.username;
 });
+
+function logout() {
+  localStorage.removeItem('token');
+  window.open('/login', '_self');
+}
 </script>
 
 </html>
