@@ -22,30 +22,30 @@
 		<div class="row">
 			<div class="col-md-6 form-horizontal">
 				<div class="box-body">
-						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">Username</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="username" placeholder="Username">
-							</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Username</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="username" placeholder="Username">
 						</div>
-						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">Password</label>
-							<div class="col-sm-10">
-								<input type="password" class="form-control" id="password" placeholder="Password">
-							</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Password</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="password" placeholder="Password">
 						</div>
-						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">Re type password</label>
-							<div class="col-sm-10">
-								<input type="password" class="form-control" id="pass2" placeholder="Confirm Password">
-							</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Re type password</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="pass2" placeholder="Confirm Password">
 						</div>
-						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label">Role</label>
-							<div class="col-sm-10">
-								<input type="number" class="form-control" id="access" placeholder="Role">
-							</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Role</label>
+						<div class="col-sm-10">
+							<input type="number" class="form-control" id="access" placeholder="Role">
 						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -65,7 +65,8 @@
 
 						<div class="box-tools">
 							<div class="input-group input-group-sm" style="width: 150px;">
-								<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+								<input type="text" name="table_search" class="form-control pull-right"
+									placeholder="Search">
 
 								<div class="input-group-btn">
 									<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -73,6 +74,7 @@
 							</div>
 						</div>
 					</div>
+					
 					<!-- /.box-header -->
 					<div class="box-body table-responsive no-padding">
 						<table class="table table-hover">
@@ -86,7 +88,7 @@
 								</tr>
 								<tr>
 									<td>1</td>
-									<td>John Doe</td>
+									<td id="userlist"></td>
 									<td>11-7-2014</td>
 									<td><span class="label label-success">Approved</span></td>
 									<td><i class="fa fa-edit 4x"></i> <i class="fa fa-trash"></i></td>
@@ -112,6 +114,14 @@
 									<td><span class="label label-danger">Denied</span></td>
 									<td><i class="fa fa-edit 4x"></i> <i class="fa fa-trash"></i></td>
 								</tr>
+								<tr>
+									<td colspan="5">
+										<ul >
+											<li>Random data 1</li>
+											<li>Random data 2</li>
+										</ul>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -123,100 +133,101 @@
 	</section>
 	<div class="clearfix"></div>
 </div>
-<ul style="padding: 8px" id="userlist">
-		<li>Random data 1</li>
-		<li>Random data 2</li>
-</ul>
+
 <div class="control-sidebar-bg"></div>
 <script src="/dependencies/jquery.js"></script>
 <script>
-    getUser();
-    const datalist = ['username', 'password', 'access'];
-    let userList = [];
-    let selectedUserId;
+	getUser();
+	const datalist = ['username', 'password', 'access'];
+	let userList = [];
+	let selectedUserId;
 
-    function submit() {
-        const data = getInputData();
-        if (!data) return;
+	function submit() {
+		const data = getInputData();
 
-        $.post('/register', data, (res) => {
-            if (!res.unique) alert('Username already exists');
-            else getUser();
-        });
-    }
+		if (!data) return;
 
-    function getUser() {
-        let listData = '';
-        $.get('/getUser', (data) => {
-            data.forEach((element, index) => {
-                const dataString = 'Username: ' + element.username + ' || Acess Level: ' + element.access;
-                listData += '<li>' + dataString + ' <button onclick="editEntry(' + index + ')">Edit</button><button onclick="deleteEntry(' + index + ')">Delete</button></li>';
-            });
-            document.getElementById('userlist').innerHTML = listData;
-            userList = data;
-        });
-    }
+		$.post('/register', data, (res) => {
+			if (!res.unique) alert('Username already exists');
+			else getUser();
+		});
+	}
 
-    function logout() {
-        localStorage.removeItem('token');
-        window.open('/login', '_self');
-    }
+	function getUser() {
+		let listData = '';
+		$.get('/getUser', (data) => {
+			data.forEach((element, index) => {
+				const dataString = 'Username: ' + element.username + ' || Acess Level: ' + element.access;
+				listData += dataString + ' <button class="label label-primary" onclick="editEntry(' + index + ')">Edit</button>&nbsp;||&nbsp;<button class="label label-danger" onclick="deleteEntry(' + index + ')">Delete</button>';
+			});
+			document.getElementById('userlist').innerHTML = listData;
+			userList = data;
+		});
+	}
 
-    function editEntry(index) {
-        document.getElementById('submitEdit').disabled = false;
+	function logout() {
+		localStorage.removeItem('token');
+		window.open('/login', '_self');
+	}
 
-        datalist.forEach(element => {
-            document.getElementById(element).value = userList[index][element]
-        });
-        document.getElementById('pass2').value = userList[index].password;
-        selectedUserId = userList[index].id;
-    }
+	function editEntry(index) {
+		document.getElementById('submitEdit').disabled = false;
 
-    function deleteEntry(index) {
-        $.ajax({
-            url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
-                if (res.update) getUser();
-            }
-        });
-    }
+		datalist.forEach(element => {
+			document.getElementById(element).value = userList[index][element]
+		});
+		document.getElementById('pass2').value = userList[index].password;
+		selectedUserId = userList[index].id;
+	}
+
+	function deleteEntry(index) {
+		$.ajax({
+			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
+				if (res.update) getUser();
+			}
+		});
+	}
 
 
-    function getInputData() {
-        data = {};
-        length = 3;
-        success = true;
+	function getInputData() {
+		data = {};
+		const length = 3;
+		let success = true;
 
-        for (let i = 0; i < length; i++) {
-            const currentValue = document.getElementById(datalist[i]).value;
-            if (!currentValue) {
-                success = false;
-                alert('Enter value for ' + datalist[i]);
-                break;
-            }
-            data[datalist[i]] = currentValue;
-        }
+		for (let i = 0; i < length; i++) {
+			const currentValue = document.getElementById(datalist[i]).value;
+			console.log(datalist[i]);
+			//console.log(datalist[i]);
+			//console.log(datalist[i]);
+			if (!currentValue) {
+				success = false;
+				alert('Enter value for ' + datalist[i]);
+				break;
+			}
+			data[datalist[i]] = currentValue;
+		}
 
-        if (!success) return false;
+		if (!success) return false;
 
-        if (data.password != document.getElementById('pass2').value) {
-            alert('Password mismatch');
-            return false;
-        }
+		if (data.password != document.getElementById('pass2').value) {
+			alert('Password mismatch');
+			return false;
+		}
 
-        return data;
-    }
+		return data;
+	}
 
-    function edit() {
-        const data = getInputData();
-        if (!data) return;
+	function edit() {
+		const data = getInputData();
+		if (!data) return;
 
-        data.userid = selectedUserId;
+		data.userid = selectedUserId;
 
-        $.ajax({
-            url: '/editUser', method: 'PUT', data: data, success: res => {
-                if (res.update) getUser();
-                else alert(res.message);
-            }
-        });
-    }
+		$.ajax({
+			url: '/editUser', method: 'PUT', data: data, success: res => {
+				if (res.update) getUser();
+				else alert(res.message);
+			}
+		});
+	}
 </script>
