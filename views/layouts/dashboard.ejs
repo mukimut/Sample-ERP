@@ -33,7 +33,63 @@
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <link rel="stylesheet" href="/styles/style.css">
+  <style>
+    .skin-blue .main-header .logo {
+      background-color: #244a36;
+      color: #fff;
+      border-bottom: 0 solid transparent;
+    }
 
+    .skin-blue .main-header .logo:hover {
+      background-color: #217346;
+      color: #fff;
+      border-bottom: 0 solid transparent;
+    }
+
+    .skin-blue .main-header .navbar .sidebar-toggle:hover {
+      background-color: #1c623c;
+    }
+
+    .skin-blue .main-header .navbar {
+      background-color: #217346;
+    }
+
+    .skin-blue .sidebar-form {
+      border-radius: 3px;
+      border: 1px solid #377a55;
+      margin: 10px 10px;
+    }
+
+    .skin-blue .sidebar-form input[type="text"],
+    .skin-blue .sidebar-form .btn {
+      box-shadow: none;
+      background-color: #217346;
+      border: 1px solid #377a55;
+      height: 35px;
+      color: #ffffff;
+    }
+
+    .skin-blue .sidebar-menu>li.header {
+      background: #217346;
+      color: #ffffff;
+    }
+
+    .skin-blue .sidebar-menu>li:hover>a,
+    .skin-blue .sidebar-menu>li.active>a,
+    .skin-blue .sidebar-menu>li.menu-open>a {
+      background: #1c623c;
+    }
+
+    .skin-blue .sidebar-menu>li>.treeview-menu {
+      background: #217346;
+    }
+
+    .skin-blue .wrapper,
+    .skin-blue .main-sidebar,
+    .skin-blue .left-side {
+      background-color: #185c37;
+    }
+  </style>
 </head>
 
 <body class="skin-blue sidebar-mini">
@@ -177,7 +233,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="/user"><i class="fa fa-circle-o"></i> User</a></li>
+              <li><a href="/user"><i class="fa fa-circle-o"></i> User</a></li>
               <li><a href="/company"><i class="fa fa-circle-o"></i> Company</a></li>
             </ul>
           </li>
@@ -403,12 +459,12 @@
   const token = localStorage.getItem('token');
   $.post('/tokendata', { token: token }, (data) => {
     document.getElementById('username').innerHTML = data.user.username;
-});
+  });
 
-function logout() {
-  localStorage.removeItem('token');
-  window.open('/login', '_self');
-}
+  function logout() {
+    localStorage.removeItem('token');
+    window.open('/login', '_self');
+  }
 </script>
 
 </html>
