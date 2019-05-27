@@ -33,6 +33,7 @@
             </div>
             <!-- /.col -->
           </div>
+          <p id="message"></p>
         <a href="#">I forgot my password</a><br>
     
       </div>
@@ -45,7 +46,10 @@
 		const data = {username: getIdData('loginName'), password: getIdData('loginPass')};
         
 			$.post('/login', data, (res) => {
-					if(!res.found) console.log(res.message);
+					if(!res.found) {
+            //console.log(res.message);
+            document.getElementById('message').innerHTML = res.message;
+          }
 					else {
 						storeToken(res.token);
 						openDashboard();
@@ -67,7 +71,7 @@
 				});
 			}
 			else {
-				console.log('Passwords Mismatch');
+				//console.log('Passwords Mismatch');
 			}
     }
 
