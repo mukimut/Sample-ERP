@@ -66,7 +66,8 @@
 <script src="/dependencies/jquery.js"></script>
 <script>
 	let allData = [];
-	let currentTitle;
+	let selectedIndex;
+	let selected = false;
 	getValue();
 	
 	function getValue() {
@@ -93,20 +94,20 @@
 	}
 
 	function typeSelected(element) {
-		const index = element.selectedIndex;
-		document.getElementById('values').value = allData[index - 1].values;
-		currentTitle = element.options[index].text;
-		console.log(allData[index - 1]);
+		selected = true;
+		selectedIndex = element.selectedIndex - 1;
+		document.getElementById('values').value = allData[selectedIndex].values;
+		currentTitle = element.options[selectedIndex + 1].text;
 	}
 
 	function edit() {
-		if(!currentTitle) return;
+		if(!selected) return;
 		const data = dataFromInput('values').split(',').map(element => element.trim());
-		const title = currentTitle;
+		const title = allData[selectedIndex].id;
 		
 		$.ajax({
 			url: '/addunit', method: 'PUT', data: {type: title, values: data}, success: res => {
-				if(res) console.log('done');
+				if(res) allData[selectedIndex].values = data;
 			}
 		});
 	}
@@ -120,5 +121,9 @@
 
 	function dataFromInput(id) {
 		return document.getElementById(id).value;
+	}
+
+	function print(message) {
+		console.log(message);
 	}
 </script>
