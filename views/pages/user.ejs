@@ -78,8 +78,8 @@
 					<!-- /.box-header -->
 					<div class="box-body table-responsive no-padding">
 						<table class="table table-hover">
-							<tbody>
-								<tr>
+							<tbody id="usertable">
+								<!-- <tr>
 									<th>ID</th>
 									<th>User Name</th>
 									<th>User Creation Date</th>
@@ -121,7 +121,7 @@
 											<li>Random data 2</li>
 										</ul>
 									</td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
 					</div>
@@ -154,13 +154,14 @@
 	}
 
 	function getUser() {
-		let listData = '';
+		let listData = '<tr><th>User Name</th><th>Access</th><th>Action</th></tr>';
 		$.get('/getUser', (data) => {
 			data.forEach((element, index) => {
-				const dataString = 'Username: ' + element.username + ' || Acess Level: ' + element.access;
-				listData += dataString + ' <button class="label label-primary" onclick="editEntry(' + index + ')">Edit</button>&nbsp;||&nbsp;<button class="label label-danger" onclick="deleteEntry(' + index + ')">Delete</button>';
+				//const dataString = 'Username: ' + element.username + ' || Acess Level: ' + element.access;
+				listData += '<tr><td>' + element.username + '</td><td>' + element.access + '</td>'
+				listData += '<td><button class="label label-primary" onclick="editEntry(' + index + ')">Edit</button><button class="label label-danger" onclick="deleteEntry(' + index + ')">Delete</button></td></tr>';
 			});
-			document.getElementById('userlist').innerHTML = listData;
+			document.getElementById('usertable').innerHTML = listData;
 			userList = data;
 		});
 	}
@@ -196,9 +197,6 @@
 
 		for (let i = 0; i < length; i++) {
 			const currentValue = document.getElementById(datalist[i]).value;
-			console.log(datalist[i]);
-			//console.log(datalist[i]);
-			//console.log(datalist[i]);
 			if (!currentValue) {
 				success = false;
 				alert('Enter value for ' + datalist[i]);
