@@ -8,19 +8,20 @@ module.exports = {
     },
     tableName: 'users'
 }
+/*
+CREATE TABLE public.users
+(
+    username text,
+    userid bigserial NOT NULL,
+    password text,
+    access integer,
+    token text,
+    PRIMARY KEY (userid)
+)
+WITH (
+    OIDS = FALSE
+);
 
-// CREATE TABLE public.users
-// (
-//     username text,
-//     userid bigserial NOT NULL,
-//     password text,
-//     access integer,
-//     token text,
-//     PRIMARY KEY (userid)
-// )
-// WITH (
-//     OIDS = FALSE
-// );
-
-// ALTER TABLE public.users
-//     OWNER to postgres;
+ALTER TABLE public.users
+    OWNER to postgres;
+    */

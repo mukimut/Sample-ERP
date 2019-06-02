@@ -184,11 +184,18 @@
 	function deleteEntry(index) {
 		$.ajax({
 			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
-				if (res.update) getUser();
+				if (res.update) {
+					getUser();
+					selectedUserId = null;
+				}
 			}
 		});
 	}
 
+	function setNull() {
+		datalist.forEach(element => document.getElementById(element).value = null);
+		document.getElementById('pass2').value = null;
+	}
 
 	function getInputData() {
 		data = {};
@@ -223,7 +230,11 @@
 
 		$.ajax({
 			url: '/editUser', method: 'PUT', data: data, success: res => {
-				if (res.update) getUser();
+				if (res.update) {
+					getUser();
+					selectedUserId = null;
+					setNull();
+				}
 				else alert(res.message);
 			}
 		});
