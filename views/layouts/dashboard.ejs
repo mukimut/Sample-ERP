@@ -180,12 +180,12 @@
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="/styles/dist/img/avatar5.png" class="user-image" alt="User Image">
-                <span class="hidden-xs" id="username">Username</span>
+                <span class="hidden-xs" id="name1">Username</span>
               </a>
               <ul class="dropdown-menu">
                 <li class="user-header">
                   <img src="/styles/dist/img/avatar5.png" class="img-circle" alt="User Image">
-                  <p><span id="username">Nilufar</span> - Web Developer<small>Member since Nov. 2012</small></p>
+                  <p><span id="name2">Nilufar</span> - Web Developer<small>Member since Nov. 2012</small></p>
                 </li>
                 <li class="user-footer">
                   <div class="pull-left">
@@ -209,7 +209,7 @@
             <img src="/styles/dist/img/avatar5.png" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p id="username">Username</p>
+            <p id="name3">Username</p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
         </div>
@@ -460,7 +460,9 @@
 <script>
   const token = localStorage.getItem('token');
   $.post('/tokendata', { token: token }, (data) => {
-    document.getElementById('username').innerHTML = data.user.username;
+    document.getElementById('name1').innerHTML = data.user.username;
+    document.getElementById('name2').innerHTML = data.user.username;
+    document.getElementById('name3').innerHTML = data.user.username;
   });
 
   function logout() {

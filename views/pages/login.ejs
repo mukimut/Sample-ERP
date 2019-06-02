@@ -47,7 +47,6 @@
         
 			$.post('/login', data, (res) => {
 					if(!res.found) {
-            //console.log(res.message);
             document.getElementById('message').innerHTML = res.message;
           }
 					else {
