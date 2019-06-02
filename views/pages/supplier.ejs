@@ -1,20 +1,20 @@
 <div class="content-wrapper">
   <section class="content-header">
     <h1>
-      Company
+      Supplier
       <small>Profile</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
       <li><a href="#">Master</a></li>
-      <li class="active">Company</li>
+      <li class="active">Supplier</li>
     </ol>
   </section>
   <section class="invoice">
     <div class="row">
       <div class="col-xs-12">
         <h2 class="page-header">
-          <i class="fa fa-globe"></i> Company Basic Information
+          <i class="fa fa-globe"></i> Supplier Basic Information
           <small class="pull-right">Date: 2/10/2019</small>
         </h2>
       </div>
@@ -23,23 +23,23 @@
       <div class="col-md-10 form-horizontal">
         <div class="box-body">
           <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Company Name</label>
+            <label for="inputEmail3" class="col-sm-2 control-label">Supplier Name</label>
 
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="name" placeholder="Company Name">
+              <input type="text" class="form-control" id="name" placeholder="Supplier Name">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Short Name</label>
 
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="shortname" placeholder="Company Short Name">
+              <input type="text" class="form-control" id="shortname" placeholder="supplier Short Name">
             </div>
           </div>
           <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Company Type</label>
+            <label for="inputPassword3" class="col-sm-2 control-label">supplier Type</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="companytype" placeholder="Company Type">
+              <input type="text" class="form-control" id="suppliertype" placeholder="supplier Type">
             </div>
           </div>
           <div class="form-group">
@@ -200,7 +200,7 @@
     <div class="row">
       <div class="col-xs-12">
         <h2 class="page-header">
-          <i class="fa fa-globe"></i> Company Factory Address
+          <i class="fa fa-globe"></i> supplier Factory Address
         </h2>
       </div>
     </div>
@@ -375,14 +375,14 @@
           <button class="btn btn-default" onclick="submitEdit()">Edit</button>
         </div>
       </div>
-      <ul id="companylist"></ul>
+      <ul id="supplierlist"></ul>
     </div>
   </section>
   <div class="clearfix"></div>
 </div>
 
 <script>
-  const idList = ['name', 'shortname', 'phone', 'mobile', 'email', 'website', 'address', 'district', 'companytype', 'postcode', 'lca'];
+  const idList = ['name', 'shortname', 'phone', 'mobile', 'email', 'website', 'address', 'district', 'suppliertype', 'postcode', 'lca'];
   let allCompanies = [];
   let selectedId;
 
@@ -402,7 +402,7 @@
 
   function submit() {
     const data = getSubmitData();
-    $.post('/Company', data, (res) => {
+    $.post('/supplier', data, (res) => {
       if (res) getCompanies();
     });
   }
@@ -420,7 +420,7 @@
     const data = getSubmitData();
     data.id = selectedId;
 
-    $.post('/Company', data, (res) => {
+    $.post('/supplier', data, (res) => {
       if (res) getCompanies();
     });
   }
@@ -430,13 +430,13 @@
     const length = allCompanies.length;
 
     for (let i = 0; i < length; i++) {
-      const currentCompany = allCompanies[i]
-      string += '<li> Name: ' + currentCompany.name + ' Shortname: ';
-      string += currentCompany.shortname;
+      const currentsupplier = allCompanies[i]
+      string += '<li> Name: ' + currentsupplier.name + ' Shortname: ';
+      string += currentsupplier.shortname;
       string += '<button onclick="edit(' + i + ')">Edit</button></li>';
     }
 
-    document.getElementById('companylist').innerHTML = string;
+    document.getElementById('supplierlist').innerHTML = string;
   }
 
   function edit(index) {

@@ -25,6 +25,8 @@ module.exports.routes = {
   'get /dashboard': {view: 'pages/dashboard', locals:{layout: 'layouts/dashboard'} },
   'get /tovpage': {view: 'pages/tov', locals:{layout: 'layouts/dashboard'}},
   'get /company': {view: 'pages/company', locals:{layout: 'layouts/dashboard'}},
+  'get /supplier': {view: 'pages/supplier', locals:{layout: 'layouts/dashboard'}},
+  'get /customer': {view: 'pages/customer', locals:{layout: 'layouts/dashboard'}},
   'post /login': {action: 'login'  },
   'post /register': {action: 'signup'},
   'post /tokendata': {action: 'tokendata'},
