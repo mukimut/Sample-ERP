@@ -4,7 +4,12 @@ module.exports = {
         access: {type: 'number', defaultsTo: 10},
         password: {type: 'string', required: true},
         username: {type: 'string', required: true},
-        token: {type: 'string'}
+        token: {type: 'string'},
+        displayname: {type: 'string', required: true},
+        department: {type: 'text'},
+        phone: {type: 'text'},
+        designation: {type: 'text'},
+        email: {type: 'text'},
     },
     tableName: 'users'
 }
@@ -24,4 +29,11 @@ WITH (
 
 ALTER TABLE public.users
     OWNER to postgres;
+
+ALTER TABLE public.users ADD COLUMN displayname text,
+	ADD COLUMN department text,
+	ADD COLUMN designation text,
+	ADD COLUMN phone text,
+	ADD COLUMN email text;
+    
     */
