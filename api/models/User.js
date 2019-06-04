@@ -6,10 +6,10 @@ module.exports = {
         username: {type: 'string', required: true},
         token: {type: 'string'},
         displayname: {type: 'string', required: true},
-        department: {type: 'text'},
-        phone: {type: 'text'},
-        designation: {type: 'text'},
-        email: {type: 'text'},
+        department: {type: 'string'},
+        phone: {type: 'string'},
+        designation: {type: 'string'},
+        email: {type: 'string'},
     },
     tableName: 'users'
 }

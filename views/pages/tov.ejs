@@ -1,23 +1,15 @@
 
 <div class="content-wrapper">
 	<section class="content-header">
-	  <h1>
-		LOV
-		<small>Settings</small>
-	  </h1>
+	  <h1>LOV<small>Settings</small></h1>
 	  <ol class="breadcrumb">
-		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-		<li><a href="#">Common Settings</a></li>
-		<li class="active">LOV</li>
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li><li><a href="#">Common Settings</a></li><li class="active">LOV</li>
 	  </ol>
 	</section>
 	<section class="invoice">
 	  <div class="row">
 		<div class="col-xs-12">
-		  <h2 class="page-header">
-			<i class="fa fa-globe"></i> List of Value
-			<small class="pull-right">Date: 2/10/2019</small>
-		  </h2>
+		  <h2 class="page-header"><i class="fa fa-globe"></i> List of Value<small class="pull-right">Date: 2/10/2019</small></h2>
 		</div>
 	  </div>
 	  <div class="row">
@@ -25,10 +17,9 @@
 		  <div class="box-body">
 			<div class="form-group">
 			  <label for="inputEmail3" class="col-sm-2 control-label">New LOV</label>
-  
 			  <div class="col-sm-10">
-				<input type="text" class="form-control" id="newType" placeholder="New LOV">
-				<button class="btn btn-info" onclick="newEntry()">New Lov</button>
+					<input type="text" class="form-control" id="newType" placeholder="New LOV">
+					<button class="btn btn-info" onclick="newEntry()">New Lov</button>
 			  </div>
 			</div>
 		  </div>
@@ -42,26 +33,15 @@
 								<option hidden disabled selected value> -- select an option -- </option>
 							</select>
             </div>
-            <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
               <input type="text" id="values" size="60"><button onclick="edit()">Edit</button>
             </div>
-            <!-- /.box-body -->
           </div>
-          <!-- /.box -->
         </div>
       </div>
 	</section>
 	<div class="clearfix"></div>
   </div>
-<!-- <div class="content-wrapper">
-	<section class="content">
-		<div class="row">
-			<p style="margin:12px">New Entry: <input type="text" id="newType"><button onclick="newEntry()">Create</button></p><br>
-			<span id="allData"></span>
-		</div>
-	</section>
-</div> -->
 <div class="control-sidebar-bg"></div>
 <script src="/dependencies/jquery.js"></script>
 <script>
@@ -71,10 +51,7 @@
 	getValue();
 	
 	function getValue() {
-		$.get('/tov', (data) => {
-			allData = data;
-			data.forEach((element, i) => createEntry(element.id, element.values, i));
-		});
+		$.get('/tov', (data) => data.forEach(createEntry));
 	}
 
 	function newEntry() {
@@ -86,11 +63,11 @@
 		}
 	}
 
-	function createEntry(title, values, serial) {
+	function createEntry(element) {
 		let string = document.getElementById('valueTypes').innerHTML;
-		string += '<option>' + title + ' </option>';
+		string += '<option>' + element.id + ' </option>';
 		document.getElementById('valueTypes').innerHTML = string;
-		allData.push({id: title, values: values});
+		allData.push({id: element.id, values: element.values});
 	}
 
 	function typeSelected(element) {
