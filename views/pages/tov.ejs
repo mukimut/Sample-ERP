@@ -58,7 +58,7 @@
 		const title = dataFromInput('newType');
 		if(title) {
 			$.post('/TOV', {id: title}, (res) => {
-				if(res) createEntry(title, [], allData.length);
+				if(res) createEntry({id: title, values: []});
 			})
 		}
 	}

@@ -46,11 +46,11 @@
 					</div>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Department</label>
-						<div class="col-sm-10"><input type="text" class="form-control" id="department" placeholder="Department"></div>
+						<div class="col-sm-10"></div><select id="department"><option hidden disabled selected value>Select Department</option></select></div>
 					</div>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Designation</label>
-						<div class="col-sm-10"><input type="text" class="form-control" id="designation" placeholder="Designation"></div>
+						<div class="col-sm-10"></div><select id="designation"><option hidden disabled selected value>Select Designation</option></select></div>
 					</div>
 				</div>
 			</div>
@@ -91,21 +91,13 @@
 <script src="/dependencies/jquery.js"></script>
 <script>
 	getUser();
-	const datalist = ['username', 'password', 'access', 'displayname', 'email', 'phone', 
-					'designation', 'department'];
+	getDepartments();
+	getDesignations();
+
+	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'phone'];
+	const selectList = ['department', 'designation'];
 	let userList = [];
 	let selectedUserId;
-
-	function submit() {
-		const data = getInputData();
-
-		if (!data) return;
-
-		$.post('/register', data, (res) => {
-			if (!res.unique) alert('Username already exists');
-			else getUser();
-		});
-	}
 
 	function getUser() {
 		let listData = `<tr><th>User Name</th><th>Access</th><th>Department</th><th>Designation</th>
@@ -122,6 +114,41 @@
 		});
 	}
 
+	function getDepartments() {
+		$.get('tov?type=departments', data => setSelectionList('department', data[0].values));
+	}
+
+	function getDesignations() {
+		$.get('tov?type=designations', data => setSelectionList('designation', data[0].values));
+	}
+
+	function setSelectionList(id, list) {
+		let string = document.getElementById(id).innerHTML;
+		list.forEach(element => string += '<option>' + element + '</option>');
+		document.getElementById(id).innerHTML = string;
+	}
+
+	function getSelectedValues(data) {
+		selectList.forEach(element => {
+			const selector = document.getElementById(element);
+			data[element] = selector.options[selector.selectedIndex].text;
+		});
+		return data;
+	}
+
+	function setSelectedValue(id, value) {
+		const selection =  document.getElementById(id);
+		const options = selection.options;
+		const length = options.length;
+
+		for(let i = 0; i < length; i++) {
+			if(options[i].innerHTML === value) {
+				selection.selectedIndex = i;
+				break;
+			}
+		}
+	}
+
 	function logout() {
 		localStorage.removeItem('token');
 		window.open('/login', '_self');
@@ -130,42 +157,25 @@
 	function editEntry(index) {
 		document.getElementById('submitEdit').disabled = false;
 
-		datalist.forEach(element => {
-			document.getElementById(element).value = userList[index][element]
-		});
+		inputList.forEach(element => document.getElementById(element).value = userList[index][element]);
+		selectList.forEach(element => setSelectedValue(element, userList[index][element])); 
 		document.getElementById('pass2').value = userList[index].password;
 		selectedUserId = userList[index].id;
 	}
 
-	function deleteEntry(index) {
-		$.ajax({
-			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
-				if (res.update) {
-					getUser();
-					selectedUserId = null;
-				}
-			}
-		});
-	}
-
-	function setNull() {
-		datalist.forEach(element => document.getElementById(element).value = null);
-		document.getElementById('pass2').value = null;
-	}
-
 	function getInputData() {
 		data = {};
-		const length = datalist.length;
+		const length = inputList.length;
 		let success = true;
 
 		for (let i = 0; i < length; i++) {
-			const currentValue = document.getElementById(datalist[i]).value;
+			const currentValue = document.getElementById(inputList[i]).value;
 			if (!currentValue) {
 				success = false;
-				alert('Enter value for ' + datalist[i]);
+				alert('Enter value for ' + inputList[i]);
 				break;
 			}
-			data[datalist[i]] = currentValue;
+			data[inputList[i]] = currentValue;
 		}
 
 		if (!success) return false;
@@ -178,14 +188,27 @@
 		return data;
 	}
 
-	function edit() {
-		const data = getInputData();
-		if (!data) return;
+	function setNull() {
+		inputList.forEach(element => document.getElementById(element).value = null);
+		document.getElementById('pass2').value = null;
+	}
 
+	function deleteEntry(index) {
+		$.ajax({url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
+			if (res.update) {
+				getUser();
+				selectedUserId = null;
+			}}
+		});
+	}
+
+	function edit() {
+		let data = getInputData();
+		if (!data) return;
+		data = getSelectedValues(data);
 		data.userid = selectedUserId;
 
-		$.ajax({
-			url: '/editUser', method: 'PUT', data: data, success: res => {
+		$.ajax({url: '/editUser', method: 'PUT', data: data, success: res => {
 				if (res.update) {
 					getUser();
 					selectedUserId = null;
@@ -193,6 +216,17 @@
 				}
 				else alert(res.message);
 			}
+		});
+	}
+
+	function submit() {
+		let data = getInputData();
+		if (!data) return;
+		data = getSelectedValues(data);
+
+		$.post('/register', data, (res) => {
+			if (!res.unique) alert('Username already exists');
+			else getUser();
 		});
 	}
 </script>
