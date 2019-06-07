@@ -29,9 +29,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-							<select id="valueTypes" onchange="typeSelected(this)">
-								<option hidden disabled selected value> -- select an option -- </option>
-							</select>
+				<select id="valueTypes" onchange="typeSelected(this)"><option hidden disabled selected value> Select Type </option></select>
             </div>
             <div class="box-body table-responsive no-padding">
               <input type="text" id="values" size="60"><button onclick="edit()">Edit</button>
@@ -82,11 +80,9 @@
 		const data = dataFromInput('values').split(',').map(element => element.trim());
 		const title = allData[selectedIndex].id;
 		
-		$.ajax({
-			url: '/addunit', method: 'PUT', data: {type: title, values: data}, success: res => {
-				if(res) allData[selectedIndex].values = data;
-			}
-		});
+		$.ajax({url: '/addunit', method: 'PUT', data: {type: title, values: data}, success: res => {
+			if(res) allData[selectedIndex].values = data;
+		}});
 	}
 
 	function postValue() {

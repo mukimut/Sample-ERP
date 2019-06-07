@@ -1,23 +1,16 @@
 
 <div class="content-wrapper">
 	<section class="content-header">
-	  <h1>
-		Mapping
-		<small>Setup</small>
-	  </h1>
+	  <h1>Mapping<small>Setup</small></h1>
 	  <ol class="breadcrumb">
 		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-		<li><a href="#">Mapping</a></li>
-		<li class="active">setup</li>
+		<li><a href="#">Mapping</a></li><li class="active">setup</li>
 	  </ol>
 	</section>
 	<section class="invoice">
 	  <div class="row">
 		<div class="col-xs-12">
-		  <h2 class="page-header">
-			<i class="fa fa-globe"></i> Mapping
-			<small class="pull-right">Date: 2/10/2019</small>
-		  </h2>
+		  <h2 class="page-header"><i class="fa fa-globe"></i> Mapping<small class="pull-right">Date: 2/10/2019</small></h2>
 		</div>
 	  </div>
 	  <div class="row">
@@ -25,143 +18,98 @@
 		  <div class="box-body">
 			<div class="form-group">
 			  <label for="inputEmail3" class="col-sm-2 control-label">New LOV</label>
-  
-			  <div class="col-sm-10">
-				<input type="text" class="form-control" id="newType" placeholder="New LOV">
-			  </div>
+			  <div class="col-sm-10"><select id="masterType" onchange="typeSelected(this)">
+				<option hidden disabled selected value> Select Type </option>
+			</select> <select id="masterValue" onchange="valueSelected(this)">
+				<option hidden disabled selected value> Select Value </option>
+			</select></div>
 			</div>
 		  </div>
 		</div>
 	  </div>
-	  <div class="row">
-		<div class="col-md-6">
-		  <div class="box-footer pull-right" style="border-top: 0px">
-			<button class="btn btn-info" onclick="newEntry()">New Lov</button>
-		  </div>
-		</div>
-	  </div>
-	  <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Responsive Hover Table</h3>
-
-              <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                  <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-              <table class="table table-hover">
-                <tbody><tr>
-                  <th>ID</th>
-                  <th>User</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Reason</th>
-                </tr>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Alexander Pierce</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="label label-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-              </tbody></table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-      </div>
+	  <h2>Set mapping data for selection</h2>
+	  <p><ul id="list"></ul></p><button onclick="add()">Add</button>
 	</section>
 	<div class="clearfix"></div>
   </div>
-<!-- <div class="content-wrapper">
-	<section class="content">
-		<div class="row">
-			<p style="margin:12px">New Entry: <input type="text" id="newType"><button onclick="newEntry()">Create</button></p><br>
-			<span id="allData"></span>
-		</div>
-	</section>
-</div> -->
 <div class="control-sidebar-bg"></div>
 <script src="/dependencies/jquery.js"></script>
 <script>
-	let allData = [];
-	getValue();
-	
-	function getValue() {
-		$.get('/tov', (data) => {
-			allData = data;
-			data.forEach((element, i) => createEntry(element.id, element.values, i));
+let allTypes = [];
+let allValues = [];
+let currentJson, masterTypeIndex, masterValueIndex;
+childNumber = 0;
+getValue();
+
+function getValue() {
+	$.get('/tov', (data) => {
+		allTypes = data.map(element => element.id);
+		setSelectionList('masterType', allTypes);
+		allValues = data;
+		currentJson = data.map(element => {
+			const valueList = element.values.map(value => {
+				return {value: value};
+			});
+
+			return {type: element.id, values: valueList};
 		});
-	}
+		console.log(currentJson);
+	});
+}
 
-	function newEntry() {
-		const title = dataFromInput('newType');
-		if(title) {
-			$.post('/TOV', {id: title}, (res) => {
-				if(res) createEntry(title, [], allData.length);
-			})
-		}
-	}
+function setSelectionList(id, list) {
+	let string = document.getElementById(id).innerHTML;
+	list.forEach(element => string += '<option>' + element + '</option>');
+	document.getElementById(id).innerHTML = string;
+}
 
-	function createEntry(title, values, serial) {
-		if(!values) values = [];
-		let string = document.getElementById('allData').innerHTML;
-		string += '<p>' + title + ' <input type="text" id="values'+serial+'" value="'+ values.join()+'" size="70">';
-		string += ' <button onclick="edit('+serial+')">Edit</button></p>';
-		document.getElementById('allData').innerHTML = string;
-		allData.push({id: title, values: values});
-	}
+function typeSelected(selection) {
+	masterTypeIndex = selection.selectedIndex - 1;
+	document.getElementById('masterValue').innerHTML = '<option hidden disabled selected value> Select Value </option>';
+	setSelectionList('masterValue', allValues[masterTypeIndex].values);
+}
 
-	function edit(index) {
-		const data = dataFromInput('values' + index).split(',').map(element => element.trim());
-		const title = allData[index].id
-		
-		$.ajax({
-			url: '/addunit', method: 'PUT', data: {type: title, values: data}, success: res => {
-				if(res) console.log('done');
-			}
-		});
-	}
+function valueSelected(selection) {
+	masterValueIndex = selection.selectedIndex - 1;
+}
 
-	function postValue() {
-		const data = document.getElementById('newValue').value;
-		$.post('/addunit', {newValue: data}, (res) => {
-			if(res) getValue();
-		});
-	}
+function createSelect(list, id, onChange, title) {
+	let string = '<select id="'+id+'" onchange="'+onChange+'"><option hidden disabled selected value> Select '+title+'</option>'
+	list.forEach(element => string += '<option>' + element + '</option>');
+	string += '</select>';
+	return string;
+}
 
-	function dataFromInput(id) {
-		return document.getElementById(id).value;
-	}
+function add() {
+	let string = document.getElementById('list').innerHTML;
+	string += '<li>';
+	string += createSelect(allTypes, 'childType' + childNumber, 'childTypeSelected(' + childNumber + ')', 'Type');
+	string += createSelect([], 'childValue' + childNumber, 'childValueSelected('+childNumber+')', 'Value');
+	string += '</li>';
+	document.getElementById('list').innerHTML = string;
+	childNumber++;
+}
+
+function childTypeSelected(index) {
+	const selectedIndex = document.getElementById('childType' + index).selectedIndex;
+	document.getElementById('childValue' + index).innerHTML = '<option hidden disabled selected value> Select Value </option>';
+	setSelectionList('childValue' + index, allValues[selectedIndex - 1].values);
+}
+
+function childValueSelected(index) {
+	const type = getSelectedText('childType' + index);
+	const value =  getSelectedText('childValue' + index);
+	print(type);
+	print(value);
+}
+
+function getSelectedText(id) {
+	const selection = document.getElementById(id);
+	return selection.options[selection.selectedIndex].innerHTML;
+}
+
+function print(message) {
+	console.log(message)
+}
+
 </script>
