@@ -37,7 +37,8 @@
 <script>
 let allTypes = [];
 let allValues = [];
-let currentJson, masterTypeIndex, masterValueIndex;
+let currentJson = [];
+let masterTypeIndex, masterValueIndex;
 childNumber = 0;
 getValue();
 
@@ -46,14 +47,14 @@ function getValue() {
 		allTypes = data.map(element => element.id);
 		setSelectionList('masterType', allTypes);
 		allValues = data;
-		currentJson = data.map(element => {
-			const valueList = element.values.map(value => {
-				return {value: value};
-			});
+		// currentJson = data.map(element => {
+		// 	const valueList = element.values.map(value => {
+		// 		return {value: value};
+		// 	});
 
-			return {type: element.id, values: valueList};
-		});
-		console.log(currentJson);
+		// 	return {type: element.id, values: valueList};
+		// });
+		// console.log(currentJson);
 	});
 }
 
@@ -85,9 +86,31 @@ function add() {
 	string += '<li>';
 	string += createSelect(allTypes, 'childType' + childNumber, 'childTypeSelected(' + childNumber + ')', 'Type');
 	string += createSelect([], 'childValue' + childNumber, 'childValueSelected('+childNumber+')', 'Value');
+	//string += '<button onclick = "remove('+childNumber+')">Delete</button></li>';
 	string += '</li>';
 	document.getElementById('list').innerHTML = string;
 	childNumber++;
+	populateList()
+}
+
+function populateList() {
+	currentJson.forEach((element, index) => {
+		setSelectedValue('childType' + index, element.type);
+		setSelectedValue('childValue' + index, element.value);
+	})
+}
+
+function setSelectedValue(id, value) {
+	const selection =  document.getElementById(id);
+	const options = selection.options;
+	const length = options.length;
+
+	for(let i = 0; i < length; i++) {
+		if(options[i].innerHTML === value) {
+			selection.selectedIndex = i;
+			break;
+		}
+	}
 }
 
 function childTypeSelected(index) {
@@ -99,13 +122,19 @@ function childTypeSelected(index) {
 function childValueSelected(index) {
 	const type = getSelectedText('childType' + index);
 	const value =  getSelectedText('childValue' + index);
-	print(type);
-	print(value);
+	currentJson[index] = {type: type, value: value};
 }
 
 function getSelectedText(id) {
 	const selection = document.getElementById(id);
 	return selection.options[selection.selectedIndex].innerHTML;
+}
+
+function remove(index) {
+	if(index < currentJson.length) {
+		currentJson.splice(index, 1);
+		populateList();
+	}
 }
 
 function print(message) {
