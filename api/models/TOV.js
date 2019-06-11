@@ -11,6 +11,7 @@ CREATE TABLE public.tov
 (
     valuetype text NOT NULL,
     "values" text[],
+    "map" jsonb,
     PRIMARY KEY (valuetype)
 )
 WITH (

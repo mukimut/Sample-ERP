@@ -19,16 +19,16 @@
 			<div class="form-group">
 			  <label for="inputEmail3" class="col-sm-2 control-label">Select Value to Map</label>
 			  <div class="col-sm-10"><select id="masterType" onchange="typeSelected(this)">
-				<option hidden disabled selected value> Select Type </option>
-			</select> <select id="masterValue" onchange="valueSelected(this)">
-				<option hidden disabled selected value> Select Value </option>
-			</select></div>
+					<option hidden disabled selected value> Select Type </option>
+				</select> <select id="masterValue" onchange="valueSelected(this)">
+					<option hidden disabled selected value> Select Value </option>
+				</select></div>
 			</div>
 		  </div>
 		</div>
 	  </div>
 	  <h2>Set mapping data for selection</h2>
-	  <p><ul id="list"></ul></p><button onclick="add()">Add</button>
+	  <p><ul id="list"></ul></p><button onclick="add()">Add</button><button onclick="save()">Save</button>
 	</section>
 	<div class="clearfix"></div>
   </div>
@@ -49,7 +49,7 @@ function getValue() {
 		allTypes = data.map(element => element.id);
 		setSelectionList('masterType', allTypes);
 		allValues = data;
-		generateList();
+		//generateList();
 	});
 }
 
@@ -66,7 +66,20 @@ function typeSelected(selection) {
 }
 
 function valueSelected(selection) {
+	currentJson = [];
 	masterValueIndex = selection.selectedIndex - 1;
+
+	const value = getSelectedText('masterValue');
+	const type = getSelectedText('masterType');
+
+	$.get('/api/tovValue?type='+type+'&value=' + value, (data) => {
+		if(!data) return;
+		data.forEach(element => {
+			const key = Object.keys(element)[0];
+			currentJson.push({type: key, value: element[key]});
+		})
+		generateList();
+	});
 }
 
 function createSelect(list, id, onChange, title) {
@@ -111,7 +124,7 @@ function populateList() {
 	currentJson.forEach((element, index) => {
 		setSelectedValue('childType' + index, element.type);
 		setSelectedValue('childValue' + index, element.value);
-	})
+	});
 }
 
 function setSelectedValue(id, value) {
@@ -151,8 +164,21 @@ function remove(index) {
 	}
 }
 
+function save() {
+	const value = getSelectedText('masterValue');
+	const type = getSelectedText('masterType');
+	const sendData = [];
+
+	currentJson.forEach(element => {
+		const pushObject = {};
+		pushObject[element.type] = element.value;
+		sendData.push(pushObject);
+	});
+
+	$.post('/setTov', {type: type, value: value, data: sendData}, (data) => console.log(data));
+}
+
 function print(message) {
 	console.log(message)
 }
-
 </script>

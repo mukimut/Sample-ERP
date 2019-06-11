@@ -7,12 +7,10 @@ module.exports = async function getTov(req, res) {
 
 	string = `'{`+string+`}'`
 	
-	//const sql = 'update tov set "values" = '+string+' where valuetype=\''+type+'\'';
-	//console.log(sql);
 	const sql = 'update tov set "values" = '+string+' where valuetype=$1';
 	var rawResult = await sails.sendNativeQuery(sql, [type]);
 	
-	console.log(rawResult);
+	//console.log(rawResult);
 	//await TOV.update({id: type}).set({values: string});
 	res.send(true);
 }

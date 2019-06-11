@@ -38,6 +38,7 @@ module.exports.routes = {
   'put /addunit': {action: 'update-tov'},
   'post /company': {action: 'company/update-company'},
   'get /api/companies': {action: 'company/get-companies'},
+  'get /api/tovValue': {action: 'map/get-values'},
   'get /user': {view: 'pages/user', locals:{layout: 'layouts/dashboard'}},
   'get /mapping': {view: 'pages/mapping', locals:{layout: 'layouts/dashboard'}},
 
