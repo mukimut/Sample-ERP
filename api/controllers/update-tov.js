@@ -4,6 +4,7 @@ module.exports = async function getTov(req, res) {
 
 	let mapObject = await sails.sendNativeQuery('SELECT map FROM public.tov WHERE valuetype = $1', [type]);
 	mapObject = mapObject.rows[0].map;
+	if(!mapObject) mapObject = {};
 
 	let stringedValues = values.map(element => {
 		if(!mapObject[element]) {
