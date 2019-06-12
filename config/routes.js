@@ -39,6 +39,7 @@ module.exports.routes = {
   'post /company': {action: 'company/update-company'},
   'get /api/companies': {action: 'company/get-companies'},
   'get /api/tovValue': {action: 'map/get-values'},
+  'post /api/setMap': {action: 'map/set-values'},
   'get /user': {view: 'pages/user', locals:{layout: 'layouts/dashboard'}},
   'get /mapping': {view: 'pages/mapping', locals:{layout: 'layouts/dashboard'}},
 

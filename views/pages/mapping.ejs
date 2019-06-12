@@ -73,7 +73,12 @@ function valueSelected(selection) {
 	const type = getSelectedText('masterType');
 
 	$.get('/api/tovValue?type='+type+'&value=' + value, (data) => {
-		if(!data) return;
+		if(!data) {
+			currentJson = [];
+			generateList();
+			return;
+		}
+
 		data.forEach(element => {
 			const key = Object.keys(element)[0];
 			currentJson.push({type: key, value: element[key]});
@@ -175,7 +180,7 @@ function save() {
 		sendData.push(pushObject);
 	});
 
-	$.post('/setTov', {type: type, value: value, data: sendData}, (data) => console.log(data));
+	$.post('/api/setMap', {type: type, value: value, data: sendData}, (data) => console.log(data));
 }
 
 function print(message) {
