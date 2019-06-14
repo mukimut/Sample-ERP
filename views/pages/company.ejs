@@ -76,12 +76,10 @@
         </h2>
       </div>
     </div>
-    <div class="row">
+    <div class="row" id="addressArea">
       <div class="col-md-10 form-horizontal">
         <div class="box-body">
           <div class="form-group">
-<<<<<<< HEAD
-=======
             <label for="inputEmail3" class="col-sm-2 control-label">Address Type</label>
             <div class="col-sm-10">
               <select id="designation" class="form-control">
@@ -93,23 +91,6 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
->>>>>>> 70db06f266cbea52c33cfff756b472ee16953924
-            <label for="inputPassword3" class="col-sm-2 control-label">Country</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="country" placeholder="Country">
-            </div>
-<<<<<<< HEAD
-          </div>  
-=======
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Division</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="division" placeholder="Division">
-            </div>
-          </div>
->>>>>>> 70db06f266cbea52c33cfff756b472ee16953924
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">District</label>
             <div class="col-sm-10">
@@ -148,11 +129,8 @@
           </div>
         </div>
       </div>
+      <button onclick="addAddress()">Add Address</button>
     </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 70db06f266cbea52c33cfff756b472ee16953924
     <div class="row">
       <div class="col-xs-12">
         <h2 class="page-header">
@@ -160,7 +138,7 @@
         </h2>
       </div>
     </div>
-    <div class="row">
+    <div class="row" id="contactPerson">
       <div class="col-md-10 form-horizontal">
         <div class="box-body">
           <div class="form-group">
@@ -195,6 +173,7 @@
           </div>
         </div>
       </div>
+      <button onclick="addContact()">Add Contact Person</button>
     </div>
     <div class="row">
       <div class="col-md-10">
@@ -213,6 +192,7 @@
   const idList = ['name', 'shortname', 'phone', 'mobile', 'email', 'website', 'address', 'district', 'companytype', 'postcode', 'lca'];
   let allCompanies = [];
   let selectedId;
+  let addressSize = 1;
 
   getCompanies();
 
@@ -265,6 +245,55 @@
     }
 
     document.getElementById('companylist').innerHTML = string;
+  }
+
+  function addContact() {
+    const string = `<div class="col-md-10 form-horizontal"><div class="box-body"><div class="form-group">
+        <label class="col-sm-2 control-label">Display Name</label><div class="col-sm-10">
+        <input type="text" class="form-control" id="displayName` + addressSize + `" placeholder="Display Name">
+        </div></div><div class="form-group"><label class="col-sm-2 control-label">Department</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" id="department` + addressSize + `" placeholder="Department">
+        </div></div><div class="form-group"><label class="col-sm-2 control-label">Designation</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" id="designation` + addressSize + `" placeholder="Designation">
+        </div></div><div class="form-group"><label class="col-sm-2 control-label">Contact No</label>
+        <div class="col-sm-10"><input type="text" class="form-control" id="contactNo` + addressSize + `" placeholder="Contact No">
+        </div></div><div class="form-group"><label class="col-sm-2 control-label">Email Address</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" id="emailAdd` + addressSize + `" placeholder="Email Address">
+        </div></div></div></div>`;
+        addressSize++;
+        const dom = document.getElementById('contactPerson');
+        dom.innerHTML = dom.innerHTML + string;
+  }
+
+  function addAddress() {
+    const address = `<div class="col-md-10 form-horizontal"><div class="box-body"><div class="form-group">
+      <label class="col-sm-2 control-label">Address Type</label><div class="col-sm-10">
+      <select id="addressType` + addressSize + `"  class="form-control"><option>Select Address Type</option>
+      <option>Organisation Address </option><option>Head Quarter Address </option>
+      <option>Factory Address </option><option>Delivery Address</option></select></div></div>
+      <div class="form-group"><label class="col-sm-2 control-label">District</label><div class="col-sm-10">
+      <input type="text" class="form-control" id="district ` + addressSize + `" placeholder="District">
+      </div></div><div class="form-group"><label class="col-sm-2 control-label">Police Station</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="policestation` + addressSize + `" placeholder="Police Station">
+      </div></div><div class="form-group"><label class="col-sm-2 control-label">Post Office</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="postOffice` + addressSize + `" placeholder="Post Office">
+      </div></div><div class="form-group"><label class="col-sm-2 control-label">Post Code</label>
+      <div class="col-sm-10">
+      <input type="number" class="form-control" id="postcode` + addressSize + `" placeholder="Post Code">
+      </div></div><div class="form-group"><label class="col-sm-2 control-label">House/ Plot/ Flat</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="HPF" placeholder="House/ Plot/ Flat">
+      </div></div><div class="form-group"><label class="col-sm-2 control-label">Village/ Area/ Road</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="VAR` + addressSize + `" placeholder="Village/ Area/ Road">
+      </div></div></div></div>`;
+      addressSize++;
+      const dom = document.getElementById('addressArea');
+      dom.innerHTML = dom.innerHTML + address; 
   }
 
   function edit(index) {
