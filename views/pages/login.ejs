@@ -1,90 +1,51 @@
 <body class="hold-transition login-page">
-    <div class="login-box">
-      <div class="login-logo">
-        <a href="../../index2.html"><b>Innovior</b>ERP</a>
-      </div>
-      <!-- /.login-logo -->
-      <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
-    
-        
-          <div class="form-group has-feedback">
-            <!-- <input type="email" class="form-control" placeholder="Email"> -->
-            <input type="text" class="form-control" id="loginName" placeholder="Username" name="username" required="">
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+  <div class="login-box">
+    <div class="login-logo"><a href="../../index2.html"><b>Innovior</b>ERP</a></div>
+    <div class="login-box-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" id="loginName" placeholder="Username" name="username" required="">
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="password" class="form-control" placeholder="Password" name="password" required="" id="loginPass">
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+          <div class="col-xs-4">
+            <button class="btn btn-primary btn-block btn-flat"  onclick="login()">Sign In</button>
           </div>
-          <div class="form-group has-feedback">
-            <!-- <input type="password" class="form-control" placeholder="Password"> -->
-            <input type="password" class="form-control" placeholder="Password" name="password" required="" id="loginPass">
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-          </div>
-          <div class="row">
-            <div class="col-xs-8">
-              <!-- <div class="checkbox icheck">
-                <label>
-                  <input type="checkbox"> Remember Me
-                </label>
-              </div> -->
-            </div>
-            <!-- <button onclick="register()" class="btn submit">Register</button> -->
-            <!-- /.col -->
-            <div class="col-xs-4">
-              <button class="btn btn-primary btn-block btn-flat"  onclick="login()">Sign In</button>
-            </div>
-            <!-- /.col -->
-          </div>
-          <p id="message"></p>
-        <a href="#">I forgot my password</a><br>
-    
-      </div>
-      <!-- /.login-box-body -->
+        </div>
+        <p id="message"></p>
+      <a href="#">I forgot my password</a><br>
     </div>
-    </body>
-    
-    <script>
-		function login() {
-		const data = {username: getIdData('loginName'), password: getIdData('loginPass')};
-        
-			$.post('/login', data, (res) => {
-					if(!res.found) {
-            document.getElementById('message').innerHTML = res.message;
-          }
-					else {
-						storeToken(res.token);
-						openDashboard();
-					};
-			});
-    }
+  </div>
+</body>    
+<script>
+document.addEventListener('keydown', (event) => {
+  if(event.key === 'Enter') login();
+});
 
-    function register() {
-			const pass = getIdData('registerPass1');
-			if (pass === getIdData('registerPass2')){
-				const data = {username: getIdData('registerName'), password: pass};
+function login() {
+  const data = {username: getIdData('loginName'), password: getIdData('loginPass')};  
+  $.post('/login', data, (res) => {
+      if(!res.found) document.getElementById('message').innerHTML = res.message;
+      else {
+        storeToken(res.token);
+        openDashboard();
+      }
+  });
+}
 
-				$.post('/register', data, (res) => {
-					if(res.found) console.log('Username already exists');
-					else {
-						storeToken(res.token);
-						openDashboard();
-					}
-				});
-			}
-			else {
-				//console.log('Passwords Mismatch');
-			}
-    }
+function getIdData(id) {
+    return document.getElementById(id).value;
+}
 
-    function getIdData(id) {
-        return document.getElementById(id).value;
-		}
-		
-		function storeToken(token) {
-			localStorage.setItem('token', token);
-		}
+function storeToken(token) {
+  localStorage.setItem('token', token);
+}
 
-		function openDashboard() {
-			window.open('/dashboard', '_self');
-		}
-    </script>
-    
-</html>
+function openDashboard() {
+  window.open('/dashboard', '_self');
+}
+</script>

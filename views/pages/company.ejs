@@ -206,6 +206,7 @@
     for(let i=0; i < addressSize; i++) {
       const addressObject = {};
       addressIds.forEach(element => addressObject[element] = getInputValue(element + '' + i));
+      addressObject['addressType'] = getSelectedText('addressType' + i);
       object['address'].push(addressObject);
     }
 
@@ -304,6 +305,11 @@
       addressSize++;
       const dom = document.getElementById('addressArea');
       dom.innerHTML = dom.innerHTML + address; 
+  }
+
+  function getSelectedText(id) {
+    const selection = document.getElementById(id);
+    return selection.options[selection.selectedIndex].innerHTML;
   }
 
   function edit(index) {
