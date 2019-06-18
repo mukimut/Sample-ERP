@@ -20,7 +20,6 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/login', locals:{layout: 'layouts/login'}  },
-  'get /signup': {view: 'pages/signup', locals:{layout: 'layouts/login'}},
   'get /login': {view: 'pages/login', locals:{layout: 'layouts/login'}},
   'get /dashboard': {view: 'pages/dashboard', locals:{layout: 'layouts/dashboard'} },
   'get /tovpage': {view: 'pages/tov', locals:{layout: 'layouts/dashboard'}},

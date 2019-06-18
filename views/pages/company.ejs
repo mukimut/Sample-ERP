@@ -195,6 +195,7 @@
   let allCompanies = [];
   let selectedId;
   let addressSize = 1;
+  let contactSize = 1;
 
   getCompanies();
 
@@ -211,7 +212,7 @@
     }
 
     object['contact'] = [];
-    for(let i=0; i < addressSize; i++) {
+    for(let i=0; i < contactSize; i++) {
       const personObject = {};
       contactIds.forEach(element => personObject[element] = getInputValue(element + '' + i));
       object['contact'].push(personObject);
@@ -233,17 +234,6 @@
     });
   }
 
-  function submitEdit() {
-    if (!selectedId) return;
-
-    const data = getSubmitData();
-    data.id = selectedId;
-
-    $.post('/Company', data, (res) => {
-      if (res) getCompanies();
-    });
-  }
-
   function displayList() {
     let string = '';
     const length = allCompanies.length;
@@ -261,20 +251,20 @@
   function addContact() {
     const string = `<div class="col-md-10 form-horizontal"><div class="box-body"><div class="form-group">
         <label class="col-sm-2 control-label">Display Name</label><div class="col-sm-10">
-        <input type="text" class="form-control" id="displayName` + addressSize + `" placeholder="Display Name">
+        <input type="text" class="form-control" id="displayName` + contactSize + `" placeholder="Display Name">
         </div></div><div class="form-group"><label class="col-sm-2 control-label">Department</label>
         <div class="col-sm-10">
-        <input type="text" class="form-control" id="department` + addressSize + `" placeholder="Department">
+        <input type="text" class="form-control" id="department` + contactSize + `" placeholder="Department">
         </div></div><div class="form-group"><label class="col-sm-2 control-label">Designation</label>
         <div class="col-sm-10">
-        <input type="text" class="form-control" id="designation` + addressSize + `" placeholder="Designation">
+        <input type="text" class="form-control" id="designation` + contactSize + `" placeholder="Designation">
         </div></div><div class="form-group"><label class="col-sm-2 control-label">Contact No</label>
-        <div class="col-sm-10"><input type="text" class="form-control" id="contactNo` + addressSize + `" placeholder="Contact No">
+        <div class="col-sm-10"><input type="text" class="form-control" id="contactNo` + contactSize + `" placeholder="Contact No">
         </div></div><div class="form-group"><label class="col-sm-2 control-label">Email Address</label>
         <div class="col-sm-10">
-        <input type="text" class="form-control" id="email` + addressSize + `" placeholder="Email Address">
+        <input type="text" class="form-control" id="email` + contactSize + `" placeholder="Email Address">
         </div></div></div></div>`;
-        addressSize++;
+        contactSize++;
         const dom = document.getElementById('contactPerson');
         dom.innerHTML = dom.innerHTML + string;
   }
@@ -318,11 +308,47 @@
     idList.forEach(element => {
       document.getElementById(element).value = allCompanies[index][element];
     });
+
+    document.getElementById('addressArea').innerHTML = '';
+    addressSize = 0;
+    const addresses = allCompanies[index].address;
+    let length = addresses.length;
+
+    for(let i=0; i < length; i++) {
+      addAddress();
+      const keyList = Object.keys(addresses[i]);
+      keyList.forEach(element => {
+        document.getElementById(element + 'i').value = addresses[i][element];
+      });
+    }
+
+    const contacts = allCompanies[index].contact;
+    length = contacts.length
+    contactSize = 0;
+
+    for(let i=0; i < length; i++) {
+      addContact();
+      const keyList = Object.keys(contacts[i]);
+      keyList.forEach(element => {
+        document.getElementById(element + 'i').value = contacts[i][element];
+      });
+    }
   }
 
   function submit() {
     const data = getSubmitData();
     console.log(data);
+    $.post('/Company', data, (res) => {
+      if (res) getCompanies();
+    });
+  }
+
+  function submitEdit() {
+    if (!selectedId) return;
+
+    const data = getSubmitData();
+    data.id = selectedId;
+
     $.post('/Company', data, (res) => {
       if (res) getCompanies();
     });
