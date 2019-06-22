@@ -37,12 +37,6 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Company Type</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="companytype" placeholder="Company Type">
-            </div>
-          </div>
-          <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Phone</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="phone" placeholder="Phone">
@@ -182,7 +176,6 @@
           <button class="btn btn-default" onclick="submitEdit()">Edit</button>
         </div>
       </div>
-      <ul id="companylist"></ul>
 
     </div>
 
@@ -204,26 +197,16 @@
           </div>
           <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
-              <tr>
-                <th>ID</th>
+              <thead><tr>
                 <th>Company Name</th>
+                <th>Short Name</th>
                 <th>Phone</th>
                 <th>Email</th>
-                <th>Head Office Address</th>
-                <th>Contact Person Name</th>
-                <th>Contact Person Phone</th>
+                <th>Website</th>
+                <th>Company Type</th>
                 <th>Action</th>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>11-7-2014</td>
-                <td>yeasminnilo@gmail.com</td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                <td>fdg</td>
-                <td>dfs</td>
-                <td><button class="label label-primary">Edit</button>&nbsp;&nbsp;<button class="label label-danger">Delete</button></td>
-              </tr>
+              </tr></thead>
+              <tbody id="companylist"></tbody>
             </table>
           </div>
         </div>
@@ -234,7 +217,7 @@
 </div>
 
 <script>
-  const idList = ['name', 'shortname', 'companytype', 'phone', 'email', 'website', 'tin'];
+  const idList = ['name', 'shortname', 'phone', 'email', 'website', 'tin'];
   addressIds = ['district', 'policestation', 'postcode', 'hpf', 'var', 'postOffice'];
   contactIds = ['displayName', 'department', 'contactNo', 'email', 'designation'];
   let allCompanies = [];
@@ -284,12 +267,13 @@
     const length = allCompanies.length;
 
     for (let i = 0; i < length; i++) {
-      const currentCompany = allCompanies[i]
-      string += '<li> Name: ' + currentCompany.name + ' Shortname: ';
-      string += currentCompany.shortname;
-      string += '<button onclick="edit(' + i + ')">Edit</button></li>';
+      const currentCompany = allCompanies[i];
+      string += '<tr><td>' + currentCompany.name + '</td><td>' + currentCompany.shortname + '</td>'
+      string += '<td>' + currentCompany.phone + '</td><td>' + currentCompany.email + '</td>';
+      string += '<td>' + currentCompany.website + '</td>';
+      string += `<td><button class="label label-primary" onclick="edit(` + i + `)">Edit</button>&nbsp;&nbsp;
+                <button class="label label-danger">Delete</button></td></tr>`;
     }
-
     document.getElementById('companylist').innerHTML = string;
   }
 
@@ -310,8 +294,10 @@
         <input type="text" class="form-control" id="email` + contactSize + `" placeholder="Email Address">
         </div></div></div></div>`;
         contactSize++;
-        const dom = document.getElementById('contactPerson');
-        dom.innerHTML = dom.innerHTML + string;
+        let dom = document.getElementById('contactPerson').innerHTML;
+        dom += string;
+        document.getElementById('contactPerson').innerHTML = dom;
+        console.log(document.getElementById('contactPerson').innerHTML);
   }
 
   function addAddress() {
@@ -321,7 +307,7 @@
       <option>Organisation Address </option><option>Head Quarter Address </option>
       <option>Factory Address </option><option>Delivery Address</option></select></div></div>
       <div class="form-group"><label class="col-sm-2 control-label">District</label><div class="col-sm-10">
-      <input type="text" class="form-control" id="district ` + addressSize + `" placeholder="District">
+      <input type="text" class="form-control" id="district` + addressSize + `" placeholder="District">
       </div></div><div class="form-group"><label class="col-sm-2 control-label">Police Station</label>
       <div class="col-sm-10">
       <input type="text" class="form-control" id="policestation` + addressSize + `" placeholder="Police Station">
@@ -338,8 +324,9 @@
       <input type="text" class="form-control" id="var` + addressSize + `" placeholder="Village/ Area/ Road">
       </div></div></div></div>`;
       addressSize++;
-      const dom = document.getElementById('addressArea');
-      dom.innerHTML = dom.innerHTML + address; 
+      let dom = document.getElementById('addressArea').innerHTML;
+      dom += address;
+      document.getElementById('addressArea').innerHTML = dom;
   }
 
   function getSelectedText(id) {
@@ -363,7 +350,7 @@
       addAddress();
       const keyList = Object.keys(addresses[i]);
       keyList.forEach(element => {
-        document.getElementById(element + 'i').value = addresses[i][element];
+        document.getElementById(element + '' + i).value = addresses[i][element];
       });
     }
 
@@ -375,7 +362,7 @@
       addContact();
       const keyList = Object.keys(contacts[i]);
       keyList.forEach(element => {
-        document.getElementById(element + 'i').value = contacts[i][element];
+        document.getElementById(element + '' + i).value = contacts[i][element];
       });
     }
   }
