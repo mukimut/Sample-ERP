@@ -1,45 +1,65 @@
-
 <div class="content-wrapper">
 	<section class="content-header">
-	  <h1>LOV<small>Settings</small></h1>
-	  <ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li><li><a href="#">Common Settings</a></li><li class="active">LOV</li>
-	  </ol>
+		<h1>LOV<small>Settings</small></h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="#">Common Settings</a></li>
+			<li class="active">LOV</li>
+		</ol>
 	</section>
 	<section class="invoice">
-	  <div class="row">
-		<div class="col-xs-12">
-		  <h2 class="page-header"><i class="fa fa-globe"></i> List of Value<small class="pull-right">Date: 2/10/2019</small></h2>
-		</div>
-	  </div>
-	  <div class="row">
-		<div class="col-md-6 form-horizontal">
-		  <div class="box-body">
-			<div class="form-group">
-			  <label for="inputEmail3" class="col-sm-2 control-label">New LOV</label>
-			  <div class="col-sm-10">
-					<input type="text" class="form-control" id="newType" placeholder="New LOV">
-					<button class="btn btn-info" onclick="newEntry()">New Lov</button>
-			  </div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h2 class="page-header"><i class="fa fa-globe"></i> List of Value<small class="pull-right">Date:
+						2/10/2019</small></h2>
 			</div>
-		  </div>
 		</div>
-	  </div>
-	  <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-				<select id="valueTypes" onchange="typeSelected(this)"><option hidden disabled selected value> Select Type </option></select>
-            </div>
-            <div class="box-body table-responsive no-padding">
-              <input type="text" id="values" size="60"><button onclick="edit()">Edit</button>
-            </div>
-          </div>
-        </div>
-      </div>
+		<div class="row">
+			<div class="col-md-6 form-horizontal">
+				<div class="box-body">
+					<div class="form-group form-inline">
+						<label for="New LOV" class="col-sm-2 control-label">New LOV</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="newType" placeholder="New LOV">
+							<button class="btn btn-primary btn-flat" onclick="newEntry()">New Lov</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="box">
+				<div class="col-md-6 form-horizontal">
+					<div class="box-body">
+						<div class="form-group">
+							<label for="New LOV" class="col-sm-2 control-label">Select LOV Type</label>
+							<div class="col-sm-10">
+								<select class="form-control" id="valueTypes" onchange="typeSelected(this)">
+									<option hidden disabled selected value> Select Type </option>
+								</select>
+							</div>
+						</div>
+						<!-- <select class="form-group" id="valueTypes" onchange="typeSelected(this)">
+							<option hidden disabled selected value> Select Type </option>
+						</select> -->
+
+						<div class="form-group form-inline">
+							<label for="New LOV" class="col-sm-2 control-label">Edit LOV Type</label>
+							<div class="col-sm-10">
+								<input class="form-control" type="text" id="values" size="60">
+								<button class="btn btn-primary btn-flat" onclick="edit()">Edit</button>
+							</div>
+						</div>
+						<!-- <div class="box-body table-responsive no-padding">
+							<input type="text" id="values" size="60"><button onclick="edit()">Edit</button>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 	<div class="clearfix"></div>
-  </div>
+</div>
 <div class="control-sidebar-bg"></div>
 <script src="/dependencies/jquery.js"></script>
 <script>
@@ -47,16 +67,16 @@
 	let selectedIndex;
 	let selected = false;
 	getValue();
-	
+
 	function getValue() {
 		$.get('/tov', (data) => data.forEach(createEntry));
 	}
 
 	function newEntry() {
 		const title = dataFromInput('newType');
-		if(title) {
-			$.post('/TOV', {id: title}, (res) => {
-				if(res) createEntry({id: title, values: []});
+		if (title) {
+			$.post('/TOV', { id: title }, (res) => {
+				if (res) createEntry({ id: title, values: [] });
 			})
 		}
 	}
@@ -65,7 +85,7 @@
 		let string = document.getElementById('valueTypes').innerHTML;
 		string += '<option>' + element.id + ' </option>';
 		document.getElementById('valueTypes').innerHTML = string;
-		allData.push({id: element.id, values: element.values});
+		allData.push({ id: element.id, values: element.values });
 	}
 
 	function typeSelected(element) {
@@ -76,19 +96,21 @@
 	}
 
 	function edit() {
-		if(!selected) return;
+		if (!selected) return;
 		const data = dataFromInput('values').split(',').map(element => element.trim());
 		const title = allData[selectedIndex].id;
-		
-		$.ajax({url: '/addunit', method: 'PUT', data: {type: title, values: data}, success: res => {
-			if(res) allData[selectedIndex].values = data;
-		}});
+
+		$.ajax({
+			url: '/addunit', method: 'PUT', data: { type: title, values: data }, success: res => {
+				if (res) allData[selectedIndex].values = data;
+			}
+		});
 	}
 
 	function postValue() {
 		const data = document.getElementById('newValue').value;
-		$.post('/addunit', {newValue: data}, (res) => {
-			if(res) getValue();
+		$.post('/addunit', { newValue: data }, (res) => {
+			if (res) getValue();
 		});
 	}
 
