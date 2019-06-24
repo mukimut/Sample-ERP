@@ -7,7 +7,7 @@
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
       <li><a href="#">Master</a></li>
-      <li class="active">Supplier</li>
+      <li class="active">Company</li>
     </ol>
   </section>
   <section class="invoice">
@@ -23,23 +23,17 @@
       <div class="col-md-10 form-horizontal">
         <div class="box-body">
           <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Supplier Name</label>
+            <label for="inputEmail3" class="col-sm-2 control-label">Company Name</label>
 
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="name" placeholder="Supplier Name">
+              <input type="text" class="form-control" id="name" placeholder="Company Name">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Short Name</label>
 
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="shortname" placeholder="supplier Short Name">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">supplier Type</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="suppliertype" placeholder="supplier Type">
+              <input type="text" class="form-control" id="shortname" placeholder="Company Short Name">
             </div>
           </div>
           <div class="form-group">
@@ -61,15 +55,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">BIN Number</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="binno" placeholder="BIN Number">
-            </div>
-          </div>
-          <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">TIN No</label>
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="tinno" placeholder="TIN No">
+              <input type="email" class="form-control" id="tin" placeholder="TIN No">
             </div>
           </div>
         </div>
@@ -78,77 +66,65 @@
     <div class="row">
       <div class="col-xs-12">
         <h2 class="page-header">
-          <i class="fa fa-globe"></i> Address Type
+          <i class="fa fa-globe"></i>Address
         </h2>
       </div>
     </div>
-    <div class="row">
+    <div class="row" id="addressArea">
       <div class="col-md-10 form-horizontal">
         <div class="box-body">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Address Type</label>
-                <div class="col-sm-10">
-                  <select id="designation" class="form-control">
-                    <option>Select Address Type</option>
-                    <option>Organisation Address </option>
-                    <option>Head Quarter Address </option>
-                    <option>Factory Address </option>
-                    <option>Delivery Address </option>
-                  </select>
-                </div>
-              </div>
           <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Country</label>
+            <label for="inputEmail3" class="col-sm-2 control-label">Address Type</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="country" placeholder="Country">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Division</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="division" placeholder="Division">
+              <select id="addressType0" class="form-control">
+                <option>Select Address Type</option>
+                <option>Organisation Address </option>
+                <option>Head Quarter Address </option>
+                <option>Factory Address </option>
+                <option>Delivery Address </option>
+              </select>
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">District</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="district" placeholder="District">
+              <input type="text" class="form-control" id="district0" placeholder="District">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Police Station</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="policestation" placeholder="Police Station">
+              <input type="text" class="form-control" id="policestation0" placeholder="Police Station">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Post Office</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="postOffice" placeholder="Post Office">
+              <input type="text" class="form-control" id="postOffice0" placeholder="Post Office">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Post Code</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="postcode" placeholder="Post Code">
+              <input type="text" class="form-control" id="postcode0" placeholder="Post Code">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">House/ Plot/ Flat</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="HPF" placeholder="House/ Plot/ Flat">
+              <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Village/ Area/ Road</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="VAR" placeholder="Village/ Area/ Road">
+              <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
             </div>
           </div>
         </div>
       </div>
+      <button onclick="addAddress()">Add Address</button>
     </div>
-   
     <div class="row">
       <div class="col-xs-12">
         <h2 class="page-header">
@@ -156,62 +132,58 @@
         </h2>
       </div>
     </div>
-    <div class="row">
+    <div class="row" id="contactPerson">
       <div class="col-md-10 form-horizontal">
         <div class="box-body">
           <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">SL</label>
-            <div class="col-sm-10">
-              <input type="email" class="form-control" id="sl" placeholder="SL">
-            </div>
-          </div>
-          <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Display Name</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="displayName" placeholder="Display Name">
+              <input type="text" class="form-control" id="displayName0" placeholder="Display Name">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Department</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="department" placeholder="Department">
+              <input type="text" class="form-control" id="department0" placeholder="Department">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Designation</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="designation" placeholder="Designation">
+              <input type="text" class="form-control" id="designation0" placeholder="Designation">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Contact No</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="contactNo" placeholder="Contact No">
+              <input type="text" class="form-control" id="contactNo0" placeholder="Contact No">
             </div>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-2 control-label">Email Address</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="emailAdd" placeholder="Email Address">
+              <input type="text" class="form-control" id="email0" placeholder="Email Address">
             </div>
           </div>
         </div>
       </div>
+      <button onclick="addContact()">Add Contact Person</button>
     </div>
     <div class="row">
       <div class="col-md-10">
         <div class="box-footer pull-right" style="border-top: 0px">
-          <button class="btn btn-info" onclick="submit()">Save</button>
+          <button class="btn btn-primary" onclick="submit()">Save</button>
           <button class="btn btn-default" onclick="submitEdit()">Edit</button>
         </div>
       </div>
-      <ul id="supplierlist"></ul>
+
     </div>
+
     <div class="row">
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Supplier List</h3>
+            <h3 class="box-title">Company List</h3>
 
             <div class="box-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
@@ -225,77 +197,68 @@
           </div>
           <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
-              <tr>
-                <th>ID</th>
-                <th>Supplier Name</th>
+              <thead><tr>
+                <th>Company Name</th>
+                <th>Short Name</th>
                 <th>Phone</th>
                 <th>Email</th>
-                <th>Head Office Address</th>
-                <th>Contact Person Name</th>
-                <th>Contact Person Phone</th>
+                <th>Website</th>
+                <th>Company Type</th>
                 <th>Action</th>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>11-7-2014</td>
-                <td>yeasminnilo@gmail.com</td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                <td>fdg</td>
-                <td>dfs</td>
-                <td><button class="label label-primary">Edit</button>&nbsp;&nbsp;<button class="label label-danger">Delete</button></td>
-              </tr>
+              </tr></thead>
+              <tbody id="companylist"></tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-
   </section>
   <div class="clearfix"></div>
 </div>
 
 <script>
-  const idList = ['name', 'shortname', 'phone', 'mobile', 'email', 'website', 'address', 'district', 'suppliertype', 'postcode', 'lca'];
+  const idList = ['name', 'shortname', 'phone', 'email', 'website', 'tin'];
+  addressIds = ['district', 'policestation', 'postcode', 'hpf', 'var', 'postOffice'];
+  contactIds = ['displayName', 'department', 'contactNo', 'email', 'designation'];
   let allCompanies = [];
   let selectedId;
+  let addressSize = 1;
+  let contactSize = 1;
 
   getCompanies();
 
   function getSubmitData() {
     const object = {};
+    idList.forEach(element => object[element] = getInputValue(element));
+    
+    object['address'] = [];
+    for(let i=0; i < addressSize; i++) {
+      const addressObject = {};
+      addressIds.forEach(element => addressObject[element] = getInputValue(element + '' + i));
+      addressObject['addressType'] = getSelectedText('addressType' + i);
+      object['address'].push(addressObject);
+    }
 
-    idList.forEach(element => {
-      let currentValue = document.getElementById(element).value;
-      if (!currentValue) currentValue = '';
-      object[element] = currentValue;
-    });
+    object['contact'] = [];
+    for(let i=0; i < contactSize; i++) {
+      const personObject = {};
+      contactIds.forEach(element => personObject[element] = getInputValue(element + '' + i));
+      object['contact'].push(personObject);
+    }
 
     return object;
   }
 
-  function submit() {
-    const data = getSubmitData();
-    $.post('/supplier', data, (res) => {
-      if (res) getCompanies();
-    });
+  function getInputValue(id) {
+    let currentValue = document.getElementById(id).value;
+    if(!currentValue) currentValue = '';
+    return currentValue;
   }
 
   function getCompanies() {
-    $.get('api/companies', (res) => {
+    $.get('api/companies?type=supplier', (res) => {
       allCompanies = res;
       displayList();
-    });
-  }
-
-  function submitEdit() {
-    if (!selectedId) return;
-
-    const data = getSubmitData();
-    data.id = selectedId;
-
-    $.post('/supplier', data, (res) => {
-      if (res) getCompanies();
     });
   }
 
@@ -304,13 +267,71 @@
     const length = allCompanies.length;
 
     for (let i = 0; i < length; i++) {
-      const currentsupplier = allCompanies[i]
-      string += '<li> Name: ' + currentsupplier.name + ' Shortname: ';
-      string += currentsupplier.shortname;
-      string += '<button onclick="edit(' + i + ')">Edit</button></li>';
+      const currentCompany = allCompanies[i];
+      string += '<tr><td>' + currentCompany.name + '</td><td>' + currentCompany.shortname + '</td>'
+      string += '<td>' + currentCompany.phone + '</td><td>' + currentCompany.email + '</td>';
+      string += '<td>' + currentCompany.website + '</td>';
+      string += `<td><button class="label label-primary" onclick="edit(` + i + `)">Edit</button>&nbsp;&nbsp;
+                <button class="label label-danger" onclick="deleteRecord(` + i + `)">Delete</button></td></tr>`;
     }
+    document.getElementById('companylist').innerHTML = string;
+  }
 
-    document.getElementById('supplierlist').innerHTML = string;
+  function addContact() {
+    const string = `<div class="col-md-10 form-horizontal"><div class="box-body"><div class="form-group">
+        <label class="col-sm-2 control-label">Display Name</label><div class="col-sm-10">
+        <input type="text" class="form-control" id="displayName` + contactSize + `" placeholder="Display Name">
+        </div></div><div class="form-group"><label class="col-sm-2 control-label">Department</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" id="department` + contactSize + `" placeholder="Department">
+        </div></div><div class="form-group"><label class="col-sm-2 control-label">Designation</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" id="designation` + contactSize + `" placeholder="Designation">
+        </div></div><div class="form-group"><label class="col-sm-2 control-label">Contact No</label>
+        <div class="col-sm-10"><input type="text" class="form-control" id="contactNo` + contactSize + `" placeholder="Contact No">
+        </div></div><div class="form-group"><label class="col-sm-2 control-label">Email Address</label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" id="email` + contactSize + `" placeholder="Email Address">
+        </div></div></div></div>`;
+        contactSize++;
+        let dom = document.getElementById('contactPerson').innerHTML;
+        dom += string;
+        document.getElementById('contactPerson').innerHTML = dom;
+        console.log(document.getElementById('contactPerson').innerHTML);
+  }
+
+  function addAddress() {
+    const address = `<div class="col-md-10 form-horizontal"><div class="box-body"><div class="form-group">
+      <label class="col-sm-2 control-label">Address Type</label><div class="col-sm-10">
+      <select id="addressType` + addressSize + `"  class="form-control"><option>Select Address Type</option>
+      <option>Organisation Address </option><option>Head Quarter Address </option>
+      <option>Factory Address </option><option>Delivery Address</option></select></div></div>
+      <div class="form-group"><label class="col-sm-2 control-label">District</label><div class="col-sm-10">
+      <input type="text" class="form-control" id="district` + addressSize + `" placeholder="District">
+      </div></div><div class="form-group"><label class="col-sm-2 control-label">Police Station</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="policestation` + addressSize + `" placeholder="Police Station">
+      </div></div><div class="form-group"><label class="col-sm-2 control-label">Post Office</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="postOffice` + addressSize + `" placeholder="Post Office">
+      </div></div><div class="form-group"><label class="col-sm-2 control-label">Post Code</label>
+      <div class="col-sm-10">
+      <input type="number" class="form-control" id="postcode` + addressSize + `" placeholder="Post Code">
+      </div></div><div class="form-group"><label class="col-sm-2 control-label">House/ Plot/ Flat</label>
+      <div class="col-sm-10"><input type="text" class="form-control" id="hpf` + addressSize + `" placeholder="House/ Plot/ Flat">
+      </div></div><div class="form-group"><label class="col-sm-2 control-label">Village/ Area/ Road</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="var` + addressSize + `" placeholder="Village/ Area/ Road">
+      </div></div></div></div>`;
+      addressSize++;
+      let dom = document.getElementById('addressArea').innerHTML;
+      dom += address;
+      document.getElementById('addressArea').innerHTML = dom;
+  }
+
+  function getSelectedText(id) {
+    const selection = document.getElementById(id);
+    return selection.options[selection.selectedIndex].innerHTML;
   }
 
   function edit(index) {
@@ -318,6 +339,60 @@
 
     idList.forEach(element => {
       document.getElementById(element).value = allCompanies[index][element];
+    });
+
+    document.getElementById('addressArea').innerHTML = '';
+    addressSize = 0;
+    const addresses = allCompanies[index].address;
+    let length = addresses.length;
+
+    for(let i=0; i < length; i++) {
+      addAddress();
+      const keyList = Object.keys(addresses[i]);
+      keyList.forEach(element => {
+        document.getElementById(element + '' + i).value = addresses[i][element];
+      });
+    }
+
+    document.getElementById('contactPerson').innerHTML = '';
+    const contacts = allCompanies[index].contact;
+    length = contacts.length
+    contactSize = 0;
+
+    for(let i=0; i < length; i++) {
+      addContact();
+      const keyList = Object.keys(contacts[i]);
+      keyList.forEach(element => {
+        document.getElementById(element + '' + i).value = contacts[i][element];
+      });
+    }
+  }
+
+  function submit() {
+    const data = getSubmitData();
+    data.companytype = 'supplier';
+    $.post('/Company', data, (res) => {
+      if (res) getCompanies();
+    });
+  }
+
+  function deleteRecord(index) {
+    const id = allCompanies[index].id;
+    $.ajax({
+			url: '/company', method: 'DELETE', data: {id: id}, success: res => {
+				if(res.update) getUser();
+			}
+		});
+  }
+
+  function submitEdit() {
+    if (!selectedId) return;
+
+    const data = getSubmitData();
+    data.id = selectedId;
+
+    $.post('/Company', data, (res) => {
+      if (res) getCompanies();
     });
   }
 </script>
