@@ -24,9 +24,18 @@
         <div class="box-body">
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Company Name</label>
-
             <div class="col-sm-10">
               <input type="text" class="form-control" id="name" placeholder="Company Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Company Type</label>
+            <div class="col-sm-10">
+              <select id="companyType" class="form-control">
+                <option selected>General</option>
+                <option>SUPPLIER</option>
+                <option>CUSTOMER</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -77,8 +86,7 @@
             <label for="inputEmail3" class="col-sm-2 control-label">Address Type</label>
             <div class="col-sm-10">
               <select id="addressType0" class="form-control">
-                <option>Select Address Type</option>
-                <option>Organisation Address </option>
+                <option selected>Organisation Address </option>
                 <option>Head Quarter Address </option>
                 <option>Factory Address </option>
                 <option>Delivery Address </option>
@@ -230,6 +238,8 @@
   function getSubmitData() {
     const object = {};
     idList.forEach(element => object[element] = getInputValue(element));
+
+    object['companytype'] = getSelectedText('companyType').toLowerCase();
     
     object['address'] = [];
     for(let i=0; i < addressSize; i++) {
@@ -297,14 +307,13 @@
         let dom = document.getElementById('contactPerson').innerHTML;
         dom += string;
         document.getElementById('contactPerson').innerHTML = dom;
-        console.log(document.getElementById('contactPerson').innerHTML);
   }
 
   function addAddress() {
     const address = `<div class="col-md-10 form-horizontal"><div class="box-body"><div class="form-group">
       <label class="col-sm-2 control-label">Address Type</label><div class="col-sm-10">
-      <select id="addressType` + addressSize + `"  class="form-control"><option>Select Address Type</option>
-      <option>Organisation Address </option><option>Head Quarter Address </option>
+      <select id="addressType` + addressSize + `" class="form-control"><option  hidden disabled selected value>
+      Select Address Type</option><option>Organisation Address</option><option>Head Quarter Address</option>
       <option>Factory Address </option><option>Delivery Address</option></select></div></div>
       <div class="form-group"><label class="col-sm-2 control-label">District</label><div class="col-sm-10">
       <input type="text" class="form-control" id="district` + addressSize + `" placeholder="District">
@@ -331,6 +340,7 @@
 
   function getSelectedText(id) {
     const selection = document.getElementById(id);
+    console.log(selection);
     return selection.options[selection.selectedIndex].innerHTML;
   }
 
