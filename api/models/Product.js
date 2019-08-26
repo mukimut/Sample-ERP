@@ -24,4 +24,7 @@ WITH (
     OIDS = FALSE
 )
 
+ALTER TABLE public.product
+    ALTER COLUMN price TYPE numeric (10, 2);
+
 */
