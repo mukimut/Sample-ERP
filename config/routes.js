@@ -20,7 +20,6 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/login', locals:{layout: 'layouts/login'}  },
-  'get /signup': {view: 'pages/signup', locals:{layout: 'layouts/login'}},
   'get /login': {view: 'pages/login', locals:{layout: 'layouts/login'}},
   'get /dashboard': {view: 'pages/dashboard', locals:{layout: 'layouts/dashboard'} },
   'get /tovpage': {view: 'pages/tov', locals:{layout: 'layouts/dashboard'}},
@@ -42,6 +41,9 @@ module.exports.routes = {
   'post /api/setMap': {action: 'map/set-values'},
   'get /user': {view: 'pages/user', locals:{layout: 'layouts/dashboard'}},
   'get /mapping': {view: 'pages/mapping', locals:{layout: 'layouts/dashboard'}},
+  'delete /company': {action: 'company/delete-company'},
+  'get /products': {view: 'pages/products', locals:{layout: 'layouts/dashboard'}},
+  'get /api/products': {action: 'products/get-products'}
 
 
   /***************************************************************************

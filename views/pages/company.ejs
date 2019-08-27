@@ -24,9 +24,18 @@
         <div class="box-body">
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Company Name</label>
-
             <div class="col-sm-10">
               <input type="text" class="form-control" id="name" placeholder="Company Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">Company Type</label>
+            <div class="col-sm-10">
+              <select id="companyType" class="form-control">
+                <option selected>General</option>
+                <option>SUPPLIER</option>
+                <option>CUSTOMER</option>
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -34,12 +43,6 @@
 
             <div class="col-sm-10">
               <input type="text" class="form-control" id="shortname" placeholder="Company Short Name">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Company Type</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="companytype" placeholder="Company Type">
             </div>
           </div>
           <div class="form-group">
@@ -83,8 +86,7 @@
             <label for="inputEmail3" class="col-sm-2 control-label">Address Type</label>
             <div class="col-sm-10">
               <select id="addressType0" class="form-control">
-                <option>Select Address Type</option>
-                <option>Organisation Address </option>
+                <option selected>Organisation Address </option>
                 <option>Head Quarter Address </option>
                 <option>Factory Address </option>
                 <option>Delivery Address </option>
@@ -182,7 +184,6 @@
           <button class="btn btn-default" onclick="submitEdit()">Edit</button>
         </div>
       </div>
-      <ul id="companylist"></ul>
 
     </div>
 
@@ -204,26 +205,16 @@
           </div>
           <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
-              <tr>
-                <th>ID</th>
+              <thead><tr>
                 <th>Company Name</th>
+                <th>Short Name</th>
                 <th>Phone</th>
                 <th>Email</th>
-                <th>Head Office Address</th>
-                <th>Contact Person Name</th>
-                <th>Contact Person Phone</th>
+                <th>Website</th>
+                <th>Company Type</th>
                 <th>Action</th>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>11-7-2014</td>
-                <td>yeasminnilo@gmail.com</td>
-                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                <td>fdg</td>
-                <td>dfs</td>
-                <td><button class="label label-primary">Edit</button>&nbsp;&nbsp;<button class="label label-danger">Delete</button></td>
-              </tr>
+              </tr></thead>
+              <tbody id="companylist"></tbody>
             </table>
           </div>
         </div>
@@ -234,18 +225,21 @@
 </div>
 
 <script>
-  const idList = ['name', 'shortname', 'companytype', 'phone', 'email', 'website', 'tin'];
+  const idList = ['name', 'shortname', 'phone', 'email', 'website', 'tin'];
   addressIds = ['district', 'policestation', 'postcode', 'hpf', 'var', 'postOffice'];
   contactIds = ['displayName', 'department', 'contactNo', 'email', 'designation'];
   let allCompanies = [];
   let selectedId;
   let addressSize = 1;
+  let contactSize = 1;
 
   getCompanies();
 
   function getSubmitData() {
     const object = {};
     idList.forEach(element => object[element] = getInputValue(element));
+
+    object['companytype'] = getSelectedText('companyType').toLowerCase();
     
     object['address'] = [];
     for(let i=0; i < addressSize; i++) {
@@ -256,7 +250,7 @@
     }
 
     object['contact'] = [];
-    for(let i=0; i < addressSize; i++) {
+    for(let i=0; i < contactSize; i++) {
       const personObject = {};
       contactIds.forEach(element => personObject[element] = getInputValue(element + '' + i));
       object['contact'].push(personObject);
@@ -278,60 +272,51 @@
     });
   }
 
-  function submitEdit() {
-    if (!selectedId) return;
-
-    const data = getSubmitData();
-    data.id = selectedId;
-
-    $.post('/Company', data, (res) => {
-      if (res) getCompanies();
-    });
-  }
-
   function displayList() {
     let string = '';
     const length = allCompanies.length;
 
     for (let i = 0; i < length; i++) {
-      const currentCompany = allCompanies[i]
-      string += '<li> Name: ' + currentCompany.name + ' Shortname: ';
-      string += currentCompany.shortname;
-      string += '<button onclick="edit(' + i + ')">Edit</button></li>';
+      const currentCompany = allCompanies[i];
+      string += '<tr><td>' + currentCompany.name + '</td><td>' + currentCompany.shortname + '</td>'
+      string += '<td>' + currentCompany.phone + '</td><td>' + currentCompany.email + '</td>';
+      string += '<td>' + currentCompany.website + '</td>';
+      string += `<td><button class="label label-primary" onclick="edit(` + i + `)">Edit</button>&nbsp;&nbsp;
+                <button class="label label-danger" onclick="deleteRecord(` + i + `)">Delete</button></td></tr>`;
     }
-
     document.getElementById('companylist').innerHTML = string;
   }
 
   function addContact() {
     const string = `<div class="col-md-10 form-horizontal"><div class="box-body"><div class="form-group">
         <label class="col-sm-2 control-label">Display Name</label><div class="col-sm-10">
-        <input type="text" class="form-control" id="displayName` + addressSize + `" placeholder="Display Name">
+        <input type="text" class="form-control" id="displayName` + contactSize + `" placeholder="Display Name">
         </div></div><div class="form-group"><label class="col-sm-2 control-label">Department</label>
         <div class="col-sm-10">
-        <input type="text" class="form-control" id="department` + addressSize + `" placeholder="Department">
+        <input type="text" class="form-control" id="department` + contactSize + `" placeholder="Department">
         </div></div><div class="form-group"><label class="col-sm-2 control-label">Designation</label>
         <div class="col-sm-10">
-        <input type="text" class="form-control" id="designation` + addressSize + `" placeholder="Designation">
+        <input type="text" class="form-control" id="designation` + contactSize + `" placeholder="Designation">
         </div></div><div class="form-group"><label class="col-sm-2 control-label">Contact No</label>
-        <div class="col-sm-10"><input type="text" class="form-control" id="contactNo` + addressSize + `" placeholder="Contact No">
+        <div class="col-sm-10"><input type="text" class="form-control" id="contactNo` + contactSize + `" placeholder="Contact No">
         </div></div><div class="form-group"><label class="col-sm-2 control-label">Email Address</label>
         <div class="col-sm-10">
-        <input type="text" class="form-control" id="email` + addressSize + `" placeholder="Email Address">
+        <input type="text" class="form-control" id="email` + contactSize + `" placeholder="Email Address">
         </div></div></div></div>`;
-        addressSize++;
-        const dom = document.getElementById('contactPerson');
-        dom.innerHTML = dom.innerHTML + string;
+        contactSize++;
+        let dom = document.getElementById('contactPerson').innerHTML;
+        dom += string;
+        document.getElementById('contactPerson').innerHTML = dom;
   }
 
   function addAddress() {
     const address = `<div class="col-md-10 form-horizontal"><div class="box-body"><div class="form-group">
       <label class="col-sm-2 control-label">Address Type</label><div class="col-sm-10">
-      <select id="addressType` + addressSize + `"  class="form-control"><option>Select Address Type</option>
-      <option>Organisation Address </option><option>Head Quarter Address </option>
+      <select id="addressType` + addressSize + `" class="form-control"><option  hidden disabled selected value>
+      Select Address Type</option><option>Organisation Address</option><option>Head Quarter Address</option>
       <option>Factory Address </option><option>Delivery Address</option></select></div></div>
       <div class="form-group"><label class="col-sm-2 control-label">District</label><div class="col-sm-10">
-      <input type="text" class="form-control" id="district ` + addressSize + `" placeholder="District">
+      <input type="text" class="form-control" id="district` + addressSize + `" placeholder="District">
       </div></div><div class="form-group"><label class="col-sm-2 control-label">Police Station</label>
       <div class="col-sm-10">
       <input type="text" class="form-control" id="policestation` + addressSize + `" placeholder="Police Station">
@@ -348,12 +333,14 @@
       <input type="text" class="form-control" id="var` + addressSize + `" placeholder="Village/ Area/ Road">
       </div></div></div></div>`;
       addressSize++;
-      const dom = document.getElementById('addressArea');
-      dom.innerHTML = dom.innerHTML + address; 
+      let dom = document.getElementById('addressArea').innerHTML;
+      dom += address;
+      document.getElementById('addressArea').innerHTML = dom;
   }
 
   function getSelectedText(id) {
     const selection = document.getElementById(id);
+    console.log(selection);
     return selection.options[selection.selectedIndex].innerHTML;
   }
 
@@ -363,11 +350,56 @@
     idList.forEach(element => {
       document.getElementById(element).value = allCompanies[index][element];
     });
+
+    document.getElementById('addressArea').innerHTML = '';
+    addressSize = 0;
+    const addresses = allCompanies[index].address;
+    let length = addresses.length;
+
+    for(let i=0; i < length; i++) {
+      addAddress();
+      const keyList = Object.keys(addresses[i]);
+      keyList.forEach(element => {
+        document.getElementById(element + '' + i).value = addresses[i][element];
+      });
+    }
+
+    document.getElementById('contactPerson').innerHTML = '';
+    const contacts = allCompanies[index].contact;
+    length = contacts.length
+    contactSize = 0;
+
+    for(let i=0; i < length; i++) {
+      addContact();
+      const keyList = Object.keys(contacts[i]);
+      keyList.forEach(element => {
+        document.getElementById(element + '' + i).value = contacts[i][element];
+      });
+    }
   }
 
   function submit() {
     const data = getSubmitData();
-    console.log(data);
+    $.post('/Company', data, (res) => {
+      if (res) getCompanies();
+    });
+  }
+
+  function deleteRecord(index) {
+    const id = allCompanies[index].id;
+    $.ajax({
+			url: '/company', method: 'DELETE', data: {id: id}, success: res => {
+				if(res.update) getUser();
+			}
+		});
+  }
+
+  function submitEdit() {
+    if (!selectedId) return;
+
+    const data = getSubmitData();
+    data.id = selectedId;
+
     $.post('/Company', data, (res) => {
       if (res) getCompanies();
     });
