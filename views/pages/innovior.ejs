@@ -1,0 +1,189 @@
+
+<div class="content-wrapper">
+	<section class="content-header">
+	  <h1>Mapping<small>Setup</small></h1>
+	  <ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li><a href="#">Mapping</a></li><li class="active">setup</li>
+	  </ol>
+	</section>
+	<section class="invoice">
+	  <div class="row">
+		<div class="col-xs-12">
+		  <h2 class="page-header"><i class="fa fa-globe"></i> Mapping<small class="pull-right">Date: 2/10/2019</small></h2>
+		</div>
+	  </div>
+	  <div class="row">
+		<div class="col-md-6 form-horizontal">
+		  <div class="box-body">
+			<div class="form-group">
+			  <label for="inputEmail3" class="col-sm-2 control-label">Select Value to Map</label>
+			  <div class="col-sm-10"><select id="masterType" onchange="typeSelected(this)">
+					<option hidden disabled selected value> Select Type </option>
+				</select> <select id="masterValue" onchange="valueSelected(this)">
+					<option hidden disabled selected value> Select Value </option>
+				</select></div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <h2>Set mapping data for selection</h2>
+	  <p><ul id="list"></ul></p><button onclick="add()">Add</button><button onclick="save()">Save</button>
+	</section>
+	<div class="clearfix"></div>
+  </div>
+<div class="control-sidebar-bg"></div>
+<script src="/dependencies/jquery.js"></script>
+<script>
+let allTypes = [];
+let allValues = [];
+let currentJson = [
+	{type: 'designations', value: 'Manager'}, {type: 'departments', value: 'Admin'}
+];
+let masterTypeIndex, masterValueIndex;
+childNumber = 0;
+getValue();
+
+function getValue() {
+	$.get('/tov', (data) => {
+		allTypes = data.map(element => element.id);
+		setSelectionList('masterType', allTypes);
+		allValues = data;
+		//generateList();
+	});
+}
+
+function setSelectionList(id, list) {
+	let string = document.getElementById(id).innerHTML;
+	list.forEach(element => string += '<option>' + element + '</option>');
+	document.getElementById(id).innerHTML = string;
+}
+
+function typeSelected(selection) {
+	masterTypeIndex = selection.selectedIndex - 1;
+	document.getElementById('masterValue').innerHTML = '<option hidden disabled selected value> Select Value </option>';
+	setSelectionList('masterValue', allValues[masterTypeIndex].values);
+}
+
+function valueSelected(selection) {
+	currentJson = [];
+	masterValueIndex = selection.selectedIndex - 1;
+
+	const value = getSelectedText('masterValue');
+	const type = getSelectedText('masterType');
+
+	$.get('/api/tovValue?type='+type+'&value=' + value, (data) => {
+		if(!data) {
+			currentJson = [];
+			generateList();
+			return;
+		}
+
+		data.forEach(element => {
+			const key = Object.keys(element)[0];
+			currentJson.push({type: key, value: element[key]});
+		})
+		generateList();
+	});
+}
+
+function createSelect(list, id, onChange, title) {
+	let string = '<select id="'+id+'" onchange="'+onChange+'"><option hidden disabled selected value> Select '+title+'</option>'
+	list.forEach(element => string += '<option>' + element + '</option>');
+	string += '</select>';
+	return string;
+}
+
+function generateList() {
+	//{type: type, value: value}
+	childNumber = currentJson.length;
+	let string = '';
+	
+	for(let i=0; i < childNumber; i++) {
+		string += '<li>'
+		string += createSelect(allTypes, 'childType' + i, 'childTypeSelected(' + i + ')', 'Type');
+
+		allValues.forEach((element) => {
+			if(element.id === currentJson[i].type) string += createSelect(element.values, 'childValue' + i, 'childValueSelected('+i+')', 'Value')
+		});
+		string += '<button onclick = "remove('+i+')">Delete</button></li>';
+		string+='</li>';
+	}
+	document.getElementById('list').innerHTML = string;
+	populateList();
+}
+
+function add() {
+	let string = document.getElementById('list').innerHTML;
+	string += '<li>';
+	string += createSelect(allTypes, 'childType' + childNumber, 'childTypeSelected(' + childNumber + ')', 'Type');
+	string += createSelect([], 'childValue' + childNumber, 'childValueSelected('+childNumber+')', 'Value');
+	string += '<button onclick = "remove('+childNumber+')">Delete</button></li>';
+	string += '</li>';
+	document.getElementById('list').innerHTML = string;
+	childNumber++;
+	populateList()
+}
+
+function populateList() {
+	currentJson.forEach((element, index) => {
+		setSelectedValue('childType' + index, element.type);
+		setSelectedValue('childValue' + index, element.value);
+	});
+}
+
+function setSelectedValue(id, value) {
+	const selection =  document.getElementById(id);
+	const options = selection.options;
+	const length = options.length;
+
+	for(let i = 0; i < length; i++) {
+		if(options[i].innerHTML === value) {
+			selection.selectedIndex = i;
+			break;
+		}
+	}
+}
+
+function childTypeSelected(index) {
+	const selectedIndex = document.getElementById('childType' + index).selectedIndex;
+	document.getElementById('childValue' + index).innerHTML = '<option hidden disabled selected value> Select Value </option>';
+	setSelectionList('childValue' + index, allValues[selectedIndex - 1].values);
+}
+
+function childValueSelected(index) {
+	const type = getSelectedText('childType' + index);
+	const value =  getSelectedText('childValue' + index);
+	currentJson[index] = {type: type, value: value};
+}
+
+function getSelectedText(id) {
+	const selection = document.getElementById(id);
+	return selection.options[selection.selectedIndex].innerHTML;
+}
+
+function remove(index) {
+	if(index < currentJson.length) {
+		currentJson.splice(index, 1);
+		generateList();
+	}
+}
+
+function save() {
+	const value = getSelectedText('masterValue');
+	const type = getSelectedText('masterType');
+	const sendData = [];
+
+	currentJson.forEach(element => {
+		const pushObject = {};
+		pushObject[element.type] = element.value;
+		sendData.push(pushObject);
+	});
+
+	$.post('/api/setMap', {type: type, value: value, data: sendData}, (data) => console.log(data));
+}
+
+function print(message) {
+	console.log(message)
+}
+</script>
