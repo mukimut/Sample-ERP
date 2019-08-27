@@ -43,7 +43,9 @@ module.exports.routes = {
   'get /mapping': {view: 'pages/mapping', locals:{layout: 'layouts/dashboard'}},
   'delete /company': {action: 'company/delete-company'},
   'get /products': {view: 'pages/products', locals:{layout: 'layouts/dashboard'}},
-  'get /api/products': {action: 'products/get-products'}
+  'get /api/products': {action: 'products/get-products'},
+  'post /api/products': {action: 'products/update-product'},
+  'put /api/products': {action: 'products/update-product'}
 
 
   /***************************************************************************

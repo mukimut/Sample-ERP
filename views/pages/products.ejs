@@ -74,12 +74,12 @@
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
-    hello();
 	getProducts();
 
-	const inputList = ['name', 'quantity', 'price', 'name', 'unit'];
+	const inputList = ['name', 'quantity', 'price', 'unit'];
 	//const selectList = ['department', 'designation'];
-	let productListList = [];
+	let productList;
+	let selectedProductId
 
 	function getProducts() {
 		let listData = `<tr><th>Product</th><th>Price</th><th>Quantity</th><th>Unit</th></tr>`;
@@ -90,43 +90,8 @@
 				listData += '<td><button class="label label-primary" onclick="editEntry(' + index + ')">Edit</button><button class="label label-danger" onclick="deleteEntry(' + index + ')">Delete</button></td></tr>';
 			});
 			document.getElementById('usertable').innerHTML = listData;
-			userList = data;
+			productList = data;
 		});
-	}
-
-	function getDepartments() {
-		$.get('tov?type=departments', data => setSelectionList('department', data[0].values));
-	}
-
-	function getDesignations() {
-		$.get('tov?type=designations', data => setSelectionList('designation', data[0].values));
-	}
-
-	function setSelectionList(id, list) {
-		let string = document.getElementById(id).innerHTML;
-		list.forEach(element => string += '<option>' + element + '</option>');
-		document.getElementById(id).innerHTML = string;
-	}
-
-	function getSelectedValues(data) {
-		selectList.forEach(element => {
-			const selector = document.getElementById(element);
-			data[element] = selector.options[selector.selectedIndex].text;
-		});
-		return data;
-	}
-
-	function setSelectedValue(id, value) {
-		const selection = document.getElementById(id);
-		const options = selection.options;
-		const length = options.length;
-
-		for (let i = 0; i < length; i++) {
-			if (options[i].innerHTML === value) {
-				selection.selectedIndex = i;
-				break;
-			}
-		}
 	}
 
 	function logout() {
@@ -137,10 +102,8 @@
 	function editEntry(index) {
 		document.getElementById('submitEdit').disabled = false;
 
-		inputList.forEach(element => document.getElementById(element).value = userList[index][element]);
-		selectList.forEach(element => setSelectedValue(element, userList[index][element]));
-		document.getElementById('pass2').value = userList[index].password;
-		selectedUserId = userList[index].id;
+		inputList.forEach(element => document.getElementById(element).value = productList[index][element]);
+		selectedProductId = productList[index].id;
 	}
 
 	function getInputData() {
@@ -160,24 +123,18 @@
 
 		if (!success) return false;
 
-		if (data.password != document.getElementById('pass2').value) {
-			alert('Password mismatch');
-			return false;
-		}
-
 		return data;
 	}
 
 	function setNull() {
 		inputList.forEach(element => document.getElementById(element).value = null);
-		document.getElementById('pass2').value = null;
 	}
 
 	function deleteEntry(index) {
 		$.ajax({
-			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
+			url: '/deleteUser', method: 'DELETE', data: { userid: productList[index].id }, success: res => {
 				if (res.update) {
-					getUser();
+					getProducts();
 					selectedUserId = null;
 				}
 			}
@@ -187,14 +144,13 @@
 	function edit() {
 		let data = getInputData();
 		if (!data) return;
-		data = getSelectedValues(data);
-		data.userid = selectedUserId;
+		data.id = selectedProductId;
 
 		$.ajax({
-			url: '/editUser', method: 'PUT', data: data, success: res => {
+			url: '/api/products', method: 'PUT', data: data, success: res => {
 				if (res.update) {
-					getUser();
-					selectedUserId = null;
+					getProducts();
+					selectedProductId = null;
 					setNull();
 				}
 				else alert(res.message);
@@ -205,11 +161,10 @@
 	function submit() {
 		let data = getInputData();
 		if (!data) return;
-		data = getSelectedValues(data);
 
-		$.post('/register', data, (res) => {
-			if (!res.unique) alert('Username already exists');
-			else getUser();
+		$.post('/api/products', data, (res) => {
+			if (!res.success) alert('Something is wrong');
+			else getProducts();
 		});
 	}
 </script>
