@@ -1,30 +1,30 @@
 module.exports = {
     attributes: {
         id: {type: 'number', columnName: 'productId', autoIncrement: true},
-        quantity: {type: 'number'},
+        description: {type: 'string'},
         price: {type: 'number'},
         name: {type: 'string', required: true},
-        unit: {type: 'string', required: true},
+        brand: {type: 'string'},
         
     },
-    tableName: 'product'
+    tableName: 'products'
 }
 
 /*
-CREATE TABLE public.product
+CREATE TABLE public.products
 (
-    "productId" bigint NOT NULL DEFAULT nextval('"product_productId_seq"'::regclass),
-    name text COLLATE pg_catalog."default",
-    unit text COLLATE pg_catalog."default",
-    quantity numeric,
-    price money,
-    CONSTRAINT product_pkey PRIMARY KEY ("productId")
+    "productId" bigserial NOT NULL,
+    name text NOT NULL,
+    brand text,
+    description text,
+    price numeric(10, 2),
+    PRIMARY KEY ("productId")
 )
 WITH (
     OIDS = FALSE
-)
+);
 
-ALTER TABLE public.product
-    ALTER COLUMN price TYPE numeric (10, 2);
+ALTER TABLE public.products
+    OWNER to samin;
 
 */

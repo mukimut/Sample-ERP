@@ -21,16 +21,16 @@
 						<div class="col-sm-10"><input type="text" class="form-control" id="name" placeholder="Product"></div>
                     </div>
                     <div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Unit</label>
-						<div class="col-sm-10"><input type="text" class="form-control" id="unit" placeholder="Unit"></div>
+						<label for="inputEmail3" class="col-sm-2 control-label">Brand</label>
+						<div class="col-sm-10"><input type="text" class="form-control" id="brand" placeholder="Brand"></div>
 					</div>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Price</label>
 						<div class="col-sm-10"><input type="number" class="form-control" id="price" placeholder="Price per Unit"></div>
                     </div>
                     <div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Quantity</label>
-						<div class="col-sm-10"><input type="number" class="form-control" id="quantity" placeholder="Quantity in Stock"></div>
+						<label for="inputEmail3" class="col-sm-2 control-label">Description</label>
+						<div class="col-sm-10"><input type="text" class="form-control" id="description" placeholder="Item Description"></div>
 					</div>
 				</div>
 
@@ -39,8 +39,8 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="box-footer pull-right" style="border-top: 0px">
-					<button class="btn btn-info" onclick="submit()">New User</button>
-					<button class="btn btn-default" onclick="edit()" disabled id="submitEdit">Edit User</button>
+					<button class="btn btn-info" onclick="submit()">New Product</button>
+					<button class="btn btn-default" onclick="edit()" disabled id="submitEdit">Edit Product</button>
 				</div>
 			</div>
 		</div>
@@ -76,22 +76,31 @@
 <script>
 	getProducts();
 
-	const inputList = ['name', 'quantity', 'price', 'unit'];
+	const inputList = ['name', 'description', 'price', 'brand'];
 	//const selectList = ['department', 'designation'];
 	let productList;
 	let selectedProductId
 
 	function getProducts() {
-		let listData = `<tr><th>Product</th><th>Price</th><th>Quantity</th><th>Unit</th></tr>`;
+		let listData = `<tr><th>Product</th><th>Brand</th><th>Description</th><th>Price</th><th>Quantity</th></tr>`;
 		$.get('/api/products', (data) => {
 			data.forEach((element, index) => {
-				listData += '<tr><td>' + element.name + '</td><td>' + element.price + '</td>';
-				listData += '<td>' + element.quantity + '</td><td>' + element.unit + '</td>';
+				listData += '<tr><td>' + element.name + '</td><td>' + element.brand + '</td>';
+				listData += '<td>' + element.description + '</td><td><input type="number" id="invoicePrice'+index+'" value='+element.price+'></td>';
+				listData += '<td><input type="number" id="invoiceQuantity'+index+'"></td><td><button onclick="invoice('+index+')">Invoice</button></td>'; 
 				listData += '<td><button class="label label-primary" onclick="editEntry(' + index + ')">Edit</button><button class="label label-danger" onclick="deleteEntry(' + index + ')">Delete</button></td></tr>';
 			});
 			document.getElementById('usertable').innerHTML = listData;
 			productList = data;
 		});
+	}
+
+	function invoice(index) {
+		const price = document.getElementById('invoicePrice' + index).value;
+		const quantity = document.getElementById('invoiceQuantity' + index).value;
+
+		var newWindow = window.open();
+		newWindow.document.write("hello, the price is " + price + ', quantity ' + quantity + ' product ' + productList[index].name);
 	}
 
 	function logout() {
