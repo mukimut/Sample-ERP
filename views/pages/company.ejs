@@ -339,12 +339,6 @@
       document.getElementById('addressArea').innerHTML = dom;
   }
 
-  function getSelectedText(id) {
-    const selection = document.getElementById(id);
-    console.log(selection);
-    return selection.options[selection.selectedIndex].innerHTML;
-  }
-
   function edit(index) {
     selectedId = allCompanies[index].id;
 
