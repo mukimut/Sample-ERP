@@ -16,6 +16,11 @@ function getSelectedValues(selectList) {
     return data;
 }
 
+function getSelectedText(id) {
+    const selection = document.getElementById(id);
+    return selection.options[selection.selectedIndex].innerHTML;
+  }
+
 function setSelectedValue(id, value) {
     const selection = document.getElementById(id);
     const options = selection.options;

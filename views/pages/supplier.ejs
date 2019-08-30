@@ -216,6 +216,7 @@
   <div class="clearfix"></div>
 </div>
 
+<script src="/js/dropdown.js"></script>
 <script>
   const idList = ['name', 'shortname', 'phone', 'email', 'website', 'tin'];
   addressIds = ['district', 'policestation', 'postcode', 'hpf', 'var', 'postOffice'];
@@ -297,7 +298,6 @@
         let dom = document.getElementById('contactPerson').innerHTML;
         dom += string;
         document.getElementById('contactPerson').innerHTML = dom;
-        console.log(document.getElementById('contactPerson').innerHTML);
   }
 
   function addAddress() {
@@ -329,11 +329,6 @@
       document.getElementById('addressArea').innerHTML = dom;
   }
 
-  function getSelectedText(id) {
-    const selection = document.getElementById(id);
-    return selection.options[selection.selectedIndex].innerHTML;
-  }
-
   function edit(index) {
     selectedId = allCompanies[index].id;
 
@@ -352,6 +347,7 @@
       keyList.forEach(element => {
         document.getElementById(element + '' + i).value = addresses[i][element];
       });
+      setSelectedValue('addressType' + i, addresses[i].addressType);
     }
 
     document.getElementById('contactPerson').innerHTML = '';
@@ -380,7 +376,7 @@
     const id = allCompanies[index].id;
     $.ajax({
 			url: '/company', method: 'DELETE', data: {id: id}, success: res => {
-				if(res.update) getUser();
+				if(res.update) getCompanies();
 			}
 		});
   }

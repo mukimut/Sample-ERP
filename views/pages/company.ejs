@@ -224,6 +224,7 @@
   <div class="clearfix"></div>
 </div>
 
+<script src="/js/dropdown.js"></script>
 <script>
   const idList = ['name', 'shortname', 'phone', 'email', 'website', 'tin'];
   addressIds = ['district', 'policestation', 'postcode', 'hpf', 'var', 'postOffice'];
@@ -351,6 +352,8 @@
       document.getElementById(element).value = allCompanies[index][element];
     });
 
+    setSelectedValue('companyType', allCompanies[index].companytype.toUpperCase());
+
     document.getElementById('addressArea').innerHTML = '';
     addressSize = 0;
     const addresses = allCompanies[index].address;
@@ -375,6 +378,7 @@
       keyList.forEach(element => {
         document.getElementById(element + '' + i).value = contacts[i][element];
       });
+      setSelectedValue('addressType' + i, addresses[i].addressType);
     }
   }
 
