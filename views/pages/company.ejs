@@ -28,7 +28,12 @@
       <div class="col-xs-12">
         <h2 class="page-header">
           Company Basic Information
-          <small class="pull-right">Date: 2/10/2019</small>
+          <small class="pull-right">
+            <script>
+              var d = new Date();
+              document.write(d.toLocaleString());
+            </script>
+          </small>
         </h2>
       </div>
     </div>
@@ -110,24 +115,38 @@
                   <!-- <label for="inputEmail3" class="col-sm-2 control-label">Address Type</label> -->
                   <div class="col-sm-12">
                     <select id="addressType0" class="form-control">
-                      <option selected> Select Address Type </option>
-                      <option>Organisation Address </option>
-                      <option>Head Quarter Address </option>
-                      <option>Factory Address </option>
-                      <option>Delivery Address </option>
+                      <option selected> Select Country </option>
+                      <option>Algeria </option>
+                      <option>Andorra </option>
+                      <option>Angola </option>
+                      <option>Bangladesh </option>
                     </select>
                   </div>
                 </div>
                 <div class="form-group">
                   <!-- <label for="inputPassword3" class="col-sm-2 control-label">Police Station</label> -->
                   <div class="col-sm-12">
-                    <input type="text" class="form-control" id="policestation0" placeholder="Police Station">
+                    <!-- <input type="text" class="form-control" id="policestation0" placeholder="Police Station"> -->
+                    <select id="addressType0" class="form-control">
+                      <option selected> Select District </option>
+                      <option>Chittagong </option>
+                      <option>Rajshahi </option>
+                      <option>Dhaka </option>
+                      <option>Jessore </option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group">
                   <!-- <label for="inputPassword3" class="col-sm-2 control-label">Post Code</label> -->
                   <div class="col-sm-12">
-                    <input type="text" class="form-control" id="postcode0" placeholder="Post Code">
+                    <!-- <input type="text" class="form-control" id="postcode0" placeholder="Post Code"> -->
+                    <select id="addressType0" class="form-control">
+                      <option selected> Select Post Code </option>
+                      <option>1100 </option>
+                      <option>1200 </option>
+                      <option>1300 </option>
+                      <option>1400 </option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group">
@@ -143,13 +162,27 @@
                 <div class="form-group leftMargin">
                   <!-- <label for="inputPassword3" class="col-sm-2 control-label">District</label> -->
                   <div class="col-sm-12">
-                    <input type="text" class="form-control" id="district0" placeholder="District">
+                    <!-- <input type="text" class="form-control" id="district0" placeholder="District"> -->
+                    <select id="addressType0" class="form-control">
+                      <option selected> Select Address Type </option>
+                      <option>Organisation Address </option>
+                      <option>Head Quarter Address </option>
+                      <option>Factory Address </option>
+                      <option>Delivery Address </option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group leftMargin">
                   <!-- <label for="inputPassword3" class="col-sm-2 control-label">Post Office</label> -->
                   <div class="col-sm-12">
-                    <input type="text" class="form-control" id="postOffice0" placeholder="Post Office">
+                    <!-- <input type="text" class="form-control" id="postOffice0" placeholder="Post Office"> -->
+                    <select id="addressType0" class="form-control">
+                      <option selected> Select Upazila </option>
+                      <option>Akkelpur </option>
+                      <option>Adamdighi </option>
+                      <option>Atrai </option>
+                      <option>Bagatipara </option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group leftMargin">
@@ -183,19 +216,20 @@
                 <div class="form-group">
                   <!-- <label for="inputPassword3" class="col-sm-2 control-label">Display Name</label> -->
                   <div class="col-sm-12">
-                    <input type="text" class="form-control" id="displayName0" placeholder="Display Name">
+                    <!-- <input type="text" class="form-control" id="displayName0" placeholder="Display Name"> -->
+                    <select id="addressType0" class="form-control">
+                      <option selected> Select Department </option>
+                      <option>Information Technology </option>
+                      <option>Human Resource </option>
+                      <option>Customer Care </option>
+                      <option>Accounts </option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group">
                   <!-- <label for="inputPassword3" class="col-sm-2 control-label">Designation</label> -->
                   <div class="col-sm-12">
-                    <input type="text" class="form-control" id="designation0" placeholder="Designation">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <!-- <label for="inputPassword3" class="col-sm-2 control-label">Email Address</label> -->
-                  <div class="col-sm-12">
-                    <input type="text" class="form-control" id="email0" placeholder="Email Address">
+                    <input type="text" class="form-control" id="contactNo0" placeholder="Contact No">
                   </div>
                 </div>
               </div>
@@ -205,13 +239,20 @@
                 <div class="form-group leftMargin">
                   <!-- <label for="inputPassword3" class="col-sm-2 control-label">Department</label> -->
                   <div class="col-sm-12 ">
-                    <input type="text" class="form-control" id="department0" placeholder="Department">
+                    <!-- <input type="text" class="form-control" id="department0" placeholder="Department"> -->
+                    <select id="addressType0" class="form-control">
+                      <option selected> Select Designation </option>
+                      <option>Executive </option>
+                      <option>Senior Executive </option>
+                      <option>Manager </option>
+                      <option>Senior Manager </option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group leftMargin">
-                  <!-- <label for="inputPassword3" class="col-sm-2 control-label">Contact No</label> -->
+                  <!-- <label for="inputPassword3" class="col-sm-2 control-label">Email Address</label> -->
                   <div class="col-sm-12">
-                    <input type="text" class="form-control" id="contactNo0" placeholder="Contact No">
+                    <input type="text" class="form-control" id="email0" placeholder="Email Address">
                   </div>
                 </div>
               </div>
