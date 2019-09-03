@@ -1,6 +1,7 @@
 module.exports = async function getTov(req, res) {
 	const type = req.body.type;
 	const values = req.body.values;
+	const newType = req.body.newType;
 
 	let mapObject = await sails.sendNativeQuery('SELECT map FROM public.tov WHERE valuetype = $1', [type]);
 	mapObject = mapObject.rows[0].map;
@@ -17,8 +18,13 @@ module.exports = async function getTov(req, res) {
 	string = `'{`+string+`}'`;
 	const mapString = JSON.stringify(mapObject);
 
-	const sql = 'update tov set "values" = '+string+', map = \''+ mapString +'\' where valuetype=$1';
+	let sql = 'update tov set "values" = '+string+', map = \''+ mapString +'\' where valuetype=$1';
 	await sails.sendNativeQuery(sql, [type]);
+
+	if(newType) {
+		sql = `update tov set valuetype = $1 where valuetype=$2`;
+		await sails.sendNativeQuery(sql, [newType, type]);
+	}
 	
 	res.send(true);
 }
