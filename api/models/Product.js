@@ -4,7 +4,10 @@ module.exports = {
         description: {type: 'string'},
         price: {type: 'number'},
         name: {type: 'string', required: true},
-        brand: {type: 'string'},
+        group: {type: 'string'},
+        subgroup: {type: 'string'},
+        type: {type: 'string'},
+        quantity: {type: 'number', defaultsTo: 0},
         
     },
     tableName: 'products'
@@ -26,5 +29,17 @@ WITH (
 
 ALTER TABLE public.products
     OWNER to samin;
+
+    ALTER TABLE public.products
+    RENAME brand TO "group";
+
+ALTER TABLE public.products
+    ADD COLUMN subgroup text;
+
+ALTER TABLE public.products
+    ADD COLUMN type text;
+
+ALTER TABLE public.products
+    ADD COLUMN quantity double precision;
 
 */
