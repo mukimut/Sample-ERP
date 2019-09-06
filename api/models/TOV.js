@@ -1,6 +1,7 @@
 module.exports = {
 	attributes: {
-			id: {type: 'string', columnName: 'valuetype', required: true},
+            id: {type: 'string', columnName: 'valuetype', required: true},
+            displayname: {type: 'string'},
 			values: {type: 'json', columnType: 'text[]'}
 	},
 	tableName: 'tov'
@@ -22,4 +23,7 @@ ALTER TABLE public.tov
     OWNER to postgres;
 
 GRANT ALL ON TABLE public.tov TO samin;
+
+ALTER TABLE public.tov
+    ADD COLUMN displayname text;
 */
