@@ -5,7 +5,7 @@ module.exports = {
         price: {type: 'number'},
         name: {type: 'string', required: true},
         group: {type: 'string'},
-        subgroup: {type: 'string'},
+        category: {type: 'string'},
         type: {type: 'string'},
         quantity: {type: 'number', defaultsTo: 0},
         
@@ -34,7 +34,7 @@ ALTER TABLE public.products
     RENAME brand TO "group";
 
 ALTER TABLE public.products
-    ADD COLUMN subgroup text;
+    ADD COLUMN category text;
 
 ALTER TABLE public.products
     ADD COLUMN type text;

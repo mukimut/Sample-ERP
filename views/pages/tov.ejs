@@ -78,7 +78,7 @@
 		const title = dataFromInput('newType');
 		if (title) {
 			$.post('/TOV', { id: title, displayname: title }, (res) => {
-				if (res) createEntry({ id: title, values: [] });
+				if (res) createEntry({ id: title, displayname: title, values: [] });
 			})
 		}
 	}
@@ -145,13 +145,6 @@
 			}
 		});
 	}
-
-	// function postValue() {
-	// 	const data = document.getElementById('newValue').value;
-	// 	$.post('/addunit', { newValue: data }, (res) => {
-	// 		if (res) getValue();
-	// 	});
-	// }
 
 	function deleteType() {
 		if(!selected) return;
