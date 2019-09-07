@@ -46,9 +46,13 @@
 						</div>
 						<div class="form-group form-inline">
 							<label for="New LOV" class="col-sm-2 control-label">Edit LOV Type</label>
-							<div class="col-sm-10">
+							<div class="col-sm-10" id="valueList">
 								<input class="form-control" type="text" id="values" size="60">
+							</div>
+							<div class="col-sm-10">
+								<button class="btn btn-primary btn-flat" onclick="add()">Add</button>
 								<button class="btn btn-primary btn-flat" onclick="edit()">Edit</button>
+								<button class="btn btn-primary btn-flat" onclick="deleteType()">Delete</button>
 							</div>
 						</div>
 					</div>
@@ -73,7 +77,7 @@
 	function newEntry() {
 		const title = dataFromInput('newType');
 		if (title) {
-			$.post('/TOV', { id: title }, (res) => {
+			$.post('/TOV', { id: title, displayname: title }, (res) => {
 				if (res) createEntry({ id: title, values: [] });
 			})
 		}
@@ -81,23 +85,56 @@
 
 	function createEntry(element) {
 		let string = document.getElementById('valueTypes').innerHTML;
-		string += '<option>' + element.id + ' </option>';
+		string += '<option>' + element.displayname + ' </option>';
 		document.getElementById('valueTypes').innerHTML = string;
-		allData.push({ id: element.id, values: element.values });
+		allData.push({ id: element.id, displayname: element.displayname, values: element.values });
 	}
 
 	function typeSelected(element) {
 		selected = true;
 		selectedIndex = element.selectedIndex - 1;
-		document.getElementById('values').value = allData[selectedIndex].values;
-		document.getElementById('typeName').value = allData[selectedIndex].id;
+		document.getElementById('typeName').value = allData[selectedIndex].displayname;
 		currentTitle = element.options[selectedIndex + 1].text;
+		drawList(allData[selectedIndex].values);
+	}
+
+	function drawList(list) {
+		if(!list) list = [];
+		let string = '';
+		list.forEach((element, index) => {
+			string += '<input class="form-control" type="text" id="listItem' + index + '" size="60" value="' + element + '">'
+			string += '<button onclick=remove(' + index + ')>Remove</button>'
+		});
+		document.getElementById('valueList').innerHTML = string;
+	}
+
+	function remove(index) {
+		if(allData[selectedIndex].values.length <= index) return;
+
+		allData[selectedIndex].values.splice(index, 1);
+		drawList(allData[selectedIndex].values);
+	}
+
+	function add() {
+		let index = 0;
+		while(true) {
+			if(!document.getElementById('listItem' + index)) break;
+			index++;
+		}
+		$('#valueList').append('<input type="text" size="60" class="form-control" id="listItem' + index + '"><br>');
 	}
 
 	function edit() {
 		if (!selected) return;
-		const data = dataFromInput('values').split(',').map(element => element.trim());
-		const title = allData[selectedIndex].id;
+		const data = [];
+		let index = 0;
+		while(true) {
+			const currentInput = document.getElementById('listItem' + index);
+			if(!currentInput) break;
+			index++;
+			data.push(currentInput.value);
+		}
+		const title = allData[selectedIndex].displayname;
 		const newTitle = document.getElementById('typeName').value;
 		const sendData = { type: title, values: data };
 		if(title != newTitle) sendData['newType'] = newTitle;
@@ -109,10 +146,24 @@
 		});
 	}
 
-	function postValue() {
-		const data = document.getElementById('newValue').value;
-		$.post('/addunit', { newValue: data }, (res) => {
-			if (res) getValue();
+	// function postValue() {
+	// 	const data = document.getElementById('newValue').value;
+	// 	$.post('/addunit', { newValue: data }, (res) => {
+	// 		if (res) getValue();
+	// 	});
+	// }
+
+	function deleteType() {
+		if(!selected) return;
+		const id = allData[selectedIndex].id;
+
+		$.ajax({
+			url: '/api/deleteTov', method: 'DELETE', data: {id: id}, success: res => {
+				if (res) {
+					document.getElementById('valueTypes').innerHTML = '<option hidden disabled selected value> Select Type </option>';
+					getValue();
+				}
+			}
 		});
 	}
 

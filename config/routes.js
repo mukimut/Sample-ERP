@@ -33,6 +33,7 @@ module.exports.routes = {
   'get /getUser': {action: 'alluser'},
   'put /editUser': {action: 'signup'},
   'delete /deleteUser': {action: 'deleteuser'},
+  'delete /api/deleteTov': {action: 'tov/delete-tov'},
   'get /tov': {action: 'tov/get-tov'},
   'put /addunit': {action: 'tov/update-tov'},
   'post /company': {action: 'company/update-company'},
@@ -46,7 +47,8 @@ module.exports.routes = {
   'get /api/products': {action: 'products/get-products'},
   'get /invoice': {view: 'pages/invoice', locals:{layout: 'layouts/dashboard'}},
   'post /api/products': {action: 'products/update-product'},
-  'put /api/products': {action: 'products/update-product'}
+  'put /api/products': {action: 'products/update-product'},
+  'get /employee': {view: 'pages/employee', locals:{layout: 'layouts/dashboard'}},
 
 
   /***************************************************************************
