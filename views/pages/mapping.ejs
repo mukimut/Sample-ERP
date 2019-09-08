@@ -19,7 +19,6 @@
 			<div class="form-group">
 			  <label for="inputEmail3" class="col-sm-2 control-label">Select Value to Map</label>
 			  <div class="col-sm-10"><select id="masterType" onchange="typeSelected(this)">
-					<option hidden disabled selected value> Select Type </option>
 				</select> <select id="masterValue" onchange="valueSelected(this)">
 					<option hidden disabled selected value> Select Value </option>
 				</select></div>
@@ -49,18 +48,11 @@ function getValue() {
 		allTypes = data.map(element => element.id);
 		setSelectionList('masterType', allTypes);
 		allValues = data;
-		//generateList();
 	});
 }
 
-function setSelectionList(id, list) {
-	let string = document.getElementById(id).innerHTML;
-	list.forEach(element => string += '<option>' + element + '</option>');
-	document.getElementById(id).innerHTML = string;
-}
-
 function typeSelected(selection) {
-	masterTypeIndex = selection.selectedIndex - 1;
+	masterTypeIndex = selection.selectedIndex - 2;
 	document.getElementById('masterValue').innerHTML = '<option hidden disabled selected value> Select Value </option>';
 	setSelectionList('masterValue', allValues[masterTypeIndex].values);
 }

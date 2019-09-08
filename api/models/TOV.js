@@ -2,7 +2,8 @@ module.exports = {
 	attributes: {
             id: {type: 'string', columnName: 'valuetype', required: true},
             displayname: {type: 'string'},
-			values: {type: 'json', columnType: 'text[]'}
+            values: {type: 'json', columnType: 'text[]'},
+            map: {type: 'json', columnType: 'jsonb'}
 	},
 	tableName: 'tov'
 }
