@@ -35,3 +35,7 @@ function setSelectedValue(id, value) {
         }
     }
 }
+
+function getSelectedIndex(id) {
+    return document.getElementById(id).selectedIndex;
+}

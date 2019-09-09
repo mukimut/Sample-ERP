@@ -22,7 +22,7 @@
 					</div>
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Category</label>
-						<div class="col-sm-10"><select id="category" class="form-control"></select></div>
+						<div class="col-sm-10"><select id="category" class="form-control" onchange="categorySelected()"></select></div>
 					</div>
                     <div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Group</label>
@@ -85,6 +85,9 @@
 	const selectList = ['group', 'category', 'type'];
 	let productList;
 	let selectedProductId;
+	let allGroups = [];
+	let allTypes = [];
+	let allCategories = [];
 
 	getProducts();
 	getSelectData();
@@ -104,8 +107,10 @@
 	}
 
 	function getSelectData() {
-		$.get('/tov?type=Product Group', (data) => setSelectionList('group', data[0].values));
-		$.get('/tov?type=Product Category', (data) => setSelectionList('category', data[0].values));
+		$.get('/tov?type=Product Category', (data) => {
+			setSelectionList('category', data[0].values);
+			allCategories = data;
+		});
 		$.get('/tov?type=Product Type', (data) => setSelectionList('type', data[0].values));
 	}
 
@@ -116,6 +121,19 @@
 		var newWindow = window.open();
 		newWindow.document.write("hello, the price is " + price + ', quantity ' + quantity + ' product ' + productList[index].name);
 	}
+
+	function categorySelected() {
+		const selectedGroup = getSelectedText('category');
+		const selectedIndex = getSelectedIndex('category') - 2;
+		const maps = allCategories[selectedIndex].map[selectedGroup];
+		const mappedGroups = [];
+		maps.forEach(element => {
+			if(element['Product Group']) mappedGroups.push(element['Product Group']);  
+		});
+
+		console.log(mappedGroups);
+		
+	}	
 
 	function editEntry(index) {
 		document.getElementById('submitEdit').disabled = false;
@@ -181,7 +199,7 @@
 	function submit() {
 		let data = getInputData();
 		if (!data) return;
-console.log(data);
+
 		$.post('/api/products', data, (res) => {
 			if (!res.success) alert('Something is wrong');
 			else getProducts();
