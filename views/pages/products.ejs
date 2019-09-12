@@ -40,6 +40,10 @@
 						<label for="inputEmail3" class="col-sm-2 control-label">Description</label>
 						<div class="col-sm-10"><input type="text" class="form-control" id="description" placeholder="Item Description"></div>
 					</div>
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Brand</label>
+						<div class="col-sm-10"><input type="text" class="form-control" id="brand" placeholder="Product Brand"></div>
+					</div>
 				</div>
 
 			</div>
@@ -81,7 +85,7 @@
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
-	const inputList = ['name', 'description', 'price'];
+	const inputList = ['name', 'description', 'price', 'brand'];
 	const selectList = ['group', 'category', 'type'];
 	let productList;
 	let selectedProductId;
@@ -111,7 +115,6 @@
 			setSelectionList('category', data[0].values);
 			allCategories = data;
 		});
-		$.get('/tov?type=Product Type', (data) => setSelectionList('type', data[0].values));
 	}
 
 	function invoice(index) {
@@ -131,8 +134,7 @@
 			if(element['Product Group']) mappedGroups.push(element['Product Group']);  
 		});
 
-		console.log(mappedGroups);
-		setSelectionList('category', mappedGroups);
+		setSelectionList('group', mappedGroups);
 		$.get('/api/getGroups?groups=' + mappedGroups.join(','), (data) => groupMap = data);
 		
 	}
@@ -142,8 +144,8 @@
 		const selectedIndex = getSelectedIndex('group') - 2;
 		const maps = groupMap;
 		const mappedGroups = [];
-		maps.forEach(element => {
-			if(element['Product Type']) mappedGroups.push(element['Product Group']);  
+		maps[selectedGroup].forEach(element => {
+			if(element['Product Type'])mappedGroups.push(element['Product Type']);  
 		});
 
 		setSelectionList('type', mappedGroups);	

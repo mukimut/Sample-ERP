@@ -1,6 +1,6 @@
 module.exports = async function getGroups(req, res) {
     const groups = req.query.groups;
-    const groupList = groups.split();
+    const groupList = groups.split(',');
     let groupMap = []
     const length = groupList.length;
 
@@ -10,6 +10,5 @@ module.exports = async function getGroups(req, res) {
         const groups = await sails.sendNativeQuery(query, [group]);
         groupMap = groupMap.concat(groups);
     }
-
-    res.send(groupMap);
+    res.send(groupMap[0].rows[0].map);
 }

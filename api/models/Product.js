@@ -7,6 +7,7 @@ module.exports = {
         group: {type: 'string'},
         category: {type: 'string'},
         type: {type: 'string'},
+        brand: {type: 'string'},
         quantity: {type: 'string', defaultsTo: '0'},
         
     },
