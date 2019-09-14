@@ -194,9 +194,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <h2 class="page-header">
-          Contact Information
-        </h2>
+        <h2 class="page-header">Contact Information</h2>
       </div>
     </div>
     <div class="row" id="contactPerson">
@@ -383,15 +381,14 @@
   }
 
   function addContact() {
+
     const string = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6">
-      <div class="row"><div class="form-group"><div class="col-sm-12"><input type="text" class="form-control" id="displayName`
-      + contactSize + `" placeholder="Display Name"></div></div><div class="form-group"><div class="col-sm-12"><input type="text" 
-      class="form-control" id="designation` + contactSize + `" placeholder="Designation"></div></div><div class="form-group">
-      <div class="col-sm-12"><input type="text" class="form-control" id="email` + contactSize + `" placeholder="Email Address">
-      </div></div></div></div><div class="col-md-6"><div class="row"><div class="form-group leftMargin"><div class="col-sm-12 ">
-      <input type="text" class="form-control" id="department` + contactSize + `" placeholder="Department"></div></div><div class="form-group 
-      leftMargin"><div class="col-sm-12"><input type="text" class="form-control" id="contactNo` + contactSize + `" placeholder="Contact No">
-      </div></div></div></div></div></div></div>`
+    <div class="row"><div class="form-group"><div class="col-sm-12">` + generateInputForm('text', 'form-control', 'designation' + contactSize, null, 'Designation')
+    + `</div></div><div class="form-group"><div class="col-sm-12">` + generateInputForm('text', 'form-control', 'email' + contactSize, null, 'Email Address') +
+    `</div></div></div></div><div class="col-md-6"><div class="row"><div class="form-group leftMargin"><div class="col-sm-12 ">`
+    + generateInputForm('text', 'form-control', 'department' + contactSize, null, 'Department') + `/div></div><div class="form-group leftMargin">
+    <div class="col-sm-12">` + generateInputForm('text', 'form-control', 'contactNo' + contactSize, null, 'Contact No') + `</div></div></div></div></div></div></div>`;
+
     contactSize++;
     let dom = document.getElementById('contactPerson').innerHTML;
     dom += string;
@@ -416,6 +413,22 @@
     let dom = document.getElementById('addressArea').innerHTML;
     dom += address;
     document.getElementById('addressArea').innerHTML = dom;
+  }
+
+  function generateInputForm(type, className, idValue, value, placeholder) {
+   let string = '<input type="'+ type + '" class="' + className + '" id="' + idValue + '" ';
+   if(value) string += ' value = "' + value + '" ';
+   if(placeholder) string += ' placeholder="' + placeholder + '"';
+   string += '>';
+   return string; 
+  }
+
+  function generateDropDown(idvalue, className, list) {
+      let string = `<select id="` + id + `" class="` + className + `">`;
+      list.forEach(element => string += '<option>' + element + '</option>');
+      string += '</select>';
+
+      return string;
   }
 
   function edit(index) {
