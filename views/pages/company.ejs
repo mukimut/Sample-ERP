@@ -382,12 +382,11 @@
 
   function addContact() {
 
-    const string = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6">
-    <div class="row"><div class="form-group"><div class="col-sm-12">` + generateInputForm('text', 'form-control', 'designation' + contactSize, null, 'Designation')
-    + `</div></div><div class="form-group"><div class="col-sm-12">` + generateInputForm('text', 'form-control', 'email' + contactSize, null, 'Email Address') +
-    `</div></div></div></div><div class="col-md-6"><div class="row"><div class="form-group leftMargin"><div class="col-sm-12 ">`
-    + generateInputForm('text', 'form-control', 'department' + contactSize, null, 'Department') + `/div></div><div class="form-group leftMargin">
-    <div class="col-sm-12">` + generateInputForm('text', 'form-control', 'contactNo' + contactSize, null, 'Contact No') + `</div></div></div></div></div></div></div>`;
+    const string = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
+    + generateInputForm('text', 'form-control', 'person' + addressSize, null, 'Contact Person') + generateDropDown(`designation` + addressSize, 'form-control', ['ManagerT', 'Executive', 'Worker'])
+    + generateInputForm('text', 'form-control', 'email' + addressSize, null, 'Email') + '</div></div><div class="col-md-6"><div class="row">'
+    + generateDropDown(`department` + addressSize, 'form-control', ['IT', 'HR', 'Admin']) + generateDropDown(`section` + addressSize, 'form-control', ['Woven', 'PFL', 'Screen Print'])
+    + generateInputForm('text', 'form-control', 'phone' + addressSize, null, 'Phone Number') + '</div></div></div></div></div>';
 
     contactSize++;
     let dom = document.getElementById('contactPerson').innerHTML;
@@ -396,18 +395,14 @@
   }
 
   function addAddress() {
-    const address = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6">
-        <div class="row"><div class="form-group"><div class="col-sm-12"><select id="addressType` + addressSize + `" class=
-        "form-control"><option selected> Select Address Type </option><option>Organisation Address </option><option>Head Quarter 
-        Address </option><option>Factory Address </option><option>Delivery Address </option></select></div></div><div class="form-group">
-        <div class="col-sm-12"><input type="text" class="form-control" id="policestation` + addressSize + `" placeholder="Police Station">
-        </div></div><div class="form-group"><div class="col-sm-12"><input type="text" class="form-control" id="postcode` + addressSize + `" 
-        placeholder="Post Code"></div></div><div class="form-group"><div class="col-sm-12"><input type="text" class="form-control" id="var`
-      + addressSize + `" placeholder="Village/ Area/ Road"></div></div></div></div><div class="col-md-6"><div class="row"><div class="form-group 
-        leftMargin"><div class="col-sm-12"><input type="text" class="form-control" id="district` + addressSize + `" placeholder="District"></div>
-        </div><div class="form-group leftMargin"><div class="col-sm-12"><input type="text" class="form-control" id="postOffice` + addressSize + `" 
-        placeholder="Post Office"></div></div><div class="form-group leftMargin"><div class="col-sm-12"><input type="text" class="form-control" 
-        id="hpf` + addressSize + `" placeholder="House/ Plot/ Flat"></div></div></div></div></div></div></div>`
+    const address = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">` 
+    + generateDropDown(`addressType` + addressSize, 'form-control', ['Organisation Address', 'Factory Address', 'Delivery Address'] )
+    + generateDropDown(`division` + addressSize, 'form-control', ['Chittagong', 'Dhaka', 'Khulna'] ) + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'] )
+    + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code') + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
+    + '</div></div><div class="col-md-6"><div class="row">'
+    + generateDropDown(`country` + addressSize, 'form-control', ['BD', 'Spain', 'USA'] ) + generateDropDown(`district` + addressSize, 'form-control', ['Dhaka', 'Chittagong', 'Sylhet'] )
+    + generateDropDown(`postoffice` + addressSize, 'form-control', ['Kotwali', 'Ramna', 'Kamrangichor'] ) + generateInputForm('text', 'form-control', 'VAR' + addressSize, null, 'Village/Road')
+    + '</div></div></div></div></div>';
 
     addressSize++;
     let dom = document.getElementById('addressArea').innerHTML;
@@ -416,17 +411,17 @@
   }
 
   function generateInputForm(type, className, idValue, value, placeholder) {
-   let string = '<input type="'+ type + '" class="' + className + '" id="' + idValue + '" ';
+   let string = '<div class="form-group"><div class="col-sm-12"><input type="'+ type + '" class="' + className + '" id="' + idValue + '" ';
    if(value) string += ' value = "' + value + '" ';
    if(placeholder) string += ' placeholder="' + placeholder + '"';
-   string += '>';
+   string += '></div></div>';
    return string; 
   }
 
   function generateDropDown(idvalue, className, list) {
-      let string = `<select id="` + id + `" class="` + className + `">`;
+      let string = `<div class="form-group"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
       list.forEach(element => string += '<option>' + element + '</option>');
-      string += '</select>';
+      string += '</select></div></div>';
 
       return string;
   }
