@@ -1,15 +1,9 @@
 <style>
-  .leftMargin {
-    margin-left: 5px !important;
-  }
+  .leftMargin {margin-left: 5px !important;}
 
-  .btnMarginTop {
-    margin-top: 8px;
-  }
+  .btnMarginTop {margin-top: 8px;}
 
-  .secMargin {
-    margin-left: 10px;
-  }
+  .secMargin {margin-left: 10px;}
 </style>
 <div class="content-wrapper">
   <section class="content-header secMargin">
@@ -146,37 +140,13 @@
             <div class="col-md-6">
               <div class="row">
                 <div class="form-group leftMargin">
-                  <div class="col-sm-12">
-                    <select id="addressType0" class="form-control">
-                      <option selected>Country </option>
-                      <option>Algeria </option>
-                      <option>Andorra </option>
-                      <option>Angola </option>
-                      <option>Bangladesh </option>
-                    </select>
-                  </div>
+                  <div class="col-sm-12"><select id="country0" class="form-control"></select></div>
                 </div>
                 <div class="form-group leftMargin">
-                  <div class="col-sm-12">
-                    <select id="addressType0" class="form-control">
-                      <option selected>District </option>
-                      <option>Chittagong </option>
-                      <option>Rajshahi </option>
-                      <option>Dhaka </option>
-                      <option>Jessore </option>
-                    </select>
-                  </div>
+                  <div class="col-sm-12"><select id="district0" class="form-control"></select></div>
                 </div>
                 <div class="form-group leftMargin">
-                  <div class="col-sm-12">
-                    <select id="addressType0" class="form-control">
-                      <option selected>Post Office </option>
-                      <option>Kotwali </option>
-                      <option>Ramna </option>
-                      <option>Kamrangichor </option>
-                      <option>Sotrapur </option>
-                    </select>
-                  </div>
+                  <div class="col-sm-12"><select id="postoffice0" class="form-control"></select></div>
                 </div>
                 <div class="form-group leftMargin">
                   <div class="col-sm-12">
@@ -208,17 +178,7 @@
                     <input type="text" class="form-control" id="email0" placeholder="Contact Person">
                   </div>
                 </div>
-                <div class="form-group">
-                  <div class="col-sm-12">
-                    <select id="addressType0" class="form-control">
-                      <option selected>Designation </option>
-                      <option>Executive </option>
-                      <option>Senior Executive </option>
-                      <option>Manager </option>
-                      <option>Senior Manager </option>
-                    </select>
-                  </div>
-                </div>
+                <div class="form-group"><div class="col-sm-12"><select id="designation0" class="form-control"></select></div></div>
                 <div class="form-group">
                   <div class="col-sm-12">
                     <input type="email" class="form-control" id="email0" placeholder="Email Address">
@@ -229,25 +189,10 @@
             <div class="col-md-6">
               <div class="row">
                 <div class="form-group leftMargin">
-                  <div class="col-sm-12 ">
-                    <select id="addressType0" class="form-control">
-                      <option selected>Department </option>
-                      <option>Information Technology </option>
-                      <option>Human Resource </option>
-                      <option>Customer Care </option>
-                      <option>Accounts </option>
-                    </select>
-                  </div>
+                  <div class="col-sm-12 "><select id="department0" class="form-control"></select></div>
                 </div>
                 <div class="form-group leftMargin">
-                  <div class="col-sm-12">
-                    <select id="addressType0" class="form-control">
-                      <option selected>Section </option>
-                      <option>Woven </option>
-                      <option>PFL </option>
-                      <option>Screen Print</option>
-                    </select>
-                  </div>
+                  <div class="col-sm-12"><select id="section0" class="form-control"></select></div>
                 </div>
                 <div class="form-group leftMargin">
                   <div class="col-sm-12">
@@ -321,12 +266,19 @@
   const idList = ['name', 'shortname', 'phone', 'email', 'website', 'tin'];
   addressIds = ['district', 'policestation', 'postcode', 'hpf', 'var', 'postOffice'];
   contactIds = ['displayName', 'department', 'contactNo', 'email', 'designation'];
-  let allCompanies = [];
+  let allCompanies = [], allDepartments = [], allDesignations = [], allSections = [], allCountries = [], allDistricts = [], allPO = [];
   let selectedId;
   let addressSize = 1;
   let contactSize = 1;
 
   getCompanies();
+  getDropdownData('tov?type=Departments', 'department0', 'Select Department').then(data => allDepartments = data);
+  getDropdownData('tov?type=Designations', 'designation0', 'Select Designation').then(data => allDesignations = data);
+  getDropdownData('tov?type=Section', 'section0', 'Select Section').then(data => allDesignations = data);
+  getDropdownData('tov?type=Country', 'country0', 'Select Countries').then(data => allCountries = data);
+  getDropdownData('tov?type=District', 'district0', 'Select Districts').then(data => allDistricts = data);
+  getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data);
+  //Post Office
 
   function getSubmitData() {
     const object = {};
@@ -365,6 +317,15 @@
     });
   }
 
+  function getDropdownData(link, id, title) {
+    return new Promise((resolve, reject) => {
+      $.get(link, (data) => {
+        setSelectionList(id, data[0].values, title);
+        resolve(data[0].values);
+      });
+    });
+  }
+
   function displayList() {
     let string = '';
     const length = allCompanies.length;
@@ -383,10 +344,10 @@
   function addContact() {
 
     const string = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
-    + generateInputForm('text', 'form-control', 'person' + addressSize, null, 'Contact Person') + generateDropDown(`designation` + addressSize, 'form-control', ['ManagerT', 'Executive', 'Worker'])
-    + generateInputForm('text', 'form-control', 'email' + addressSize, null, 'Email') + '</div></div><div class="col-md-6"><div class="row">'
-    + generateDropDown(`department` + addressSize, 'form-control', ['IT', 'HR', 'Admin']) + generateDropDown(`section` + addressSize, 'form-control', ['Woven', 'PFL', 'Screen Print'])
-    + generateInputForm('text', 'form-control', 'phone' + addressSize, null, 'Phone Number') + '</div></div></div></div></div>';
+    + generateInputForm('text', 'form-control', 'person' + contactSize, null, 'Contact Person') + generateDropDown(`designation` + contactSize, 'form-control', allDesignations)
+    + generateInputForm('text', 'form-control', 'email' + contactSize, null, 'Email') + '</div></div><div class="col-md-6"><div class="row">'
+    + generateDropDown(`department` + contactSize, 'form-control', allDepartments) + generateDropDown(`section` + contactSize, 'form-control', allSections)
+    + generateInputForm('text', 'form-control', 'phone' + contactSize, null, 'Phone Number') + '</div></div></div></div></div>';
 
     contactSize++;
     let dom = document.getElementById('contactPerson').innerHTML;
@@ -400,8 +361,8 @@
     + generateDropDown(`division` + addressSize, 'form-control', ['Chittagong', 'Dhaka', 'Khulna'] ) + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'] )
     + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code') + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
     + '</div></div><div class="col-md-6"><div class="row">'
-    + generateDropDown(`country` + addressSize, 'form-control', ['BD', 'Spain', 'USA'] ) + generateDropDown(`district` + addressSize, 'form-control', ['Dhaka', 'Chittagong', 'Sylhet'] )
-    + generateDropDown(`postoffice` + addressSize, 'form-control', ['Kotwali', 'Ramna', 'Kamrangichor'] ) + generateInputForm('text', 'form-control', 'VAR' + addressSize, null, 'Village/Road')
+    + generateDropDown(`country` + addressSize, 'form-control', allCountries) + generateDropDown(`district` + addressSize, 'form-control', allDistricts )
+    + generateDropDown(`postoffice` + addressSize, 'form-control', allPO ) + generateInputForm('text', 'form-control', 'VAR' + addressSize, null, 'Village/Road')
     + '</div></div></div></div></div>';
 
     addressSize++;

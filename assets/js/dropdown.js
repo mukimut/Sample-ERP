@@ -2,9 +2,10 @@ function hello() {
     console.log('Helllo');
 }
 
-function setSelectionList(id, inputList) {
+function setSelectionList(id, inputList, title=null) {
+    if(!title) title = 'Select Type';
     let string = '';
-    list = ['<option hidden disabled selected value> Select Type </option>'];
+    list = ['<option hidden disabled selected value>' + title + '</option>'];
     if(inputList.length > 0) list = list.concat(inputList)
     list.forEach(element => string += '<option>' + element + '</option>');
     document.getElementById(id).innerHTML = string;
