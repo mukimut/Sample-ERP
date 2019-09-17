@@ -1,9 +1,19 @@
 <style>
-  .leftMargin {margin-left: 5px !important;}
+  .leftMargin {
+    margin-left: 5px !important;
+  }
 
-  .btnMarginTop {margin-top: 8px;}
+  .btnMarginTop {
+    margin-top: 8px;
+  }
 
-  .secMargin {margin-left: 10px;}
+  .secMargin {
+    margin-left: 10px;
+  }
+
+  .btn_lm {
+    margin-left: -4px;
+  }
 </style>
 <div class="content-wrapper">
   <section class="content-header secMargin">
@@ -87,7 +97,7 @@
       </div>
     </div>
     <div class="row" id="addressArea">
-      <div class="col-md-11 form-horizontal">
+      <div class="col-md-12 form-horizontal">
         <div class="box-body">
           <div class="row">
             <div class="col-md-6">
@@ -127,14 +137,14 @@
                 </div>
                 <div class="form-group">
                   <div class="col-sm-12">
-                      <input type="text" class="form-control" id="hpf0" placeholder="Post Code">
+                    <input type="text" class="form-control" id="hpf0" placeholder="Post Code">
                   </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-12">
-                        <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
-                    </div>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
                   </div>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
@@ -144,7 +154,7 @@
                 <div class="form-group leftMargin"><div class="col-sm-12"><select id="postoffice0" class="form-control"></select></div></div>
                 <div class="form-group leftMargin">
                   <div class="col-sm-12">
-                      <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
+                    <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
                   </div>
                 </div>
               </div>
@@ -152,8 +162,21 @@
           </div>
         </div>
       </div>
-      <div class="col-md-1">
-        <button class="btnMarginTop btn btn-flat btn-success" onclick="addAddress()">Add</button>
+    </div>
+    <!-- <div class="row">
+      <div class="box-footer pull-left" style="border-top: 0px">
+        <div class="col-md-12">
+          <button class="btn btn-flat btn-success" onclick="addAddress()">Add</button>
+        </div>
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="col-md-10">
+        <div class="row">
+          <div class="box-footer pull-left" style="border-top: 0px">
+            <button class="btn btn-flat btn-success" onclick="addAddress()">Add</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -162,7 +185,7 @@
       </div>
     </div>
     <div class="row" id="contactPerson">
-      <div class="col-md-11 form-horizontal">
+      <div class="col-md-12 form-horizontal">
         <div class="box-body">
           <div class="row">
             <div class="col-md-6">
@@ -172,7 +195,9 @@
                     <input type="text" class="form-control" id="email0" placeholder="Contact Person">
                   </div>
                 </div>
-                <div class="form-group"><div class="col-sm-12"><select id="designation0" class="form-control"></select></div></div>
+                <div class="form-group">
+                  <div class="col-sm-12"><select id="designation0" class="form-control"></select></div>
+                </div>
                 <div class="form-group">
                   <div class="col-sm-12">
                     <input type="email" class="form-control" id="email0" placeholder="Email Address">
@@ -198,8 +223,14 @@
           </div>
         </div>
       </div>
-      <div class="col-md-1">
-        <button class="btnMarginTop btn btn-flat btn-success" onclick="addContact()">Add</button>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <div class="row">
+          <div class="box-footer pull-left" style="border-top: 0px">
+            <button class="btn btn-flat btn-success" onclick="addContact()">Add</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row" style="margin-bottom: 20px;">
@@ -226,7 +257,7 @@
                   <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
                   <div class="input-group-btn">
-                    <button type="submit" class=" btn btn-flat btn-success"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn btn-flat btn-success"><i class="fa fa-search"></i></button>
                   </div>
                 </div>
               </div>
@@ -337,10 +368,10 @@
   function addContact() {
 
     const string = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
-    + generateInputForm('text', 'form-control', 'person' + contactSize, null, 'Contact Person') + generateDropDown(`designation` + contactSize, 'form-control', allDesignations)
-    + generateInputForm('text', 'form-control', 'email' + contactSize, null, 'Email') + '</div></div><div class="col-md-6"><div class="row">'
-    + generateDropDown(`department` + contactSize, 'form-control', allDepartments) + generateDropDown(`section` + contactSize, 'form-control', allSections)
-    + generateInputForm('text', 'form-control', 'phone' + contactSize, null, 'Phone Number') + '</div></div></div></div></div>';
+      + generateInputForm('text', 'form-control', 'person' + contactSize, null, 'Contact Person') + generateDropDown(`designation` + contactSize, 'form-control', allDesignations)
+      + generateInputForm('text', 'form-control', 'email' + contactSize, null, 'Email') + '</div></div><div class="col-md-6"><div class="row">'
+      + generateDropDown(`department` + contactSize, 'form-control', allDepartments) + generateDropDown(`section` + contactSize, 'form-control', allSections)
+      + generateInputForm('text', 'form-control', 'phone' + contactSize, null, 'Phone Number') + '</div></div></div></div></div>';
 
     contactSize++;
     let dom = document.getElementById('contactPerson').innerHTML;
@@ -349,14 +380,14 @@
   }
 
   function addAddress() {
-    const address = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">` 
-    + generateDropDown(`addressType` + addressSize, 'form-control', ['Organisation Address', 'Factory Address', 'Delivery Address'] )
-    + generateDropDown(`division` + addressSize, 'form-control', ['Chittagong', 'Dhaka', 'Khulna'] ) + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'] )
-    + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code') + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
-    + '</div></div><div class="col-md-6"><div class="row">'
-    + generateDropDown(`country` + addressSize, 'form-control', allCountries) + generateDropDown(`district` + addressSize, 'form-control', allDistricts )
-    + generateDropDown(`postoffice` + addressSize, 'form-control', allPO ) + generateInputForm('text', 'form-control', 'VAR' + addressSize, null, 'Village/Road')
-    + '</div></div></div></div></div>';
+    const address = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
+      + generateDropDown(`addressType` + addressSize, 'form-control', ['Organisation Address', 'Factory Address', 'Delivery Address'])
+      + generateDropDown(`division` + addressSize, 'form-control', ['Chittagong', 'Dhaka', 'Khulna']) + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'])
+      + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code') + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
+      + '</div></div><div class="col-md-6"><div class="row">'
+      + generateDropDown(`country` + addressSize, 'form-control', allCountries) + generateDropDown(`district` + addressSize, 'form-control', allDistricts)
+      + generateDropDown(`postoffice` + addressSize, 'form-control', allPO) + generateInputForm('text', 'form-control', 'VAR' + addressSize, null, 'Village/Road')
+      + '</div></div></div></div></div>';
 
     addressSize++;
     let dom = document.getElementById('addressArea').innerHTML;
@@ -365,19 +396,19 @@
   }
 
   function generateInputForm(type, className, idValue, value, placeholder) {
-   let string = '<div class="form-group"><div class="col-sm-12"><input type="'+ type + '" class="' + className + '" id="' + idValue + '" ';
-   if(value) string += ' value = "' + value + '" ';
-   if(placeholder) string += ' placeholder="' + placeholder + '"';
-   string += '></div></div>';
-   return string; 
+    let string = '<div class="form-group"><div class="col-sm-12"><input type="' + type + '" class="' + className + '" id="' + idValue + '" ';
+    if (value) string += ' value = "' + value + '" ';
+    if (placeholder) string += ' placeholder="' + placeholder + '"';
+    string += '></div></div>';
+    return string;
   }
 
   function generateDropDown(idvalue, className, list) {
-      let string = `<div class="form-group"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
-      list.forEach(element => string += '<option>' + element + '</option>');
-      string += '</select></div></div>';
+    let string = `<div class="form-group"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
+    list.forEach(element => string += '<option>' + element + '</option>');
+    string += '</select></div></div>';
 
-      return string;
+    return string;
   }
 
   function edit(index) {
