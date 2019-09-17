@@ -139,15 +139,9 @@
             </div>
             <div class="col-md-6">
               <div class="row">
-                <div class="form-group leftMargin">
-                  <div class="col-sm-12"><select id="country0" class="form-control"></select></div>
-                </div>
-                <div class="form-group leftMargin">
-                  <div class="col-sm-12"><select id="district0" class="form-control"></select></div>
-                </div>
-                <div class="form-group leftMargin">
-                  <div class="col-sm-12"><select id="postoffice0" class="form-control"></select></div>
-                </div>
+                <div class="form-group leftMargin"><div class="col-sm-12"><select id="country0" class="form-control"></select></div></div>
+                <div class="form-group leftMargin"><div class="col-sm-12"><select id="district0" class="form-control"></select></div></div>
+                <div class="form-group leftMargin"><div class="col-sm-12"><select id="postoffice0" class="form-control"></select></div></div>
                 <div class="form-group leftMargin">
                   <div class="col-sm-12">
                       <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
@@ -278,7 +272,6 @@
   getDropdownData('tov?type=Country', 'country0', 'Select Countries').then(data => allCountries = data);
   getDropdownData('tov?type=District', 'district0', 'Select Districts').then(data => allDistricts = data);
   getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data);
-  //Post Office
 
   function getSubmitData() {
     const object = {};
