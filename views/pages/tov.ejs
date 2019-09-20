@@ -1,3 +1,14 @@
+<style>
+	.card {
+		/* Add shadows to create the "card" effect */
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+		transition: 0.3s;
+	}
+
+	.boxbdymt {
+		margin-top: 25px;
+	}
+</style>
 <div class="content-wrapper">
 	<section class="content-header">
 		<h1>LOV<small>Settings</small></h1>
@@ -10,49 +21,68 @@
 	<section class="invoice">
 		<div class="row">
 			<div class="col-xs-12">
-				<h2 class="page-header"><i class="fa fa-globe"></i> List of Value<small class="pull-right">Date: 2/10/2019</small></h2>
+				<h2 class="page-header">List of Value<small class="pull-right">
+						<script>
+							var d = new Date();
+							document.write(d.toLocaleString());
+						</script>
+					</small>
+				</h2>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-6 form-horizontal">
-				<div class="box-body">
-					<div class="form-group form-inline">
-						<label for="New LOV" class="col-sm-2 control-label">New LOV</label>
-						<div class="col-sm-10">
+			<div class="card col-md-6 form-horizontal col-md-offset-3">
+				<div class="box-body boxbdymt">
+					<div class="form-group">
+						<!-- <label for="New LOV" class="col-sm-2 control-label">New LOV</label> -->
+						<div class="col-sm-12">
 							<input type="text" class="form-control" id="newType" placeholder="New LOV">
-							<button class="btn btn-primary btn-flat" onclick="newEntry()">New Lov</button>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 20px;">
+						<div class="col-md-10">
+							<div class="row">
+								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
+									<button class="btn btn-flat btn-success" onclick="newEntry()">New</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		<div class="row">
-			<div class="box">
-				<div class="col-md-6 form-horizontal">
-					<div class="box-body">
-						<div class="form-group">
-							<label for="New LOV" class="col-sm-2 control-label">Select LOV Type</label>
-							<div class="col-sm-10">
-								<select class="form-control" id="valueTypes" onchange="typeSelected(this)">
-									<option hidden disabled selected value> Select Type </option>
-								</select>
-							</div>
+			<div class="card col-md-6 form-horizontal col-md-offset-3">
+				<div class="box-body boxbdymt">
+					<div class="form-group">
+						<!-- <label for="New LOV" class="col-sm-2 control-label">Select LOV Type</label> -->
+						<div class="col-sm-12">
+							<select class="form-control" id="valueTypes" onchange="typeSelected(this)">
+								<option hidden disabled selected value> Select Type </option>
+							</select>
 						</div>
-						<div class="form-group">
-							<label for="New LOV" class="col-sm-2 control-label">Type Name</label>
-							<div class="col-sm-10">
-								<input type="text" id="typeName" class="form-control" size="40">
-							</div>
+					</div>
+					<div class="form-group">
+						<!-- <label for="New LOV" class="col-sm-2 control-label">Type Name</label> -->
+						<div class="col-sm-12">
+							<input type="text" id="typeName" class="form-control" placeholder="Type Name">
 						</div>
-						<div class="form-group form-inline">
-							<label for="New LOV" class="col-sm-2 control-label">Edit LOV Type</label>
-							<div class="col-sm-10" id="valueList">
-								<input class="form-control" type="text" id="values" size="60">
-							</div>
-							<div class="col-sm-10">
-								<button class="btn btn-primary btn-flat" onclick="add()">Add</button>
-								<button class="btn btn-primary btn-flat" onclick="edit()">Edit</button>
-								<button class="btn btn-primary btn-flat" onclick="deleteType()">Delete</button>
+					</div>
+					<div class="form-group">
+						<!-- <label for="New LOV" class="col-sm-2 control-label">Edit LOV Type</label> -->
+						<div class="col-sm-12" id="valueList">
+							<input class="form-control" type="text" id="values" placeholder="Edit LOV Type">
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 20px;">
+						<div class="col-md-10">
+							<div class="row">
+								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
+									<button class="btn btn-flat btn-success" onclick="add()">Add</button>
+									<button class="btn btn-primary btn-flat" onclick="edit()">Edit</button>
+									<button class="btn btn-default btn-flat" onclick="deleteType()">Delete</button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -99,7 +129,7 @@
 	}
 
 	function drawList(list) {
-		if(!list) list = [];
+		if (!list) list = [];
 		let string = '';
 		list.forEach((element, index) => {
 			string += '<input class="form-control" type="text" id="listItem' + index + '" size="60" value="' + element + '">'
@@ -109,7 +139,7 @@
 	}
 
 	function remove(index) {
-		if(allData[selectedIndex].values.length <= index) return;
+		if (allData[selectedIndex].values.length <= index) return;
 
 		allData[selectedIndex].values.splice(index, 1);
 		drawList(allData[selectedIndex].values);
@@ -117,8 +147,8 @@
 
 	function add() {
 		let index = 0;
-		while(true) {
-			if(!document.getElementById('listItem' + index)) break;
+		while (true) {
+			if (!document.getElementById('listItem' + index)) break;
 			index++;
 		}
 		$('#valueList').append('<input type="text" size="60" class="form-control" id="listItem' + index + '"><br>');
@@ -128,16 +158,16 @@
 		if (!selected) return;
 		const data = [];
 		let index = 0;
-		while(true) {
+		while (true) {
 			const currentInput = document.getElementById('listItem' + index);
-			if(!currentInput) break;
+			if (!currentInput) break;
 			index++;
 			data.push(currentInput.value);
 		}
 		const title = allData[selectedIndex].displayname;
 		const newTitle = document.getElementById('typeName').value;
 		const sendData = { type: title, values: data };
-		if(title != newTitle) sendData['newType'] = newTitle;
+		if (title != newTitle) sendData['newType'] = newTitle;
 
 		$.ajax({
 			url: '/addunit', method: 'PUT', data: sendData, success: res => {
@@ -147,11 +177,11 @@
 	}
 
 	function deleteType() {
-		if(!selected) return;
+		if (!selected) return;
 		const id = allData[selectedIndex].id;
 
 		$.ajax({
-			url: '/api/deleteTov', method: 'DELETE', data: {id: id}, success: res => {
+			url: '/api/deleteTov', method: 'DELETE', data: { id: id }, success: res => {
 				if (res) {
 					document.getElementById('valueTypes').innerHTML = '<option hidden disabled selected value> Select Type </option>';
 					getValue();
