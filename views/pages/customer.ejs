@@ -1,484 +1,462 @@
 <style>
-    .leftMargin {
-      margin-left: 5px !important;
-    }
-  
-    .btnMarginTop {
-      margin-top: 8px;
-    }
-  
-    .secMargin {
-      margin-left: 10px;
-    }
-  </style>
-  <div class="content-wrapper">
-    <section class="content-header secMargin">
-      <h1>Customer<small>Profile</small></h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Master</a></li>
-        <li class="active">Customer</li>
-      </ol>
-    </section>
-    <section class="invoice">
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Customer Basic Information<small class="pull-right">
-              <script>
-                var d = new Date();
-                document.write(d.toLocaleString());
-              </script>
-            </small></h2>
-        </div>
+  .leftMargin {
+    margin-left: 5px !important;
+  }
+
+  .btnMarginTop {
+    margin-top: 8px;
+  }
+
+  .secMargin {
+    margin-left: 10px;
+  }
+
+  .btn_lm {
+    margin-left: -4px;
+  }
+</style>
+<div class="content-wrapper">
+  <section class="content-header secMargin">
+    <h1>Company<small>Profile</small></h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Master</a></li>
+      <li class="active">Company</li>
+    </ol>
+  </section>
+  <section class="invoice">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="page-header">Company Basic Information<small class="pull-right">
+            <script>
+              var d = new Date();
+              document.write(d.toLocaleString());
+            </script>
+          </small></h2>
       </div>
-      <div class="row">
-        <div class="col-md-12 form-horizontal">
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" id="name" placeholder="Customer Name">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" id="shortname" placeholder="Customer Short Name">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <input type="email" class="form-control" id="email" placeholder="Email">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <input type="email" class="form-control" id="tin" placeholder="TIN No">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="form-group leftMargin">
-                    <div class="col-sm-12">
-                      <select id="companyType" class="form-control">
-                        <option selected>Customer Type</option>
-                        <option>General</option>
-                        <option>SUPPLIER</option>
-                        <option>CUSTOMER</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group leftMargin">
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" id="phone" placeholder="Phone">
-                    </div>
-                  </div>
-                  <div class="form-group leftMargin">
-                    <div class="col-sm-12">
-                      <input type="url" class="form-control" id="website" placeholder="Website">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">Address</h2>
-        </div>
-      </div>
-      <div class="row" id="addressArea">
-        <div class="col-md-11 form-horizontal">
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <select id="addressType0" class="form-control">
-                        <option selected>Address Type </option>
-                        <option>Organisation Address </option>
-                        <option>Head Quarter Address </option>
-                        <option>Factory Address </option>
-                        <option>Delivery Address </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <select id="addressType0" class="form-control">
-                        <option selected>Division </option>
-                        <option>Chittagong </option>
-                        <option>Rajshahi </option>
-                        <option>Dhaka </option>
-                        <option>Jessore </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <select id="addressType0" class="form-control">
-                        <option selected>Police Station </option>
-                        <option>Akkelpur </option>
-                        <option>Adamdighi </option>
-                        <option>Atrai </option>
-                        <option>Bagatipara </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                        <input type="text" class="form-control" id="hpf0" placeholder="Post Code">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                      <div class="col-sm-12">
-                          <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
-                      </div>
-                    </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="form-group leftMargin">
-                    <div class="col-sm-12">
-                      <select id="addressType0" class="form-control">
-                        <option selected>Country </option>
-                        <option>Algeria </option>
-                        <option>Andorra </option>
-                        <option>Angola </option>
-                        <option>Bangladesh </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group leftMargin">
-                    <div class="col-sm-12">
-                      <select id="addressType0" class="form-control">
-                        <option selected>District </option>
-                        <option>Chittagong </option>
-                        <option>Rajshahi </option>
-                        <option>Dhaka </option>
-                        <option>Jessore </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group leftMargin">
-                    <div class="col-sm-12">
-                      <select id="addressType0" class="form-control">
-                        <option selected>Post Office </option>
-                        <option>Kotwali </option>
-                        <option>Ramna </option>
-                        <option>Kamrangichor </option>
-                        <option>Sotrapur </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group leftMargin">
-                    <div class="col-sm-12">
-                        <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-1">
-          <button class="btnMarginTop btn btn-flat btn-success" onclick="addAddress()">Add</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">
-            Contact Information
-          </h2>
-        </div>
-      </div>
-      <div class="row" id="contactPerson">
-        <div class="col-md-11 form-horizontal">
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" id="email0" placeholder="Contact Person">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <select id="addressType0" class="form-control">
-                        <option selected>Designation </option>
-                        <option>Executive </option>
-                        <option>Senior Executive </option>
-                        <option>Manager </option>
-                        <option>Senior Manager </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <input type="email" class="form-control" id="email0" placeholder="Email Address">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="form-group leftMargin">
-                    <div class="col-sm-12 ">
-                      <select id="addressType0" class="form-control">
-                        <option selected>Department </option>
-                        <option>Information Technology </option>
-                        <option>Human Resource </option>
-                        <option>Customer Care </option>
-                        <option>Accounts </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group leftMargin">
-                    <div class="col-sm-12">
-                      <select id="addressType0" class="form-control">
-                        <option selected>Section </option>
-                        <option>Woven </option>
-                        <option>PFL </option>
-                        <option>Screen Print</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group leftMargin">
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control" id="contactNo0" placeholder="Contact No">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-1">
-          <button class="btnMarginTop btn btn-flat btn-success" onclick="addContact()">Add</button>
-        </div>
-      </div>
-      <div class="row" style="margin-bottom: 20px;">
-        <div class="col-md-10">
+    </div>
+    <div class="row">
+      <div class="col-md-12 form-horizontal">
+        <div class="box-body">
           <div class="row">
-            <div class="box-footer pull-left" style="border-top: 0px">
-              <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
-              <button class="btn btn-flat btn-primary" onclick="submitEdit()">Edit</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style="clear:both;"></div>
-  
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="row">
-            <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">Customer List</h3>
-  
-                <div class="box-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-  
-                    <div class="input-group-btn">
-                      <button type="submit" class=" btn btn-flat btn-success"><i class="fa fa-search"></i></button>
-                    </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="name" placeholder="Company Name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="shortname" placeholder="Company Short Name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <input type="email" class="form-control" id="email" placeholder="Email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <input type="email" class="form-control" id="tin" placeholder="TIN No">
                   </div>
                 </div>
               </div>
-              <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Customer Name</th>
-                      <th>Short Name</th>
-                      <th>Phone</th>
-                      <th>Email</th>
-                      <th>Website</th>
-                      <th>Customer Type</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody id="companylist"></tbody>
-                </table>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="form-group leftMargin">
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="phone" placeholder="Phone">
+                  </div>
+                </div>
+                <div class="form-group leftMargin">
+                  <div class="col-sm-12">
+                    <input type="url" class="form-control" id="website" placeholder="Website">
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-    <div class="clearfix"></div>
-  </div>
-  
-  <script src="/js/dropdown.js"></script>
-  <script>
-    const idList = ['name', 'shortname', 'phone', 'email', 'website', 'tin'];
-    addressIds = ['district', 'policestation', 'postcode', 'hpf', 'var', 'postOffice'];
-    contactIds = ['displayName', 'department', 'contactNo', 'email', 'designation'];
-    let allCompanies = [];
-    let selectedId;
-    let addressSize = 1;
-    let contactSize = 1;
-  
-    getCompanies();
-  
-    function getSubmitData() {
-      const object = {};
-      idList.forEach(element => object[element] = getInputValue(element));
-  
-      object['companytype'] = getSelectedText('companyType').toLowerCase();
-  
-      object['address'] = [];
-      for (let i = 0; i < addressSize; i++) {
-        const addressObject = {};
-        addressIds.forEach(element => addressObject[element] = getInputValue(element + '' + i));
-        addressObject['addressType'] = getSelectedText('addressType' + i);
-        object['address'].push(addressObject);
-      }
-  
-      object['contact'] = [];
-      for (let i = 0; i < contactSize; i++) {
-        const personObject = {};
-        contactIds.forEach(element => personObject[element] = getInputValue(element + '' + i));
-        object['contact'].push(personObject);
-      }
-  
-      return object;
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="page-header">Address</h2>
+      </div>
+    </div>
+    <div class="row" id="addressArea">
+      <div class="col-md-12 form-horizontal">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <select id="addressType0" class="form-control">
+                      <option selected>Address Type </option>
+                      <option>Organisation Address </option>
+                      <option>Head Quarter Address </option>
+                      <option>Factory Address </option>
+                      <option>Delivery Address </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <select id="division0" class="form-control">
+                      <option selected>Division </option>
+                      <option>Chittagong </option>
+                      <option>Rajshahi </option>
+                      <option>Dhaka </option>
+                      <option>Jessore </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <select id="thana0" class="form-control">
+                      <option selected>Police Station </option>
+                      <option>Akkelpur </option>
+                      <option>Adamdighi </option>
+                      <option>Atrai </option>
+                      <option>Bagatipara </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="postcode0" placeholder="Post Code">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="form-group leftMargin"><div class="col-sm-12"><select id="country0" class="form-control"></select></div></div>
+                <div class="form-group leftMargin"><div class="col-sm-12"><select id="district0" class="form-control"></select></div></div>
+                <div class="form-group leftMargin"><div class="col-sm-12"><select id="postoffice0" class="form-control"></select></div></div>
+                <div class="form-group leftMargin">
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <div class="row">
+          <div class="box-footer pull-left" style="border-top: 0px">
+            <button class="btn btn-flat btn-success" onclick="addAddress()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="page-header">Contact Information</h2>
+      </div>
+    </div>
+    <div class="row" id="contactPerson">
+      <div class="col-md-12 form-horizontal">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="name0" placeholder="Contact Person">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12"><select id="designation0" class="form-control"></select></div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12"><input type="email" class="form-control" id="email0" placeholder="Email Address"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="form-group leftMargin">
+                  <div class="col-sm-12 "><select id="department0" class="form-control"></select></div>
+                </div>
+                <div class="form-group leftMargin">
+                  <div class="col-sm-12"><select id="section0" class="form-control"></select></div>
+                </div>
+                <div class="form-group leftMargin">
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="phone0" placeholder="Contact No">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <div class="row">
+          <div class="box-footer pull-left" style="border-top: 0px">
+            <button class="btn btn-flat btn-success" onclick="addContact()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 20px;">
+      <div class="col-md-10">
+        <div class="row">
+          <div class="box-footer pull-left" style="border-top: 0px">
+            <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
+            <button class="btn btn-flat btn-primary" onclick="submitEdit()">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="clear:both;"></div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Company List</h3>
+
+              <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-flat btn-success"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Company Name</th>
+                    <th>Short Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Website</th>
+                    <th>Company Type</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="companylist"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="clearfix"></div>
+</div>
+
+<script src="/js/dropdown.js"></script>
+<script>
+  const idList = ['name', 'shortname', 'phone', 'email', 'website', 'tin'];
+  addressDropdowns = ['addressType', 'division', 'thana', 'country', 'district', 'postoffice'];
+  addressInputs = ['postcode', 'hpf', 'var'];
+  contactDropdowns = ['section', 'department', 'designation'];
+  contactInputs = ['email', 'name', 'phone'];
+  let allCompanies = [], allDepartments = [], allDesignations = [], allSections = [], allCountries = [], allDistricts = [], allPO = [];
+  let selectedId;
+  let addressSize = 1;
+  let contactSize = 1;
+
+  getCompanies();
+  getDropdownData('tov?type=Departments', 'department0', 'Select Department').then(data => allDepartments = data);
+  getDropdownData('tov?type=Designations', 'designation0', 'Select Designation').then(data => allDesignations = data);
+  getDropdownData('tov?type=Section', 'section0', 'Select Section').then(data => allDesignations = data);
+  getDropdownData('tov?type=Country', 'country0', 'Select Countries').then(data => allCountries = data);
+  getDropdownData('tov?type=District', 'district0', 'Select Districts').then(data => allDistricts = data);
+  getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data);
+
+  function getSubmitData() {
+    const object = {};
+    idList.forEach(element => object[element] = getInputValue(element));
+
+    object['companytype'] = 'customer';
+
+    object['address'] = [];
+    for (let i = 0; i < addressSize; i++) {
+      const addressObject = {};
+      addressInputs.forEach(element => addressObject[element] = getInputValue(element + '' + i));
+      addressDropdowns.forEach(element => addressObject[element] = getSelectedText(element + i));
+      object['address'].push(addressObject);
     }
-  
-    function getInputValue(id) {
-      let currentValue = document.getElementById(id).value;
-      if (!currentValue) currentValue = '';
-      return currentValue;
+
+    object['contact'] = [];
+    for (let i = 0; i < contactSize; i++) {
+      const personObject = {};
+      contactInputs.forEach(element => personObject[element] = getInputValue(element + '' + i));
+      contactDropdowns.forEach(element => personObject[element] = getSelectedText(element + i));
+      object['contact'].push(personObject);
     }
-  
-    function getCompanies() {
-      $.get('api/companies', (res) => {
-        allCompanies = res;
-        displayList();
+
+    return object;
+  }
+
+  function getInputValue(id) {
+    let currentValue = document.getElementById(id).value;
+    if (!currentValue) currentValue = '';
+    return currentValue;
+  }
+
+  function getCompanies() {
+    $.get('api/companies?type=customer', (res) => {
+      allCompanies = res;
+      displayList();
+    });
+  }
+
+  function getDropdownData(link, id, title) {
+    return new Promise((resolve, reject) => {
+      $.get(link, (data) => {
+        setSelectionList(id, data[0].values, title);
+        resolve(data[0].values);
+      });
+    });
+  }
+
+  function displayList() {
+    let string = '';
+    const length = allCompanies.length;
+
+    for (let i = 0; i < length; i++) {
+      const currentCompany = allCompanies[i];
+      string += '<tr><td>' + currentCompany.name + '</td><td>' + currentCompany.shortname + '</td>'
+      string += '<td>' + currentCompany.phone + '</td><td>' + currentCompany.email + '</td>';
+      string += '<td>' + currentCompany.website + '</td>';
+      string += `<td><button class="label label-primary" onclick="edit(` + i + `)">Edit</button>&nbsp;&nbsp;
+                <button class="label label-danger" onclick="deleteRecord(` + i + `)">Delete</button></td></tr>`;
+    }
+    document.getElementById('companylist').innerHTML = string;
+  }
+
+  function addContact() {
+
+    const string = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
+      + generateInputForm('text', 'form-control', 'name' + contactSize, null, 'Contact Person') + generateDropDown(`designation` + contactSize, 'form-control', allDesignations)
+      + generateInputForm('text', 'form-control', 'email' + contactSize, null, 'Email') + '</div></div><div class="col-md-6"><div class="row">'
+      + generateDropDown(`department` + contactSize, 'form-control', allDepartments) + generateDropDown(`section` + contactSize, 'form-control', allSections)
+      + generateInputForm('text', 'form-control', 'phone' + contactSize, null, 'Phone Number') + '</div></div></div></div></div>';
+
+    contactSize++;
+    let dom = document.getElementById('contactPerson').innerHTML;
+    dom += string;
+    document.getElementById('contactPerson').innerHTML = dom;
+  }
+
+  function addAddress() {
+    const address = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
+      + generateDropDown(`addressType` + addressSize, 'form-control', ['Organisation Address', 'Factory Address', 'Delivery Address'])
+      + generateDropDown(`division` + addressSize, 'form-control', ['Chittagong', 'Dhaka', 'Khulna']) + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'])
+      + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code') + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
+      + '</div></div><div class="col-md-6"><div class="row">'
+      + generateDropDown(`country` + addressSize, 'form-control', allCountries) + generateDropDown(`district` + addressSize, 'form-control', allDistricts)
+      + generateDropDown(`postoffice` + addressSize, 'form-control', allPO) + generateInputForm('text', 'form-control', 'var' + addressSize, null, 'Village/Road')
+      + '</div></div></div></div></div>';
+
+    addressSize++;
+    let dom = document.getElementById('addressArea').innerHTML;
+    dom += address;
+    document.getElementById('addressArea').innerHTML = dom;
+  }
+
+  function generateInputForm(type, className, idValue, value, placeholder) {
+    let string = '<div class="form-group"><div class="col-sm-12"><input type="' + type + '" class="' + className + '" id="' + idValue + '" ';
+    if (value) string += ' value = "' + value + '" ';
+    if (placeholder) string += ' placeholder="' + placeholder + '"';
+    string += '></div></div>';
+    return string;
+  }
+
+  function generateDropDown(idvalue, className, list) {
+    let string = `<div class="form-group"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
+    list.forEach(element => string += '<option>' + element + '</option>');
+    string += '</select></div></div>';
+
+    return string;
+  }
+
+  function edit(index) {
+    selectedId = allCompanies[index].id;
+
+    idList.forEach(element => {
+      document.getElementById(element).value = allCompanies[index][element];
+    });
+
+    setSelectedValue('companyType', allCompanies[index].companytype.toUpperCase());
+
+    document.getElementById('addressArea').innerHTML = '';
+    addressSize = 0;
+    const addresses = allCompanies[index].address;
+    let length = addresses.length;
+
+    for (let i = 0; i < length; i++) {
+      addAddress();
+      const keyList = Object.keys(addresses[i]);
+      keyList.forEach(element => {
+        document.getElementById(element + '' + i).value = addresses[i][element];
       });
     }
-  
-    function displayList() {
-      let string = '';
-      const length = allCompanies.length;
-  
-      for (let i = 0; i < length; i++) {
-        const currentCompany = allCompanies[i];
-        string += '<tr><td>' + currentCompany.name + '</td><td>' + currentCompany.shortname + '</td>'
-        string += '<td>' + currentCompany.phone + '</td><td>' + currentCompany.email + '</td>';
-        string += '<td>' + currentCompany.website + '</td>';
-        string += `<td><button class="label label-primary" onclick="edit(` + i + `)">Edit</button>&nbsp;&nbsp;
-                  <button class="label label-danger" onclick="deleteRecord(` + i + `)">Delete</button></td></tr>`;
+
+    document.getElementById('contactPerson').innerHTML = '';
+    const contacts = allCompanies[index].contact;
+    length = contacts.length
+    contactSize = 0;
+
+    for (let i = 0; i < length; i++) {
+      addContact();
+      const keyList = Object.keys(contacts[i]);
+      keyList.forEach(element => {
+        document.getElementById(element + '' + i).value = contacts[i][element];
+      });
+      setSelectedValue('addressType' + i, addresses[i].addressType);
+    }
+  }
+
+  function submit() {
+    const data = getSubmitData();
+    console.log(data);
+    $.post('/Company', data, (res) => {
+      if (res) getCompanies();
+    });
+  }
+
+  function deleteRecord(index) {
+    const id = allCompanies[index].id;
+    $.ajax({
+      url: '/company', method: 'DELETE', data: { id: id }, success: res => {
+        if (res.update) getUser();
       }
-      document.getElementById('companylist').innerHTML = string;
-    }
-  
-    function addContact() {
-      const string = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6">
-        <div class="row"><div class="form-group"><div class="col-sm-12"><input type="text" class="form-control" id="displayName`
-        + contactSize + `" placeholder="Display Name"></div></div><div class="form-group"><div class="col-sm-12"><input type="text" 
-        class="form-control" id="designation` + contactSize + `" placeholder="Designation"></div></div><div class="form-group">
-        <div class="col-sm-12"><input type="text" class="form-control" id="email` + contactSize + `" placeholder="Email Address">
-        </div></div></div></div><div class="col-md-6"><div class="row"><div class="form-group leftMargin"><div class="col-sm-12 ">
-        <input type="text" class="form-control" id="department` + contactSize + `" placeholder="Department"></div></div><div class="form-group 
-        leftMargin"><div class="col-sm-12"><input type="text" class="form-control" id="contactNo` + contactSize + `" placeholder="Contact No">
-        </div></div></div></div></div></div></div>`
-      contactSize++;
-      let dom = document.getElementById('contactPerson').innerHTML;
-      dom += string;
-      document.getElementById('contactPerson').innerHTML = dom;
-    }
-  
-    function addAddress() {
-      const address = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6">
-          <div class="row"><div class="form-group"><div class="col-sm-12"><select id="addressType` + addressSize + `" class=
-          "form-control"><option selected> Select Address Type </option><option>Organisation Address </option><option>Head Quarter 
-          Address </option><option>Factory Address </option><option>Delivery Address </option></select></div></div><div class="form-group">
-          <div class="col-sm-12"><input type="text" class="form-control" id="policestation` + addressSize + `" placeholder="Police Station">
-          </div></div><div class="form-group"><div class="col-sm-12"><input type="text" class="form-control" id="postcode` + addressSize + `" 
-          placeholder="Post Code"></div></div><div class="form-group"><div class="col-sm-12"><input type="text" class="form-control" id="var`
-        + addressSize + `" placeholder="Village/ Area/ Road"></div></div></div></div><div class="col-md-6"><div class="row"><div class="form-group 
-          leftMargin"><div class="col-sm-12"><input type="text" class="form-control" id="district` + addressSize + `" placeholder="District"></div>
-          </div><div class="form-group leftMargin"><div class="col-sm-12"><input type="text" class="form-control" id="postOffice` + addressSize + `" 
-          placeholder="Post Office"></div></div><div class="form-group leftMargin"><div class="col-sm-12"><input type="text" class="form-control" 
-          id="hpf` + addressSize + `" placeholder="House/ Plot/ Flat"></div></div></div></div></div></div></div>`
-  
-      addressSize++;
-      let dom = document.getElementById('addressArea').innerHTML;
-      dom += address;
-      document.getElementById('addressArea').innerHTML = dom;
-    }
-  
-    function edit(index) {
-      selectedId = allCompanies[index].id;
-  
-      idList.forEach(element => {
-        document.getElementById(element).value = allCompanies[index][element];
-      });
-  
-      setSelectedValue('companyType', allCompanies[index].companytype.toUpperCase());
-  
-      document.getElementById('addressArea').innerHTML = '';
-      addressSize = 0;
-      const addresses = allCompanies[index].address;
-      let length = addresses.length;
-  
-      for (let i = 0; i < length; i++) {
-        addAddress();
-        const keyList = Object.keys(addresses[i]);
-        keyList.forEach(element => {
-          document.getElementById(element + '' + i).value = addresses[i][element];
-        });
-      }
-  
-      document.getElementById('contactPerson').innerHTML = '';
-      const contacts = allCompanies[index].contact;
-      length = contacts.length
-      contactSize = 0;
-  
-      for (let i = 0; i < length; i++) {
-        addContact();
-        const keyList = Object.keys(contacts[i]);
-        keyList.forEach(element => {
-          document.getElementById(element + '' + i).value = contacts[i][element];
-        });
-        setSelectedValue('addressType' + i, addresses[i].addressType);
-      }
-    }
-  
-    function submit() {
-      const data = getSubmitData();
-      $.post('/Company', data, (res) => {
-        if (res) getCompanies();
-      });
-    }
-  
-    function deleteRecord(index) {
-      const id = allCompanies[index].id;
-      $.ajax({
-        url: '/company', method: 'DELETE', data: { id: id }, success: res => {
-          if (res.update) getUser();
-        }
-      });
-    }
-  
-    function submitEdit() {
-      if (!selectedId) return;
-  
-      const data = getSubmitData();
-      data.id = selectedId;
-  
-      $.post('/Company', data, (res) => {
-        if (res) getCompanies();
-      });
-    }
-  </script>
+    });
+  }
+
+  function submitEdit() {
+    if (!selectedId) return;
+
+    const data = getSubmitData();
+    data.id = selectedId;
+
+    $.post('/Company', data, (res) => {
+      if (res) getCompanies();
+    });
+  }
+</script>

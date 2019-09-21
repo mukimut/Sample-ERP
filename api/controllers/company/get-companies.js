@@ -5,5 +5,6 @@ module.exports =async function getCompanies(req, res) {
 	else allCompanies = await Company.find();
 
 	res.send(allCompanies);
-	
 }
+
+//http://localhost:1337/api/companies?type=customer

@@ -21,7 +21,9 @@ function getSelectedValues(selectList) {
 
 function getSelectedText(id) {
     const selection = document.getElementById(id);
-    return selection.options[selection.selectedIndex].innerHTML;
+    const selectedIndex = selection.selectedIndex;
+    if(selectedIndex === -1) return null;
+    return selection.options[selectedIndex].innerHTML;
   }
 
 function setSelectedValue(id, value) {
