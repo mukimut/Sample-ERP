@@ -454,7 +454,7 @@
     const id = allCompanies[index].id;
     $.ajax({
       url: '/company', method: 'DELETE', data: { id: id }, success: res => {
-        if (res.update) getUser();
+        if (res.update) getCompanies();
       }
     });
   }
