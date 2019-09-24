@@ -199,7 +199,7 @@
             <div class="col-md-6">
               <div class="row">
                 <div class="form-group leftMargin">
-                  <div class="col-sm-12 "><select id="department0" class="form-control"></select></div>
+                  <div class="col-sm-12 "><select id="department0" class="form-control" onchange="departmentSelected(0)"></select></div>
                 </div>
                 <div class="form-group leftMargin">
                   <div class="col-sm-12"><select id="section0" class="form-control"></select></div>
@@ -285,17 +285,19 @@
   contactDropdowns = ['section', 'department', 'designation'];
   contactInputs = ['email', 'name', 'phone'];
   let allCompanies = [], allDepartments = [], allDesignations = [], allSections = [], allCountries = [], allDistricts = [], allPO = [];
-  let selectedId;
+  let selectedId, departmentMap;
   let addressSize = 1;
   let contactSize = 1;
 
   getCompanies();
-  getDropdownData('tov?type=Departments', 'department0', 'Select Department').then(data => allDepartments = data);
-  getDropdownData('tov?type=Designations', 'designation0', 'Select Designation').then(data => allDesignations = data);
-  getDropdownData('tov?type=Section', 'section0', 'Select Section').then(data => allDesignations = data);
-  getDropdownData('tov?type=Country', 'country0', 'Select Countries').then(data => allCountries = data);
-  getDropdownData('tov?type=District', 'district0', 'Select Districts').then(data => allDistricts = data);
-  getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data);
+  getDropdownData('tov?type=Departments', 'department0', 'Select Department').then(data => {
+    allDepartments = data.values;
+    departmentMap = data.map;
+  });
+  getDropdownData('tov?type=Designations', 'designation0', 'Select Designation').then(data => allDesignations = data.values);
+  getDropdownData('tov?type=Country', 'country0', 'Select Countries').then(data => allCountries = data.values);
+  getDropdownData('tov?type=District', 'district0', 'Select Districts').then(data => allDistricts = data.values);
+  getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data.values);
 
   function getSubmitData() {
     const object = {};
@@ -322,6 +324,12 @@
     return object;
   }
 
+  function departmentSelected(index) {
+    const selectedDepartment = getSelectedText('department' + index);
+    allSections = departmentMap[selectedDepartment].map(element => element.Section);
+    setSelectionList('section' + index, allSections, 'Select Section');
+  }
+
   function getInputValue(id) {
     let currentValue = document.getElementById(id).value;
     if (!currentValue) currentValue = '';
@@ -339,7 +347,7 @@
     return new Promise((resolve, reject) => {
       $.get(link, (data) => {
         setSelectionList(id, data[0].values, title);
-        resolve(data[0].values);
+        resolve(data[0]);
       });
     });
   }
@@ -371,6 +379,7 @@
     let dom = document.getElementById('contactPerson').innerHTML;
     dom += string;
     document.getElementById('contactPerson').innerHTML = dom;
+    document.getElementById(`department` + (contactSize - 1)).setAttribute('onchange', 'departmentSelected(' + (contactSize - 1) + ')');
   }
 
   function addAddress() {
@@ -397,7 +406,7 @@
     return string;
   }
 
-  function generateDropDown(idvalue, className, list) {
+  function generateDropDown(idvalue, className, list, onSelect) {
     let string = `<div class="form-group"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
     list.forEach(element => string += '<option>' + element + '</option>');
     string += '</select></div></div>';
