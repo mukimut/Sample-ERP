@@ -61,6 +61,10 @@
 						<div class="col-sm-12"><input type="text" class="form-control" id="description"
 								placeholder="Item Description"></div>
 					</div>
+					<!-- <div class="form-group">
+						<div class="col-sm-12"><select class="form-control" id="brand"
+								placeholder="Product Brand"></select></div>
+					</div> -->
 					<div class="row" style="margin-bottom: 20px;">
 						<div class="col-md-10">
 							<div class="row">
@@ -148,8 +152,7 @@
 
 	function categorySelected() {
 		const selectedGroup = getSelectedText('category');
-		const selectedIndex = getSelectedIndex('category') - 2;
-		const maps = allCategories[selectedIndex].map[selectedGroup];
+		const maps = allCategories[0].map[selectedGroup];
 		const mappedGroups = [];
 		maps.forEach(element => {
 			if (element['Product Group']) mappedGroups.push(element['Product Group']);
