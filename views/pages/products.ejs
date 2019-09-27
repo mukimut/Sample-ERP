@@ -61,10 +61,6 @@
 						<div class="col-sm-12"><input type="text" class="form-control" id="description"
 								placeholder="Item Description"></div>
 					</div>
-					<!-- <div class="form-group">
-						<div class="col-sm-12"><select class="form-control" id="brand"
-								placeholder="Product Brand"></select></div>
-					</div> -->
 					<div class="row" style="margin-bottom: 20px;">
 						<div class="col-md-10">
 							<div class="row">
@@ -140,8 +136,6 @@
 			setSelectionList('category', data[0].values, 'Select Product Category');
 			allCategories = data;
 		});
-
-		$.get('/tov?type=Product Brand', (data) => setSelectionList('brand', data[0].values, 'Select Brand'));
 	}
 
 	function invoice(index) {
