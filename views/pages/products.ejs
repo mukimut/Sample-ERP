@@ -140,8 +140,6 @@
 			setSelectionList('category', data[0].values, 'Select Product Category');
 			allCategories = data;
 		});
-
-		$.get('/tov?type=Product Brand', (data) => setSelectionList('brand', data[0].values, 'Select Brand'));
 	}
 
 	function invoice(index) {
@@ -154,8 +152,7 @@
 
 	function categorySelected() {
 		const selectedGroup = getSelectedText('category');
-		const selectedIndex = getSelectedIndex('category') - 2;
-		const maps = allCategories[selectedIndex].map[selectedGroup];
+		const maps = allCategories[0].map[selectedGroup];
 		const mappedGroups = [];
 		maps.forEach(element => {
 			if (element['Product Group']) mappedGroups.push(element['Product Group']);
