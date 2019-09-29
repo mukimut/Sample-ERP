@@ -107,7 +107,7 @@
 <script src="/js/dropdown.js"></script>
 <script>
 	const inputList = ['name', 'description'];
-	const selectList = ['group', 'category', 'type', 'brand'];
+	const selectList = ['group', 'category', 'type'];
 	let productList;
 	let selectedProductId;
 	let groupMap = [];
@@ -206,7 +206,7 @@
 
 	function deleteEntry(index) {
 		$.ajax({
-			url: '/deleteUser', method: 'DELETE', data: { userid: productList[index].id }, success: res => {
+			url: '/product', method: 'DELETE', data: { id: productList[index].id }, success: res => {
 				if (res.update) {
 					getProducts();
 					selectedUserId = null;
