@@ -43,6 +43,7 @@ module.exports.routes = {
   'get /user': {view: 'pages/user', locals:{layout: 'layouts/dashboard'}},
   'get /mapping': {view: 'pages/mapping', locals:{layout: 'layouts/dashboard'}},
   'delete /company': {action: 'company/delete-company'},
+  'delete /product': {action: 'products/delete-product'},
   'get /products': {view: 'pages/products', locals:{layout: 'layouts/dashboard'}},
   'get /api/products': {action: 'products/get-products'},
   'get /invoice': {view: 'pages/invoice', locals:{layout: 'layouts/dashboard'}},

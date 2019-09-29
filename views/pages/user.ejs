@@ -83,11 +83,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div class="box-footer pull-left" style="border-top: 0px">
-						<button class="btn btn-flat btn-success" onclick="submit()">New User</button>
-						<button class="btn btn-flat btn-primary" onclick="edit()" disabled id="submitEdit">Edit
-							User</button>
-					</div> -->
 				</div>
 			</div>
 		</div><br><br><br>
@@ -125,11 +120,8 @@
 <script src="/dependencies/jquery.js"></script>
 <script>
 	getUser();
-	getDepartments();
-	getDesignations();
 
-	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'phone'];
-	const selectList = ['department', 'designation'];
+	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'employeeid'];
 	let userList = [];
 	let selectedUserId;
 
@@ -148,41 +140,6 @@
 		});
 	}
 
-	function getDepartments() {
-		$.get('tov?type=departments', data => setSelectionList('department', data[0].values));
-	}
-
-	function getDesignations() {
-		$.get('tov?type=designations', data => setSelectionList('designation', data[0].values));
-	}
-
-	function setSelectionList(id, list) {
-		let string = document.getElementById(id).innerHTML;
-		list.forEach(element => string += '<option>' + element + '</option>');
-		document.getElementById(id).innerHTML = string;
-	}
-
-	function getSelectedValues(data) {
-		selectList.forEach(element => {
-			const selector = document.getElementById(element);
-			data[element] = selector.options[selector.selectedIndex].text;
-		});
-		return data;
-	}
-
-	function setSelectedValue(id, value) {
-		const selection = document.getElementById(id);
-		const options = selection.options;
-		const length = options.length;
-
-		for (let i = 0; i < length; i++) {
-			if (options[i].innerHTML === value) {
-				selection.selectedIndex = i;
-				break;
-			}
-		}
-	}
-
 	function logout() {
 		localStorage.removeItem('token');
 		window.open('/login', '_self');
@@ -192,7 +149,6 @@
 		document.getElementById('submitEdit').disabled = false;
 
 		inputList.forEach(element => document.getElementById(element).value = userList[index][element]);
-		selectList.forEach(element => setSelectedValue(element, userList[index][element]));
 		document.getElementById('pass2').value = userList[index].password;
 		selectedUserId = userList[index].id;
 	}
@@ -241,7 +197,6 @@
 	function edit() {
 		let data = getInputData();
 		if (!data) return;
-		data = getSelectedValues(data);
 		data.userid = selectedUserId;
 
 		$.ajax({
@@ -259,7 +214,6 @@
 	function submit() {
 		let data = getInputData();
 		if (!data) return;
-		data = getSelectedValues(data);
 
 		$.post('/register', data, (res) => {
 			if (!res.unique) alert('Username already exists');
