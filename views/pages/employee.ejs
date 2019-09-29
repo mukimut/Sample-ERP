@@ -22,22 +22,12 @@
   </section>
   <section class="invoice">
     <div class="row">
-      <div class="col-xs-12">
-        <h2 class="page-header">Employee Identification<small class="pull-right">
-            <script>
-              var d = new Date();
-              document.write(d.toLocaleString());
-            </script>
-          </small></h2>
-      </div>
-    </div>
-    <div class="row">
       <div class="col-md-12">
         <!-- Custom Tabs -->
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab_1" data-toggle="tab">Basic Info</a></li>
-            <li><a href="#tab_2" data-toggle="tab">Employment Details</a></li>
+            <li><a href="#tab_2" data-toggle="tab">Address</a></li>
             <li><a href="#tab_3" data-toggle="tab">Prior Experience</a></li>
           </ul>
           <div class="tab-content">
@@ -107,11 +97,6 @@
                               <input type="text" class="form-control" id="tin" placeholder="Driving License No">
                             </div>
                           </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="tin" placeholder="TIN No">
-                            </div>
-                          </div>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -129,12 +114,6 @@
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
                               <input type="text" class="form-control" id="website" placeholder="Mothers Name">
-                            </div>
-                          </div>
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="website" placeholder="Mothers Name">
-                              <!-- <input type="checkbox" name="vehicle1" value="doctorsAproval"> Doctor's Approval -->
                             </div>
                           </div>
                           <div class="form-group leftMargin">
@@ -173,213 +152,10 @@
                           </div>
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
-                              <input type="text" class="form-control" id="licencenseExpiry"
-                                placeholder="License Expiry Date">
+                              <input type="text" class="form-control" id="tin" placeholder="TIN No">
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <h2 class="page-header">Present Address</h2>
-                    </div>
-                    <div class="row" id="addressArea">
-                      <div class="col-md-11 form-horizontal">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="row">
-                              <div class="form-group">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>Address Type </option>
-                                    <option>Organisation Address </option>
-                                    <option>Head Quarter Address </option>
-                                    <option>Factory Address </option>
-                                    <option>Delivery Address </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>Division </option>
-                                    <option>Chittagong </option>
-                                    <option>Rajshahi </option>
-                                    <option>Dhaka </option>
-                                    <option>Jessore </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>Police Station </option>
-                                    <option>Akkelpur </option>
-                                    <option>Adamdighi </option>
-                                    <option>Atrai </option>
-                                    <option>Bagatipara </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group">
-                                <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="hpf0" placeholder="Post Code">
-                                </div>
-                              </div>
-                              <div class="form-group">
-                                <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="row">
-                              <div class="form-group leftMargin">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>Country </option>
-                                    <option>Algeria </option>
-                                    <option>Andorra </option>
-                                    <option>Angola </option>
-                                    <option>Bangladesh </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group leftMargin">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>District </option>
-                                    <option>Chittagong </option>
-                                    <option>Rajshahi </option>
-                                    <option>Dhaka </option>
-                                    <option>Jessore </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group leftMargin">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>Post Office </option>
-                                    <option>Kotwali </option>
-                                    <option>Ramna </option>
-                                    <option>Kamrangichor </option>
-                                    <option>Sotrapur </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group leftMargin">
-                                <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-1">
-                        <button class="btn btn-flat btn-success" onclick="addAddress()">Add</button>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <h2 class="page-header">Permanent Address</h2>
-                    </div>
-                    <div class="row" id="addressArea">
-                      <div class="col-md-11 form-horizontal">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="row">
-                              <div class="form-group">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>Address Type </option>
-                                    <option>Organisation Address </option>
-                                    <option>Head Quarter Address </option>
-                                    <option>Factory Address </option>
-                                    <option>Delivery Address </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>Division </option>
-                                    <option>Chittagong </option>
-                                    <option>Rajshahi </option>
-                                    <option>Dhaka </option>
-                                    <option>Jessore </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>Police Station </option>
-                                    <option>Akkelpur </option>
-                                    <option>Adamdighi </option>
-                                    <option>Atrai </option>
-                                    <option>Bagatipara </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group">
-                                <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="hpf0" placeholder="Post Code">
-                                </div>
-                              </div>
-                              <div class="form-group">
-                                <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="row">
-                              <div class="form-group leftMargin">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>Country </option>
-                                    <option>Algeria </option>
-                                    <option>Andorra </option>
-                                    <option>Angola </option>
-                                    <option>Bangladesh </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group leftMargin">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>District </option>
-                                    <option>Chittagong </option>
-                                    <option>Rajshahi </option>
-                                    <option>Dhaka </option>
-                                    <option>Jessore </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group leftMargin">
-                                <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
-                                    <option selected>Post Office </option>
-                                    <option>Kotwali </option>
-                                    <option>Ramna </option>
-                                    <option>Kamrangichor </option>
-                                    <option>Sotrapur </option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group leftMargin">
-                                <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-1">
-                        <button class="btn btn-flat btn-success" onclick="addAddress()">Add</button>
                       </div>
                     </div>
                   </div>
@@ -390,152 +166,198 @@
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_2">
               <div class="row">
+                <h2 class="page-header">Present Address</h2>
+              </div>
+              <div class="row" id="addressArea">
                 <div class="col-md-12 form-horizontal">
-                  <div class="box-body">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="name" placeholder="Employee Id">
-                            </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="row">
+                        <!-- <div class="form-group">
+                           <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>Address Type </option>
+                              <option>Organisation Address </option>
+                              <option>Head Quarter Address </option>
+                              <option>Factory Address </option>
+                              <option>Delivery Address </option>
+                            </select>
+                          </div> 
+                        </div>-->
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>Division </option>
+                              <option>Chittagong </option>
+                              <option>Rajshahi </option>
+                              <option>Dhaka </option>
+                              <option>Jessore </option>
+                            </select>
                           </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="name" placeholder="Barcode">
-                            </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>Police Station </option>
+                              <option>Akkelpur </option>
+                              <option>Adamdighi </option>
+                              <option>Atrai </option>
+                              <option>Bagatipara </option>
+                            </select>
                           </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="title" placeholder="Access Code">
-                            </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" id="hpf0" placeholder="Post Code">
                           </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="tin" placeholder="Org Stracture">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="tin" placeholder="Effective Date From">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <select id="gender" class="form-control">
-                                <option selected>Job Agree Type</option>
-                                <option>Full Time</option>
-                                <option>Part Time</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="tin" placeholder="Provation End Date">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <select id="gender" class="form-control">
-                                <option selected>Job Level</option>
-                                <option>Jr. Management</option>
-                                <option>Hindue</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <select id="gender" class="form-control">
-                                <option selected>Job Title</option>
-                                <option>Executive</option>
-                                <option>Sr. Executive</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <select id="gender" class="form-control">
-                                <option selected>Job Grade</option>
-                                <option>5</option>
-                                <option>6</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <select id="gender" class="form-control">
-                                <option selected>Designation</option>
-                                <option>Jr. Manager</option>
-                                <option>Hindue</option>
-                              </select>
-                            </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="name" placeholder="Work Area">
-                            </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="form-group leftMargin">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>Country </option>
+                              <option>Algeria </option>
+                              <option>Andorra </option>
+                              <option>Angola </option>
+                              <option>Bangladesh </option>
+                            </select>
                           </div>
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="nickNmae" placeholder="Date of Joining">
-                            </div>
+                        </div>
+                        <div class="form-group leftMargin">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>District </option>
+                              <option>Chittagong </option>
+                              <option>Rajshahi </option>
+                              <option>Dhaka </option>
+                              <option>Jessore </option>
+                            </select>
                           </div>
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <select id="gender" class="form-control">
-                                <option selected>Shift Category</option>
-                                <option>Regular</option>
-                                <option>Part Time</option>
-                              </select>
-                            </div>
+                        </div>
+                        <div class="form-group leftMargin">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>Post Office </option>
+                              <option>Kotwali </option>
+                              <option>Ramna </option>
+                              <option>Kamrangichor </option>
+                              <option>Sotrapur </option>
+                            </select>
                           </div>
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="website" placeholder="Work Site">
-                            </div>
+                        </div>
+                        <div class="form-group leftMargin">
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
                           </div>
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="tin" placeholder="Effective Date To">
-                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-1">
+                  <button class="btn btn-flat btn-success" onclick="addAddress()">Add</button>
+                </div> -->
+              </div>
+              <div class="row">
+                <h2 class="page-header">Permanent Address</h2>
+              </div>
+              <div class="row" id="addressArea">
+                <div class="col-md-12 form-horizontal">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="row">
+                        <!-- <div class="form-group">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>Address Type </option>
+                              <option>Organisation Address </option>
+                              <option>Head Quarter Address </option>
+                              <option>Factory Address </option>
+                              <option>Delivery Address </option>
+                            </select>
                           </div>
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <select id="gender" class="form-control">
-                                <option selected>Pay Schedule</option>
-                                <option>Monthly</option>
-                                <option>Yearly</option>
-                              </select>
-                            </div>
+                        </div> -->
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>Division </option>
+                              <option>Chittagong </option>
+                              <option>Rajshahi </option>
+                              <option>Dhaka </option>
+                              <option>Jessore </option>
+                            </select>
                           </div>
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <select id="gender" class="form-control">
-                                <option selected>Pay Grade</option>
-                                <option>Jr. Management, Pay Grade 0</option>
-                              </select>
-                            </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>Police Station </option>
+                              <option>Akkelpur </option>
+                              <option>Adamdighi </option>
+                              <option>Atrai </option>
+                              <option>Bagatipara </option>
+                            </select>
                           </div>
-                          <!-- <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="nationality" placeholder="Basic">
-                            </div>
-                          </div> -->
-                          <!-- <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="passportNo" placeholder="Passport No">
-                            </div>
-                          </div> -->
-                          <!-- <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="licencenseExpiry"
-                                placeholder="License Expiry Date">
-                            </div>
-                          </div> -->
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" id="hpf0" placeholder="Post Code">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="form-group leftMargin">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>Country </option>
+                              <option>Algeria </option>
+                              <option>Andorra </option>
+                              <option>Angola </option>
+                              <option>Bangladesh </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group leftMargin">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>District </option>
+                              <option>Chittagong </option>
+                              <option>Rajshahi </option>
+                              <option>Dhaka </option>
+                              <option>Jessore </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group leftMargin">
+                          <div class="col-sm-12">
+                            <select id="addressType0" class="form-control">
+                              <option selected>Post Office </option>
+                              <option>Kotwali </option>
+                              <option>Ramna </option>
+                              <option>Kamrangichor </option>
+                              <option>Sotrapur </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group leftMargin">
+                          <div class="col-sm-12">
+                            <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
+                          </div>
                         </div>
                       </div>
                     </div>
