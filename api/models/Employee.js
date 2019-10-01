@@ -2,7 +2,7 @@ module.exports = {
     attributes: {
         id: {type: 'number', columnName: 'employeeid', autoIncrement: true}, userid: {type: 'number'},
         firstname: {type: 'string'}, middlename: {type: 'string'}, lastname: {type: 'string'},
-        mother: {type: 'string'},father: {type: 'string'},
+        mother: {type: 'string'}, father: {type: 'string'}, relationship: {type: 'string'},
         religion: {type: 'string'},blood: {type: 'string'},nationality: {type: 'string'},gender: {type: 'string'},
         tin: {type: 'string'},passport: {type: 'string'},license: {type: 'string'},nid: {type: 'string'},
         birthday: {type: 'string', columnType: 'date'},licensedate: {type: 'string', columnType: 'date'}
