@@ -118,13 +118,14 @@
 	getSelectData();
 
 	function getProducts() {
-		let listData = `<tr><th>Product</th><th>Brand</th><th>Description</th><th>Price</th><th>Quantity</th></tr>`;
+		let listData = `<tr><th>Product</th><th>Description</th><th>Category</th><th>Group</th><th>Type</th></tr>`;
 		$.get('/api/products', (data) => {
 			data.forEach((element, index) => {
-				listData += '<tr><td>' + element.name + '</td><td>' + element.brand + '</td>';
-				listData += '<td>' + element.description + '</td><td><input type="number" id="invoicePrice' + index + '" value=' + element.price + '></td>';
-				listData += '<td><input type="number" id="invoiceQuantity' + index + '"></td><td><button onclick="invoice(' + index + ')">Invoice</button></td>';
-				listData += '<td><button class="label label-primary" onclick="editEntry(' + index + ')">Edit</button><button class="label label-danger" onclick="deleteEntry(' + index + ')">Delete</button></td></tr>';
+				listData += '<tr><td>' + element.name + '</td>';
+				listData += '<td>' + element.description + '</td>'
+				listData += '<td>' + element.category + '</td>'
+				listData += '<td>' + element.group + '</td>'
+				listData += '<td>' + element.type + '</td>';
 			});
 			document.getElementById('usertable').innerHTML = listData;
 			productList = data;
