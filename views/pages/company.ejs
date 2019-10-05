@@ -304,7 +304,7 @@
   addressInputs = ['postcode', 'hpf', 'var'];
   contactDropdowns = ['section', 'department', 'designation'];
   contactInputs = ['email', 'name', 'phone'];
-  let allCompanies = [], allDepartments = [], allDesignations = [], allSections = [], allCountries = [], allDistricts = [], allPO = [], diplayCompanies = [];
+  let allCompanies = [], allDepartments = [], allDesignations = [], allSections = [], allCountries = [], allDistricts = [], allPO = [], diplayCompanies = [], addressTypes = [];
   let selectedId, departmentMap;
   let addressSize = 1;
   let contactSize = 1;
@@ -318,6 +318,7 @@
   getDropdownData('tov?type=Country', 'country0', 'Select Countries').then(data => allCountries = data.values);
   getDropdownData('tov?type=District', 'district0', 'Select Districts').then(data => allDistricts = data.values);
   getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data.values);
+  //getDropdownData('tov?type=Address Type', 'addressType0', 'Select Post Office').then(data => allPO = data.values);
 
   function getSubmitData() {
     const object = {};
