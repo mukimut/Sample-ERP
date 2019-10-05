@@ -78,12 +78,7 @@
                         <div class="row">
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
-                              <select id="companyType" class="form-control">
-                                <option selected>Company Type</option>
-                                <option>General</option>
-                                <option>SUPPLIER</option>
-                                <option>CUSTOMER</option>
-                              </select>
+                              <select id="companyType" class="form-control"></select>
                             </div>
                           </div>
                           <div class="form-group leftMargin">
@@ -114,13 +109,7 @@
                         <div class="row">
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <select id="addressType0" class="form-control">
-                                <option selected>Address Type </option>
-                                <option>Organisation Address </option>
-                                <option>Head Quarter Address </option>
-                                <option>Factory Address </option>
-                                <option>Delivery Address </option>
-                              </select>
+                              <select id="addressType0" class="form-control"></select>
                             </div>
                           </div>
                           <div class="form-group">
@@ -261,11 +250,7 @@
 
               <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
-                  <select id="searchType" class="form-control" onchange="typeFilter()">
-                    <option selected>GENERAL</option>
-                    <option>SUPPLIER</option>
-                    <option>CUSTOMER</option>
-                  </select>
+                  <select id="searchType" class="form-control" onchange="typeFilter()"></select>
                   <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
                   <div class="input-group-btn">
                     <button type="submit" class="btn btn-flat btn-success"><i class="fa fa-search"></i></button>
@@ -304,7 +289,12 @@
   addressInputs = ['postcode', 'hpf', 'var'];
   contactDropdowns = ['section', 'department', 'designation'];
   contactInputs = ['email', 'name', 'phone'];
+<<<<<<< HEAD
   let allCompanies = [], allDepartments = [], allDesignations = [], allSections = [], allCountries = [], allDistricts = [], allPO = [], diplayCompanies = [], addressTypes = [];
+=======
+  let allCompanies = [], allDepartments = [], allDesignations = [], allSections = [], allCountries = [], allDistricts = [], allPO = [], diplayCompanies = [];
+  let addressTypes = [];
+>>>>>>> 0b2190540734800b000652d9d83aace47a260115
   let selectedId, departmentMap;
   let addressSize = 1;
   let contactSize = 1;
@@ -318,7 +308,12 @@
   getDropdownData('tov?type=Country', 'country0', 'Select Countries').then(data => allCountries = data.values);
   getDropdownData('tov?type=District', 'district0', 'Select Districts').then(data => allDistricts = data.values);
   getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data.values);
+<<<<<<< HEAD
   //getDropdownData('tov?type=Address Type', 'addressType0', 'Select Post Office').then(data => allPO = data.values);
+=======
+  getDropdownData('tov?type=Company Type', 'companyType', 'Select Company Type').then(data => setSelectionList('searchType', data.values));
+  getDropdownData('tov?type=Address Type', 'addressType0', 'Select Address Type').then(data => addressTypes = data.values);
+>>>>>>> 0b2190540734800b000652d9d83aace47a260115
 
   function getSubmitData() {
     const object = {};
@@ -361,6 +356,7 @@
     $.get('api/companies', (res) => {
       allCompanies = res;
       diplayCompanies = res;
+      if(selectedId === -1) selectedId = res[res.length - 1].id;
       displayList();
     });
   }
@@ -406,7 +402,7 @@
 
   function addAddress() {
     const address = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
-      + generateDropDown(`addressType` + addressSize, 'form-control', ['Organisation Address', 'Factory Address', 'Delivery Address'])
+      + generateDropDown(`addressType` + addressSize, 'form-control', addressTypes)
       + generateDropDown(`division` + addressSize, 'form-control', ['Chittagong', 'Dhaka', 'Khulna']) + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'])
       + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code') + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
       + '</div></div><div class="col-md-6"><div class="row">'
@@ -484,7 +480,10 @@
     const data = getSubmitData();
     console.log(data);
     $.post('/Company', data, (res) => {
-      if (res) getCompanies();
+      if (res) {
+        getCompanies();
+        selectedId = -1;
+      }
     });
   }
 
