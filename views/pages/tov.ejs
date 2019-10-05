@@ -71,8 +71,17 @@
 					</div>
 					<div class="form-group">
 						<!-- <label for="New LOV" class="col-sm-2 control-label">Edit LOV Type</label> -->
-						<div class="col-sm-12" id="valueList">
-							<input class="form-control" type="text" id="values" placeholder="Edit LOV Type">
+						<div class="col-sm-12">
+							<table id="valueList">
+								<!-- <tr>
+									<td>
+										<input class="form-control" type="text" id="listItem' + index + '" size="60"
+											value="' + element + '" />
+									</td>
+									<td>&nbsp;</td>
+									<td><button class="btn btn-flat btn-block btn-danger btn-sm">Remove</button></td>
+								</tr> -->
+							</table>
 						</div>
 					</div>
 					<div class="row" style="margin-bottom: 20px;">
@@ -132,8 +141,12 @@
 		if (!list) list = [];
 		let string = '';
 		list.forEach((element, index) => {
-			string += '<input class="form-control" type="text" id="listItem' + index + '" size="60" value="' + element + '">'
-			string += '<button onclick=remove(' + index + ')>Remove</button>'
+			if(!element) return;
+			// string += '<input class="form-control" type="text" id="listItem' + index + '" size="60" value="' + element + '"/>'
+			// string += '<button onclick=remove(' + index + ')>Remove</button>'
+
+			string += '<tr><td><input class="form-control" type="text" id="listItem' + index + '" size="60" value="' + element + '"/></td>'
+			string += '<td>&nbsp;</td><td><button class="btn btn-flat btn-block btn-danger btn-sm" onclick=remove(' + index + ')>Remove</button></td></tr>'
 		});
 		document.getElementById('valueList').innerHTML = string;
 	}
