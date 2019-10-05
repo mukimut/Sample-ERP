@@ -389,4 +389,15 @@
     selectList.forEach(id => data[id] = getSelectedText(id));
     return data;
   }
+
+  function submit() {
+    const data = getInputData({});
+
+    $.post('/employee', data, (res) => {
+      if(res) {
+        console.log('Data Submitted');
+      }
+    })
+  }
+
 </script>
