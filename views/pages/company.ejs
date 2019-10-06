@@ -25,16 +25,6 @@
     </ol>
   </section>
   <section class="invoice">
-    <!-- <div class="row">
-      <div class="col-xs-12">
-        <h2 class="page-header">Identification <small class="pull-right">
-            <script>
-              var d = new Date();
-              document.write(d.toLocaleString());
-            </script>
-          </small></h2>
-      </div>
-    </div> -->
     <div class="row">
       <div class="col-md-12">
         <!-- Custom Tabs -->
@@ -237,7 +227,7 @@
             <div class="row">
               <div class="box-footer pull-left" style="border-top: 0px">
                 <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
-                <button class="btn btn-flat btn-primary" onclick="submitEdit()">Savw</button>
+                <button class="btn btn-flat btn-primary" onclick="submitEdit()">Save</button>
               </div>
             </div>
           </div>
@@ -316,7 +306,7 @@
     const object = {};
     idList.forEach(element => object[element] = getInputValue(element));
 
-    object['companytype'] = getSelectedText('companyType').toLowerCase();
+    object['companytype'] = getSelectedText('companyType');
 
     object['address'] = [];
     for (let i = 0; i < addressSize; i++) {
@@ -416,7 +406,7 @@
   function typeFilter() {
     const searchType = getSelectedText('searchType');
     if(searchType === 'GENERAL') diplayCompanies = allCompanies;
-    else diplayCompanies = allCompanies.filter(element => element.companytype.toUpperCase() === searchType);
+    else diplayCompanies = allCompanies.filter(element => element.companytype === searchType);
     displayList();
   }
 
@@ -443,7 +433,7 @@
       document.getElementById(element).value = diplayCompanies[index][element];
     });
 
-    setSelectedValue('companyType', diplayCompanies[index].companytype.toUpperCase());
+    setSelectedValue('companyType', diplayCompanies[index].companytype);
 
     document.getElementById('addressArea').innerHTML = '';
     addressSize = 0;
@@ -475,7 +465,6 @@
 
   function submit() {
     const data = getSubmitData();
-    console.log(data);
     $.post('/Company', data, (res) => {
       if (res) {
         getCompanies();
