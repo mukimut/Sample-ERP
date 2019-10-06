@@ -19,7 +19,7 @@
 		</ol>
 	</section>
 	<section class="invoice">
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-xs-12">
 				<h2 class="page-header">User
 					<small class="pull-right">
@@ -30,7 +30,7 @@
 					</small>
 				</h2>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="row">
 			<div class="card col-md-6 form-horizontal col-md-offset-3">
@@ -126,13 +126,10 @@
 	let selectedUserId;
 
 	function getUser() {
-		let listData = `<tr><th>User Name</th><th>Access</th><th>Department</th><th>Designation</th>
-			<th>Email</th><th>Phone</th><th>Action</th></tr>`;
+		let listData = `<tr><th>User Name</th><th>Access</th><th>Email</th><th>Action</th></tr>`;
 		$.get('/getUser', (data) => {
 			data.forEach((element, index) => {
-				listData += '<tr><td>' + element.username + '</td><td>' + element.access + '</td>'
-				listData += '<td>' + element.department + '</td><td>' + element.designation + '</td>'
-				listData += '<td>' + element.email + '</td><td>' + element.phone + '</td>'
+				listData += '<tr><td>' + element.username + '</td><td>' + element.access + '</td><td>' + element.email + '</td>'
 				listData += '<td><button class="label label-primary" onclick="editEntry(' + index + ')">Edit</button><button class="label label-danger" onclick="deleteEntry(' + index + ')">Delete</button></td></tr>';
 			});
 			document.getElementById('usertable').innerHTML = listData;
