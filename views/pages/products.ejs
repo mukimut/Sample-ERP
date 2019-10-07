@@ -140,7 +140,7 @@
 				listData += '<td>' + element.category + '</td>'
 				listData += '<td>' + element.group + '</td>'
 				listData += '<td>' + element.type + '</td>';
-				listData += '<td><i class="fa fa-edit fa_edt"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt"></i></td>';
+				listData += '<td><i class="fa fa-edit fa_edt" onclick = "editEntry(i)"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt"></i></td>';
 			});
 			document.getElementById('usertable').innerHTML = listData;
 			productList = data;
@@ -191,6 +191,7 @@
 		document.getElementById('submitEdit').disabled = false;
 
 		inputList.forEach(element => document.getElementById(element).value = productList[index][element]);
+		selectList.forEach(element => setSelectedValue(element, productList[index][element]));
 		selectedProductId = productList[index].id;
 	}
 
