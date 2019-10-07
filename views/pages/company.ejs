@@ -138,13 +138,7 @@
                           </div>
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <select id="division0" class="form-control">
-                                <option selected>Select Division </option>
-                                <option>Chittagong </option>
-                                <option>Rajshahi </option>
-                                <option>Dhaka </option>
-                                <option>Jessore </option>
-                              </select>
+                              <select id="division0" class="form-control" onchange="divisionSelected(0)"></select>
                             </div>
                           </div>
                           <div class="form-group">
@@ -176,7 +170,7 @@
                             <div class="col-sm-12"><select id="country0" class="form-control"></select></div>
                           </div>
                           <div class="form-group leftMargin">
-                            <div class="col-sm-12"><select id="district0" class="form-control"></select></div>
+                            <div class="col-sm-12"><select id="district0" class="form-control" onchange="districtSelected(0)"></select></div>
                           </div>
                           <div class="form-group leftMargin">
                             <div class="col-sm-12"><select id="postoffice0" class="form-control"></select></div>
@@ -268,17 +262,6 @@
           </div>
           <!-- /.tab-content -->
         </div>
-        <!-- nav-tabs-custom -->
-        <!-- <div class="row" style="margin-bottom: 20px;">
-          <div class="col-md-10">
-            <div class="row">
-              <div class="box-footer pull-left" style="border-top: 0px">
-                <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
-                <button class="btn btn-flat btn-primary" onclick="submitEdit()">Save</button>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
     <div style="clear:both;"></div>
@@ -331,9 +314,9 @@
   addressInputs = ['postcode', 'hpf', 'var'];
   contactDropdowns = ['section', 'department', 'designation'];
   contactInputs = ['email', 'name', 'phone'];
-  let allCompanies = [], allDepartments = [], allDesignations = [], allSections = [], allCountries = [], allDistricts = [], allPO = [], diplayCompanies = [];
+  let allCompanies = [], allDepartments = [], allDesignations = [], allSections = [], allCountries = [], allDivisions = [], allPO = [], diplayCompanies = [];
   let addressTypes = [];
-  let selectedId, departmentMap;
+  let selectedId, departmentMap, divisionMap;
   let addressSize = 1;
   let contactSize = 1;
 
@@ -344,10 +327,13 @@
   });
   getDropdownData('tov?type=Designations', 'designation0', 'Select Designation').then(data => allDesignations = data.values);
   getDropdownData('tov?type=Country', 'country0', 'Select Countries').then(data => allCountries = data.values);
-  getDropdownData('tov?type=District', 'district0', 'Select Districts').then(data => allDistricts = data.values);
-  getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data.values);
+  // getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data.values);
   getDropdownData('tov?type=Company Type', 'companyType', 'Select Company Type').then(data => setSelectionList('searchType', data.values));
   getDropdownData('tov?type=Address Type', 'addressType0', 'Select Address Type').then(data => addressTypes = data.values);
+  getDropdownData('tov?type=Division', 'division0', 'Select Division').then(data => {
+    allDivisions = data.values;
+    divisionMap = data.map;
+  });
 
   function getSubmitData() {
     const object = {};
@@ -378,6 +364,20 @@
     const selectedDepartment = getSelectedText('department' + index);
     allSections = departmentMap[selectedDepartment].map(element => element.Section);
     setSelectionList('section' + index, allSections, 'Select Section');
+  }
+  
+  function divisionSelected(index) {
+    const selectedDivision = getSelectedText('division' + index);
+    const districtList = divisionMap[selectedDivision].map(element => element.District);
+    setSelectionList('district' + index, districtList);
+  }
+
+  function districtSelected(index) {
+    const selectedDistrict = getSelectedText('district' + index);
+    $.get('/api/tovValue?type=District&value=' + selectedDistrict, (res) => {
+      const poList = res.map(element => element['Post Office']);
+      setSelectionList('postoffice' + index, poList);
+    })
   }
 
   function getInputValue(id) {
@@ -434,12 +434,13 @@
   }
   
   function addAddress() {
+    
     const address = `<div class="col-md-12 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
       + generateDropDown(`addressType` + addressSize, 'form-control', addressTypes)
-      + generateDropDown(`division` + addressSize, 'form-control', ['Chittagong', 'Dhaka', 'Khulna']) + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'])
+      + generateDropDown(`division` + addressSize, 'form-control', allDivisions, 'divisionSelected(' + addressSize + ')') + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'])
       + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code') + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
       + '</div></div><div class="col-md-6"><div class="row">'
-      + generateDropDown(`country` + addressSize, 'form-control', allCountries, null, 'leftMargin') + generateDropDown(`district` + addressSize, 'form-control', allDistricts, null, 'leftMargin')
+      + generateDropDown(`country` + addressSize, 'form-control', allCountries, null, 'leftMargin') + generateDropDown(`district` + addressSize, 'form-control', [], null, 'leftMargin')
       + generateDropDown(`postoffice` + addressSize, 'form-control', allPO, null, 'leftMargin') + generateInputForm('text', 'form-control', 'var' + addressSize, null, 'Village/Road', 'leftMargin')
       + '<div class="form-group leftMargin"><div class="col-sm-12"><button class="btn btn-flat btn-danger">Delete</button></div></div></div></div></div></div></div>';
 
@@ -467,7 +468,8 @@
 
   function generateDropDown(idvalue, className, list, onSelect, parentClass = null) {
     if(!parentClass) parentClass = '';
-    let string = `<div class="form-group ` + parentClass + `"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
+    if(!onSelect) onSelect = '';
+    let string = `<div class="form-group ` + parentClass + `" onchange="` + onSelect + `"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
     list.forEach(element => string += '<option>' + element + '</option>');
     string += '</select></div></div>';
 
