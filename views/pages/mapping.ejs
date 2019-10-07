@@ -91,7 +91,7 @@
 	let currentJson = [
 		{ type: 'designations', value: 'Manager' }, { type: 'departments', value: 'Admin' }
 	];
-	let masterTypeIndex, masterValueIndex;
+	let masterTypeIndex;
 	childNumber = 0;
 	getValue();
 
@@ -104,15 +104,13 @@
 	}
 
 	function typeSelected(selection) {
-		masterTypeIndex = selection.selectedIndex - 2;
+		masterTypeIndex = selection.selectedIndex - 1;
 		document.getElementById('masterValue').innerHTML = '<option hidden disabled selected value> Select Value </option>';
 		setSelectionList('masterValue', allValues[masterTypeIndex].values);
 	}
 
 	function valueSelected(selection) {
 		currentJson = [];
-		masterValueIndex = selection.selectedIndex - 1;
-
 		const value = getSelectedText('masterValue');
 		const type = getSelectedText('masterType');
 

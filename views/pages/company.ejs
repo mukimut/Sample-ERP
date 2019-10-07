@@ -10,9 +10,23 @@
   .secMargin {
     margin-left: 10px;
   }
-
   .btn_lm {
     margin-left: -4px;
+  }
+  .fa_edt {
+    font-size: 22px;
+    color: rgb(4, 117, 161);
+    font-weight: bold;
+  }
+  .fa_dlt {
+    font-size: 22px;
+    color: red;
+    font-weight: bold;
+  }
+  .fa_detail{
+    font-size: 24px;
+    color: rgb(202, 132, 3);
+    font-weight: bold;
   }
 </style>
 <div class="content-wrapper">
@@ -92,7 +106,16 @@
                   </div>
                 </div>
               </div>
-
+              <div class="row">
+                <div class="col-md-10">
+                  <div class="row">
+                    <div class="box-footer pull-left" style="border-top: 0px">
+                      <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
+                      <button class="btn btn-flat btn-primary" onclick="submitEdit()">Save</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_2">
@@ -143,9 +166,15 @@
                       </div>
                       <div class="col-md-6">
                         <div class="row">
-                          <div class="form-group leftMargin"><div class="col-sm-12"><select id="country0" class="form-control"></select></div></div>
-                          <div class="form-group leftMargin"><div class="col-sm-12"><select id="district0" class="form-control"></select></div></div>
-                          <div class="form-group leftMargin"><div class="col-sm-12"><select id="postoffice0" class="form-control"></select></div></div>
+                          <div class="form-group leftMargin">
+                            <div class="col-sm-12"><select id="country0" class="form-control"></select></div>
+                          </div>
+                          <div class="form-group leftMargin">
+                            <div class="col-sm-12"><select id="district0" class="form-control"></select></div>
+                          </div>
+                          <div class="form-group leftMargin">
+                            <div class="col-sm-12"><select id="postoffice0" class="form-control"></select></div>
+                          </div>
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
                               <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
@@ -162,6 +191,9 @@
                   <div class="row">
                     <div class="box-footer pull-left" style="border-top: 0px">
                       <button class="btn btn-flat btn-success" onclick="addAddress()">Add</button>
+                      <button class="btn btn-flat btn-danger" onclick="addContact()">Delete</button>
+                      <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
+                      <button class="btn btn-flat btn-primary" onclick="submitEdit()">Save</button>
                     </div>
                   </div>
                 </div>
@@ -184,14 +216,16 @@
                             <div class="col-sm-12"><select id="designation0" class="form-control"></select></div>
                           </div>
                           <div class="form-group">
-                            <div class="col-sm-12"><input type="email" class="form-control" id="email0" placeholder="Email Address"></div>
+                            <div class="col-sm-12"><input type="email" class="form-control" id="email0"
+                                placeholder="Email Address"></div>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="row">
                           <div class="form-group leftMargin">
-                            <div class="col-sm-12 "><select id="department0" class="form-control" onchange="departmentSelected(0)"></select></div>
+                            <div class="col-sm-12 "><select id="department0" class="form-control"
+                                onchange="departmentSelected(0)"></select></div>
                           </div>
                           <div class="form-group leftMargin">
                             <div class="col-sm-12"><select id="section0" class="form-control"></select></div>
@@ -212,6 +246,8 @@
                   <div class="row">
                     <div class="box-footer pull-left" style="border-top: 0px">
                       <button class="btn btn-flat btn-success" onclick="addContact()">Add</button>
+                      <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
+                      <button class="btn btn-flat btn-primary" onclick="submitEdit()">Save</button>
                     </div>
                   </div>
                 </div>
@@ -222,7 +258,7 @@
           <!-- /.tab-content -->
         </div>
         <!-- nav-tabs-custom -->
-        <div class="row" style="margin-bottom: 20px;">
+        <!-- <div class="row" style="margin-bottom: 20px;">
           <div class="col-md-10">
             <div class="row">
               <div class="box-footer pull-left" style="border-top: 0px">
@@ -231,7 +267,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div style="clear:both;"></div>
@@ -343,7 +379,7 @@
     $.get('api/companies', (res) => {
       allCompanies = res;
       diplayCompanies = res;
-      if(selectedId === -1) selectedId = res[res.length - 1].id;
+      if (selectedId === -1) selectedId = res[res.length - 1].id;
       displayList();
     });
   }
@@ -366,8 +402,7 @@
       string += '<tr><td>' + currentCompany.name + '</td><td>' + currentCompany.shortname + '</td>'
       string += '<td>' + currentCompany.phone + '</td><td>' + currentCompany.email + '</td>';
       string += '<td>' + currentCompany.website + '</td>';
-      string += `<td><button class="label label-primary" onclick="edit(` + i + `)">Edit</button>&nbsp;&nbsp;
-                <button class="label label-danger" onclick="deleteRecord(` + i + `)">Delete</button></td></tr>`;
+      string += `<td> <i class="fa fa-edit fa_edt" onclick="edit(` + i + `)"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteRecord(` + i + `)"></i></td></tr>`;
     }
     document.getElementById('companylist').innerHTML = string;
   }
@@ -388,13 +423,13 @@
   }
 
   function addAddress() {
-    const address = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
+    const address = `<div class="col-md-12 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
       + generateDropDown(`addressType` + addressSize, 'form-control', addressTypes)
       + generateDropDown(`division` + addressSize, 'form-control', ['Chittagong', 'Dhaka', 'Khulna']) + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'])
       + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code') + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
       + '</div></div><div class="col-md-6"><div class="row">'
-      + generateDropDown(`country` + addressSize, 'form-control', allCountries) + generateDropDown(`district` + addressSize, 'form-control', allDistricts)
-      + generateDropDown(`postoffice` + addressSize, 'form-control', allPO) + generateInputForm('text', 'form-control', 'var' + addressSize, null, 'Village/Road')
+      + generateDropDown(`country` + addressSize, 'form-control', allCountries, null, 'leftMargin') + generateDropDown(`district` + addressSize, 'form-control', allDistricts, null, 'leftMargin')
+      + generateDropDown(`postoffice` + addressSize, 'form-control', allPO, null, 'leftMargin') + generateInputForm('text', 'form-control', 'var' + addressSize, null, 'Village/Road', 'leftMargin')
       + '</div></div></div></div></div>';
 
     addressSize++;
@@ -405,21 +440,23 @@
 
   function typeFilter() {
     const searchType = getSelectedText('searchType');
-    if(searchType === 'GENERAL') diplayCompanies = allCompanies;
+    if (searchType === 'GENERAL') diplayCompanies = allCompanies;
     else diplayCompanies = allCompanies.filter(element => element.companytype === searchType);
     displayList();
   }
 
-  function generateInputForm(type, className, idValue, value, placeholder) {
-    let string = '<div class="form-group"><div class="col-sm-12"><input type="' + type + '" class="' + className + '" id="' + idValue + '" ';
+  function generateInputForm(type, className, idValue, value, placeholder, parentClass = null) {
+    if(!parentClass) parentClass = '';
+    let string = '<div class="form-group ' + parentClass + '"><div class="col-sm-12"><input type="' + type + '" class="' + className + '" id="' + idValue + '" ';
     if (value) string += ' value = "' + value + '" ';
     if (placeholder) string += ' placeholder="' + placeholder + '"';
     string += '></div></div>';
     return string;
   }
 
-  function generateDropDown(idvalue, className, list, onSelect) {
-    let string = `<div class="form-group"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
+  function generateDropDown(idvalue, className, list, onSelect, parentClass = null) {
+    if(!parentClass) parentClass = '';
+    let string = `<div class="form-group ` + parentClass + `"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
     list.forEach(element => string += '<option>' + element + '</option>');
     string += '</select></div></div>';
 
