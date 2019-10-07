@@ -28,6 +28,12 @@
     color: rgb(202, 132, 3);
     font-weight: bold;
   }
+
+  @media all and (max-width: 991px) {
+  .leftMargin {
+    margin-left: 0px !important;
+  }
+}
 </style>
 <div class="content-wrapper">
   <section class="content-header secMargin">
@@ -133,7 +139,7 @@
                           <div class="form-group">
                             <div class="col-sm-12">
                               <select id="division0" class="form-control">
-                                <option selected>Division </option>
+                                <option selected>Select Division </option>
                                 <option>Chittagong </option>
                                 <option>Rajshahi </option>
                                 <option>Dhaka </option>
@@ -180,6 +186,12 @@
                               <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
                             </div>
                           </div>
+                          <div class="form-group leftMargin">
+                            <div class="col-sm-12">
+                              <button class="btn btn-flat btn-danger">Delete</button>
+                            </div>
+                          </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -191,7 +203,6 @@
                   <div class="row">
                     <div class="box-footer pull-left" style="border-top: 0px">
                       <button class="btn btn-flat btn-success" onclick="addAddress()">Add</button>
-                      <button class="btn btn-flat btn-danger" onclick="addContact()">Delete</button>
                       <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
                       <button class="btn btn-flat btn-primary" onclick="submitEdit()">Save</button>
                     </div>
@@ -421,7 +432,7 @@
     document.getElementById('contactPerson').innerHTML = dom;
     document.getElementById(`department` + (contactSize - 1)).setAttribute('onchange', 'departmentSelected(' + (contactSize - 1) + ')');
   }
-
+  
   function addAddress() {
     const address = `<div class="col-md-12 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
       + generateDropDown(`addressType` + addressSize, 'form-control', addressTypes)
@@ -430,7 +441,7 @@
       + '</div></div><div class="col-md-6"><div class="row">'
       + generateDropDown(`country` + addressSize, 'form-control', allCountries, null, 'leftMargin') + generateDropDown(`district` + addressSize, 'form-control', allDistricts, null, 'leftMargin')
       + generateDropDown(`postoffice` + addressSize, 'form-control', allPO, null, 'leftMargin') + generateInputForm('text', 'form-control', 'var' + addressSize, null, 'Village/Road', 'leftMargin')
-      + '</div></div></div></div></div>';
+      + '<div class="form-group leftMargin"><div class="col-sm-12"><button class="btn btn-flat btn-danger">Delete</button></div></div></div></div></div></div></div>';
 
     addressSize++;
     let dom = document.getElementById('addressArea').innerHTML;
