@@ -40,3 +40,12 @@ function setSelectedValue(id, value) {
 function getSelectedIndex(id) {
     return document.getElementById(id).selectedIndex;
 }
+
+function setLovData(link, id, title) {
+    return new Promise((resolve, reject) => {
+      $.get(link, (data) => {
+        setSelectionList(id, data[0].values, title);
+        resolve(data[0]);
+      });
+    });
+  }
