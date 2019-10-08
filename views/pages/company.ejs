@@ -375,7 +375,7 @@
     $.get('/api/tovValue?type=District&value=' + selectedDistrict, (res) => {
       let thanaList;
       if(!res) thanaList = [];
-      else thanaList = res.map(element => element['Post Office']);
+      else thanaList = res.map(element => element['Police Station']);
       
       setSelectionList('thana' + index, thanaList);
     });
