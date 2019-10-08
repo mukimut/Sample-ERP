@@ -143,13 +143,7 @@
                           </div>
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <select id="thana0" class="form-control">
-                                <option selected>Police Station </option>
-                                <option>Akkelpur </option>
-                                <option>Adamdighi </option>
-                                <option>Atrai </option>
-                                <option>Bagatipara </option>
-                              </select>
+                              <select id="thana0" class="form-control"></select>
                             </div>
                           </div>
                           <div class="form-group">
@@ -327,7 +321,7 @@
   });
   getDropdownData('tov?type=Designations', 'designation0', 'Select Designation').then(data => allDesignations = data.values);
   getDropdownData('tov?type=Country', 'country0', 'Select Countries').then(data => allCountries = data.values);
-  // getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data.values);
+  getDropdownData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data.values);
   getDropdownData('tov?type=Company Type', 'companyType', 'Select Company Type').then(data => setSelectionList('searchType', data.values));
   getDropdownData('tov?type=Address Type', 'addressType0', 'Select Address Type').then(data => addressTypes = data.values);
   getDropdownData('tov?type=Division', 'division0', 'Select Division').then(data => {
@@ -368,16 +362,23 @@
   
   function divisionSelected(index) {
     const selectedDivision = getSelectedText('division' + index);
-    const districtList = divisionMap[selectedDivision].map(element => element.District);
+    let districtList;
+
+    if(!divisionMap[selectedDivision]) districtList = [];
+    else districtList = divisionMap[selectedDivision].map(element => element.District);
+
     setSelectionList('district' + index, districtList);
   }
 
   function districtSelected(index) {
     const selectedDistrict = getSelectedText('district' + index);
     $.get('/api/tovValue?type=District&value=' + selectedDistrict, (res) => {
-      const poList = res.map(element => element['Post Office']);
-      setSelectionList('postoffice' + index, poList);
-    })
+      let thanaList;
+      if(!res) thanaList = [];
+      else thanaList = res.map(element => element['Post Office']);
+      
+      setSelectionList('thana' + index, thanaList);
+    });
   }
 
   function getInputValue(id) {
