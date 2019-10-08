@@ -22,10 +22,17 @@
     color: red;
     font-weight: bold;
   }
-  .fa_detail{
+
+  .fa_detail {
     font-size: 24px;
     color: rgb(202, 132, 3);
     font-weight: bold;
+  }
+
+  @media all and (max-width: 991px) {
+    .leftMargin {
+      margin-left: -14px !important;
+    }
   }
 </style>
 <div class="content-wrapper">
@@ -429,7 +436,8 @@
                   <td>Software</td>
                   <td>Application Software</td>
                   <td>Perpetual</td>
-                  <td><i class="fa fa-edit fa_edt"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt"></i></td>
+                  <td><i class="fa fa-edit fa_edt"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i
+                      class="fa fa-trash-o fa_dlt"></i></td>
                 </tr>
               </tbody>
             </table>
