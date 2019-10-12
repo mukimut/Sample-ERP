@@ -10,30 +10,34 @@
   .secMargin {
     margin-left: 10px;
   }
+
   .btn_lm {
     margin-left: -4px;
   }
+
   .fa_edt {
     font-size: 22px;
     color: rgb(4, 117, 161);
     font-weight: bold;
   }
+
   .fa_dlt {
     font-size: 22px;
     color: red;
     font-weight: bold;
   }
-  .fa_detail{
+
+  .fa_detail {
     font-size: 24px;
     color: rgb(202, 132, 3);
     font-weight: bold;
   }
 
   @media all and (max-width: 991px) {
-  .leftMargin {
-    margin-left: -14px !important;
+    .leftMargin {
+      margin-left: -14px !important;
+    }
   }
-}
 </style>
 <div class="content-wrapper">
   <section class="content-header secMargin">
@@ -64,6 +68,13 @@
                         <div class="row">
                           <div class="form-group">
                             <div class="col-sm-12">
+                              <select id="companyType" class="form-control">
+                                <option>Select Company Type</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-12">
                               <input type="text" class="form-control" id="name" placeholder="Company Name">
                             </div>
                           </div>
@@ -73,29 +84,24 @@
                             </div>
                           </div>
                           <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="email" class="form-control" id="email" placeholder="Email">
+                              <div class="col-sm-12">
+                                <input type="text" class="form-control" id="phone" placeholder="Phone">
+                              </div>
                             </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="email" class="form-control" id="tin" placeholder="TIN No">
-                            </div>
-                          </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="row">
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <select id="companyType" class="form-control"></select>
-                            </div>
-                          </div>
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="phone" placeholder="Phone">
-                            </div>
-                          </div>
+                            <div class="form-group leftMargin">
+                                <div class="col-sm-12">
+                                  <input type="email" class="form-control" id="email" placeholder="Email">
+                                </div>
+                              </div>
+                              <div class="form-group leftMargin">
+                                <div class="col-sm-12">
+                                  <input type="text" class="form-control" id="tin" placeholder="TIN No">
+                                </div>
+                              </div>
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
                               <input type="url" class="form-control" id="website" placeholder="Website">
@@ -133,42 +139,55 @@
                         <div class="row">
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <select id="addressType0" class="form-control"></select>
+                              <select id="addressType0" class="form-control">
+                                <option>Select Address Type</option>
+                              </select>
                             </div>
                           </div>
                           <div class="form-group">
+                              <div class="col-sm-12"><select id="country0" class="form-control">
+                                  <option>Select Country</option>
+                              </select></div>
+                            </div>
+                          <div class="form-group">
                             <div class="col-sm-12">
-                              <select id="division0" class="form-control" onchange="divisionSelected(0)"></select>
+                              <select id="division0" class="form-control" onchange="divisionSelected(0)">
+                                  <option>Select Division</option>
+                              </select>
                             </div>
                           </div>
                           <div class="form-group">
-                            <div class="col-sm-12">
-                              <select id="thana0" class="form-control"></select>
+                              <div class="col-sm-12"><select id="district0" class="form-control"
+                                  onchange="districtSelected(0)">
+                                  <option>Select District</option>
+                                </select></div>
                             </div>
-                          </div>
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <input type="text" class="form-control" id="postcode0" placeholder="Post Code">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
+                              <select id="thana0" class="form-control">
+                                  <option>Select Thana</option>
+                              </select>
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="row">
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12"><select id="country0" class="form-control"></select></div>
-                          </div>
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12"><select id="district0" class="form-control" onchange="districtSelected(0)"></select></div>
-                          </div>
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12"><select id="postoffice0" class="form-control"></select></div>
-                          </div>
+                            <div class="form-group leftMargin">
+                                <div class="col-sm-12"><select id="postoffice0" class="form-control">
+                                    <option>Select Post Office</option>
+                                </select></div>
+                              </div>
+                            <div class="form-group leftMargin">
+                              <div class="col-sm-12">
+                                <input type="text" class="form-control" id="postcode0" placeholder="Post Code">
+                              </div>
+                            </div>
+                            <div class="form-group leftMargin">
+                              <div class="col-sm-12">
+                                <input type="text" class="form-control" id="hpf0" placeholder="House/ Plot/ Flat">
+                              </div>
+                            </div>
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
                               <input type="text" class="form-control" id="var0" placeholder="Village/ Area/ Road">
@@ -179,7 +198,7 @@
                               <button class="btn btn-flat btn-danger">Delete</button>
                             </div>
                           </div>
-                          
+
                         </div>
                       </div>
                     </div>
@@ -212,23 +231,30 @@
                             </div>
                           </div>
                           <div class="form-group">
-                            <div class="col-sm-12"><select id="designation0" class="form-control"></select></div>
-                          </div>
+                              <div class="col-sm-12 "><select id="department0" class="form-control"
+                                  onchange="departmentSelected(0)">
+                                <option>Select Department</option>
+                                </select></div>
+                            </div>
                           <div class="form-group">
-                            <div class="col-sm-12"><input type="email" class="form-control" id="email0"
-                                placeholder="Email Address"></div>
+                            <div class="col-sm-12">
+                              <select id="designation0" class="form-control">
+                                  <option>Select Designation</option>
+                              </select></div>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="row">
                           <div class="form-group leftMargin">
-                            <div class="col-sm-12 "><select id="department0" class="form-control"
-                                onchange="departmentSelected(0)"></select></div>
+                            <div class="col-sm-12"><select id="section0" class="form-control">
+                                <option>Select Section</option>
+                            </select></div>
                           </div>
                           <div class="form-group leftMargin">
-                            <div class="col-sm-12"><select id="section0" class="form-control"></select></div>
-                          </div>
+                              <div class="col-sm-12"><input type="email" class="form-control" id="email0"
+                                  placeholder="Email Address"></div>
+                            </div>
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
                               <input type="text" class="form-control" id="phone0" placeholder="Contact No">
@@ -359,12 +385,12 @@
     allSections = departmentMap[selectedDepartment].map(element => element.Section);
     setSelectionList('section' + index, allSections, 'Select Section');
   }
-  
+
   function divisionSelected(index) {
     const selectedDivision = getSelectedText('division' + index);
     let districtList;
 
-    if(!divisionMap[selectedDivision]) districtList = [];
+    if (!divisionMap[selectedDivision]) districtList = [];
     else districtList = divisionMap[selectedDivision].map(element => element.District);
 
     setSelectionList('district' + index, districtList, 'Select District');
@@ -374,9 +400,9 @@
     const selectedDistrict = getSelectedText('district' + index);
     $.get('/api/tovValue?type=District&value=' + selectedDistrict, (res) => {
       let thanaList;
-      if(!res) thanaList = [];
+      if (!res) thanaList = [];
       else thanaList = res.map(element => element['Police Station']);
-      
+
       setSelectionList('thana' + index, thanaList, 'Select Thana');
     });
   }
@@ -424,9 +450,9 @@
     document.getElementById('contactPerson').innerHTML = dom;
     document.getElementById(`department` + (contactSize - 1)).setAttribute('onchange', 'departmentSelected(' + (contactSize - 1) + ')');
   }
-  
+
   function addAddress() {
-    
+
     const address = `<div class="col-md-12 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
       + generateDropDown(`addressType` + addressSize, 'form-control', addressTypes)
       + generateDropDown(`division` + addressSize, 'form-control', allDivisions, 'divisionSelected(' + addressSize + ')') + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'])
@@ -450,7 +476,7 @@
   }
 
   function generateInputForm(type, className, idValue, value, placeholder, parentClass = null) {
-    if(!parentClass) parentClass = '';
+    if (!parentClass) parentClass = '';
     let string = '<div class="form-group ' + parentClass + '"><div class="col-sm-12"><input type="' + type + '" class="' + className + '" id="' + idValue + '" ';
     if (value) string += ' value = "' + value + '" ';
     if (placeholder) string += ' placeholder="' + placeholder + '"';
@@ -459,8 +485,8 @@
   }
 
   function generateDropDown(idvalue, className, list, onSelect, parentClass = null) {
-    if(!parentClass) parentClass = '';
-    if(!onSelect) onSelect = '';
+    if (!parentClass) parentClass = '';
+    if (!onSelect) onSelect = '';
     let string = `<div class="form-group ` + parentClass + `" onchange="` + onSelect + `"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
     list.forEach(element => string += '<option>' + element + '</option>');
     string += '</select></div></div>';
