@@ -10,6 +10,30 @@
   .secMargin {
     margin-left: 10px;
   }
+
+  .fa_edt {
+    font-size: 22px;
+    color: rgb(4, 117, 161);
+    font-weight: bold;
+  }
+
+  .fa_dlt {
+    font-size: 22px;
+    color: red;
+    font-weight: bold;
+  }
+
+  .fa_detail {
+    font-size: 24px;
+    color: rgb(202, 132, 3);
+    font-weight: bold;
+  }
+
+  @media all and (max-width: 991px) {
+    .leftMargin {
+      margin-left: -14px !important;
+    }
+  }
 </style>
 <div class="content-wrapper">
   <section class="content-header secMargin">
@@ -45,14 +69,19 @@
                           </div>
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <input type="text" class="form-control" id="middlename" placeholder="Middle Name">
+                              <input type="text" class="form-control" id="lastname" placeholder="Last Name">
                             </div>
                           </div>
-                          <div class="form-group">
+                          <!-- <div class="form-group">
                             <div class="col-sm-12">
-                              <input type="text" class="form-control" id="lastname" placeholder="Title">
+                              <select id="lastname" class="form-control">
+                                <option selected>Title</option>
+                                <option>Mr.</option>
+                                <option>Mrs</option>
+                                <option>Mss</option>
+                              </select>
                             </div>
-                          </div>
+                          </div> -->
                           <div class="form-group">
                             <div class="col-sm-12">
                               <input type="text" class="form-control" id="father" placeholder="Fathers Name">
@@ -60,41 +89,22 @@
                           </div>
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <!-- <label>Date of Birth</label> -->
+                              <input type="text" class="form-control" id="mother" placeholder="Mothers Name">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-12">
                               <input type="date" class="form-control" id="birthday" name="dateOfBirth">
                             </div>
                           </div>
-                          <!-- <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="tin" placeholder="Birth Place">
-                            </div>
-                          </div> -->
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <select id="blood" class="form-control">
-                                <option selected>Blood Group</option>
-                                <option>A+</option>
-                                <option>B+</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <select id="religion" class="form-control">
-                                <option selected>Religion</option>
-                                <option>Islam</option>
-                                <option>Hindue</option>
-                              </select>
+                              <select id="blood" class="form-control"></select>
                             </div>
                           </div>
                           <div class="form-group">
                             <div class="col-sm-12">
                               <input type="text" class="form-control" id="nid" placeholder="National Id No">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="license" placeholder="Driving License No">
                             </div>
                           </div>
                         </div>
@@ -103,46 +113,27 @@
                         <div class="row">
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
-                              <input type="text" class="form-control" id="lastname" placeholder="Last Name">
-                            </div>
-                          </div>
-                          <!-- <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="nickNmae" placeholder="Nick Name">
-                            </div>
-                          </div> -->
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="mother" placeholder="Mothers Name">
-                            </div>
-                          </div>
-                          <!-- <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <input type="text" class="form-control" id="age" placeholder="Age">
-                            </div>
-                          </div> -->
-                          <div class="form-group leftMargin">
-                            <div class="col-sm-12">
-                              <select id="gender" class="form-control">
-                                <option selected>Gender</option>
-                                <option>Male</option>
-                                <option>Female</option>
-                              </select>
+                              <input type="text" class="form-control" id="phone" placeholder="Phone No">
                             </div>
                           </div>
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
-                              <select id="relationship" class="form-control">
-                                <option selected>Merital Status</option>
-                                <option>Married</option>
-                                <option>UnMarried</option>
-                                <option>Single</option>
-                              </select>
+                              <input type="email" class="form-control" id="email" placeholder="Email">
                             </div>
                           </div>
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
-                              <input type="text" class="form-control" id="nationality" placeholder="Nationality">
+                              <select id="gender" class="form-control"></select>
+                            </div>
+                          </div>
+                          <div class="form-group leftMargin">
+                            <div class="col-sm-12">
+                              <select id="relationship" class="form-control"></select>
+                            </div>
+                          </div>
+                          <div class="form-group leftMargin">
+                            <div class="col-sm-12">
+                              <select id="religion" class="form-control"></select>
                             </div>
                           </div>
                           <div class="form-group leftMargin">
@@ -153,6 +144,11 @@
                           <div class="form-group leftMargin">
                             <div class="col-sm-12">
                               <input type="text" class="form-control" id="tin" placeholder="TIN No">
+                            </div>
+                          </div>
+                          <div class="form-group leftMargin">
+                            <div class="col-sm-12">
+                              <input type="text" class="form-control" id="license" placeholder="Driving License No">
                             </div>
                           </div>
                         </div>
@@ -178,7 +174,7 @@
                             <div class="row">
                               <div class="form-group">
                                 <div class="col-sm-12">
-                                  <select id="addressType0" class="form-control">
+                                  <select id="division0" class="form-control">
                                     <option selected>Division </option>
                                     <option>Chittagong </option>
                                     <option>Rajshahi </option>
@@ -359,7 +355,7 @@
                 <div class="row">
                   <div class="box-footer pull-left" style="border-top: 0px">
                     <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
-                    <button class="btn btn-flat btn-primary" onclick="submitEdit()">Edit</button>
+                    <button class="btn btn-flat btn-primary" onclick="submitEdit()">Save</button>
                   </div>
                 </div>
               </div>
@@ -371,7 +367,46 @@
       </div>
       <!-- /.col -->
     </div>
-
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Employee Details</h3>
+            <div class="box-tools">
+              <div class="input-group input-group-sm" style="width: 150px;">
+                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                <div class="input-group-btn">
+                  <button type="submit" class="btn btn-flat btn-success"><i class="fa fa-search"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <tbody id="usertable">
+                <tr>
+                  <th>Employee Name</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Present Address</th>
+                  <th>Permanent Address</th>
+                  <th>Action</th>
+                </tr>
+                <tr>
+                  <td>whatever</td>
+                  <td>descriptiom</td>
+                  <td>Software</td>
+                  <td>Application Software</td>
+                  <td>Perpetual</td>
+                  <td><i class="fa fa-edit fa_edt"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i
+                      class="fa fa-trash-o fa_dlt"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </div>
 
@@ -379,14 +414,38 @@
 </section>
 <div class="clearfix"></div>
 </div>
-
+<script src="/js/dropdown.js"></script>
 <script>
-  const inputList = ['firstname', 'middlename', 'lastname', 'mother', 'father', 'nationality', 'tin', 'passport', 'license', 'nid', 'birthday'];
+  const inputList = ['firstname', 'lastname', 'mother', 'father', 'nationality', 'tin', 'passport', 'license', 'nid', 'birthday'];
   const selectList = ['religion', 'blood', 'gender', 'relationship'];
+  let allDivisions = [];
+  let divisionMap;
+
+  setLovData('tov?type=Religion', 'religion', 'Select Religion');
+  setLovData('tov?type=Blood Group', 'blood', 'Select Blood Group');
+  setLovData('tov?type=Gender', 'gender', 'Select Gender');
+  setLovData('tov?type=Country', 'nationality', 'Select Nationality');
+  setLovData('tov?type=Maritial Status', 'relationship', 'Select Maritial Status');
+  setLovData('tov?type=Division', 'division0', 'Select Division').then(data => {
+    allDivisions = data.values;
+    divisionMap = data.map;
+  });
+  //relationship
 
   function getInputData(data) {
     inputList.forEach(id => data[id] = document.getElementById(id).value);
     selectList.forEach(id => data[id] = getSelectedText(id));
     return data;
   }
+
+  function submit() {
+    const data = getInputData({});
+
+    $.post('/employee', data, (res) => {
+      if (res) {
+        console.log('Data Submitted');
+      }
+    })
+  }
+
 </script>

@@ -5,9 +5,9 @@ module.exports = {
         mother: {type: 'string'}, father: {type: 'string'}, relationship: {type: 'string'},
         religion: {type: 'string'},blood: {type: 'string'},nationality: {type: 'string'},gender: {type: 'string'},
         tin: {type: 'string'},passport: {type: 'string'},license: {type: 'string'},nid: {type: 'string'},
-        birthday: {type: 'string', columnType: 'date'},licensedate: {type: 'string', columnType: 'date'}
+        birthday: {type: 'string', columnType: 'date'},licensedate: {type: 'string', columnType: 'date', defaultsTo: '2000-01-01'}
     },
-    tableName: 'users'
+    tableName: 'employee'
 }
 
 
