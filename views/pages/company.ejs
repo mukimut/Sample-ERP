@@ -164,7 +164,7 @@
                             </div>
                           <div class="form-group">
                             <div class="col-sm-12">
-                              <select id="thana0" class="form-control">
+                              <select id="thana0" class="form-control" onchange="thanaSelected(0)">
                                   <option>Select Thana</option>
                               </select>
                             </div>
@@ -347,7 +347,7 @@
   });
   setLovData('tov?type=Designations', 'designation0', 'Select Designation').then(data => allDesignations = data.values);
   setLovData('tov?type=Country', 'country0', 'Select Countries').then(data => allCountries = data.values);
-  setLovData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data.values);
+  // setLovData('tov?type=Post Office', 'postoffice0', 'Select Post Office').then(data => allPO = data.values);
   setLovData('tov?type=Company Type', 'companyType', 'Select Company Type').then(data => setSelectionList('searchType', data.values));
   setLovData('tov?type=Address Type', 'addressType0', 'Select Address Type').then(data => addressTypes = data.values);
   setLovData('tov?type=Division', 'division0', 'Select Division').then(data => {
@@ -397,13 +397,21 @@
   }
 
   function districtSelected(index) {
-    const selectedDistrict = getSelectedText('district' + index);
-    $.get('/api/tovValue?type=District&value=' + selectedDistrict, (res) => {
-      let thanaList;
-      if (!res) thanaList = [];
-      else thanaList = res.map(element => element['Police Station']);
+    setFilteredSelection('district' + index, 'District', 'Police Station', 'thana' + index, 'Select Thana');
+  }
 
-      setSelectionList('thana' + index, thanaList, 'Select Thana');
+  function thanaSelected(index) {
+    setFilteredSelection('thana' + index, 'Police Station', 'Post Office', 'postoffice' + index, 'Select Post Office');
+  }
+
+  function setFilteredSelection(sourceId, linkType, filterKey, destinationId, title) {
+    const selectedItem = getSelectedText(sourceId);
+    $.get('/api/tovValue?type=' + linkType + '&value=' + selectedItem, (res) => {
+      let filteredList;
+      if(!res) filteredList = [];
+      else filteredList = res.map(element => element[filterKey]);
+
+      setSelectionList(destinationId, filteredList, title);
     });
   }
 
@@ -459,7 +467,7 @@
       + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code') + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
       + '</div></div><div class="col-md-6"><div class="row">'
       + generateDropDown(`country` + addressSize, 'form-control', allCountries, null, 'leftMargin') + generateDropDown(`district` + addressSize, 'form-control', [], null, 'leftMargin')
-      + generateDropDown(`postoffice` + addressSize, 'form-control', allPO, null, 'leftMargin') + generateInputForm('text', 'form-control', 'var' + addressSize, null, 'Village/Road', 'leftMargin')
+      + generateDropDown(`postoffice` + addressSize, 'form-control', [], null, 'leftMargin') + generateInputForm('text', 'form-control', 'var' + addressSize, null, 'Village/Road', 'leftMargin')
       + '<div class="form-group leftMargin"><div class="col-sm-12"><button class="btn btn-flat btn-danger">Delete</button></div></div></div></div></div></div></div>';
 
     addressSize++;
