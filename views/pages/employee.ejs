@@ -383,25 +383,14 @@
           </div>
           <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
-              <tbody id="usertable">
-                <tr>
-                  <th>Employee Name</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                  <th>Present Address</th>
-                  <th>Permanent Address</th>
-                  <th>Action</th>
-                </tr>
-                <tr>
-                  <td>whatever</td>
-                  <td>descriptiom</td>
-                  <td>Software</td>
-                  <td>Application Software</td>
-                  <td>Perpetual</td>
-                  <td><i class="fa fa-edit fa_edt"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i
-                      class="fa fa-trash-o fa_dlt"></i></td>
-                </tr>
-              </tbody>
+              <thead ><tr>
+                <th>Employee Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Action</th>
+              </tr></thead>
+              <tbody id="usertable"><tr>
+              </tr></tbody>
             </table>
           </div>
         </div>
@@ -419,7 +408,10 @@
   const inputList = ['firstname', 'lastname', 'mother', 'father', 'nationality', 'tin', 'passport', 'license', 'nid', 'birthday'];
   const selectList = ['religion', 'blood', 'gender', 'relationship'];
   let allDivisions = [];
+  let allEmployees = [];
   let divisionMap;
+
+  getEmployee();
 
   setLovData('tov?type=Religion', 'religion', 'Select Religion');
   setLovData('tov?type=Blood Group', 'blood', 'Select Blood Group');
@@ -430,7 +422,28 @@
     allDivisions = data.values;
     divisionMap = data.map;
   });
-  //relationship
+
+  function getEmployee() {
+    $.get('/api/employees', (res) => {
+      allEmployees = res;
+      let string = '';
+      res.forEach(element => {
+        string += '<tr><td>' + element.firstname + ' ' + element.lastname + '</td>';
+        string += '<td>' + element.userid + '</td><td>' + element.middlename + '</td>';
+        string += '<td><i class="fa fa-edit fa_edt"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt"></i></td>'
+        document.getElementById('usertable').innerHTML = string;
+        /*
+                <td>whatever</td>
+                <td>descriptiom</td>
+                <td>Software</td>
+                <td>Application Software</td>
+                <td>Perpetual</td>
+                <td><i class="fa fa-edit fa_edt"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i
+                    class="fa fa-trash-o fa_dlt"></i></td>
+                    */
+      })
+    })
+  }
 
   function getInputData(data) {
     inputList.forEach(id => data[id] = document.getElementById(id).value);
@@ -443,7 +456,7 @@
 
     $.post('/employee', data, (res) => {
       if (res) {
-        console.log('Data Submitted');
+        getEmployee();
       }
     })
   }

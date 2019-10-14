@@ -1,6 +1,6 @@
 module.exports = {
     attributes: {
-        id: {type: 'number', columnName: 'employeeid', autoIncrement: true}, userid: {type: 'number'},
+        id: {type: 'number', columnName: 'employeeid', autoIncrement: true}, userid: {type: 'number', allowNull: true},
         firstname: {type: 'string'}, middlename: {type: 'string'}, lastname: {type: 'string'},
         mother: {type: 'string'}, father: {type: 'string'}, relationship: {type: 'string'},
         religion: {type: 'string'},blood: {type: 'string'},nationality: {type: 'string'},gender: {type: 'string'},
