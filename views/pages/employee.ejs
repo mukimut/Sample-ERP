@@ -72,16 +72,6 @@
                               <input type="text" class="form-control" id="lastname" placeholder="Last Name">
                             </div>
                           </div>
-                          <!-- <div class="form-group">
-                            <div class="col-sm-12">
-                              <select id="lastname" class="form-control">
-                                <option selected>Title</option>
-                                <option>Mr.</option>
-                                <option>Mrs</option>
-                                <option>Mss</option>
-                              </select>
-                            </div>
-                          </div> -->
                           <div class="form-group">
                             <div class="col-sm-12">
                               <input type="text" class="form-control" id="father" placeholder="Fathers Name">
@@ -250,9 +240,6 @@
                           </div>
                         </div>
                       </div>
-                      <!-- <div class="col-md-1">
-                  <button class="btn btn-flat btn-success" onclick="addAddress()">Add</button>
-                </div> -->
                     </div>
                     <div class="row">
                       <h2 class="page-header">Permanent Address</h2>
@@ -354,8 +341,8 @@
               <div class="col-md-10">
                 <div class="row">
                   <div class="box-footer pull-left" style="border-top: 0px">
-                    <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
-                    <button class="btn btn-flat btn-primary" onclick="submitEdit()">Save</button>
+                    <button class="btn btn-flat btn-success" onclick="submit()" id="saveButton">Save</button>
+                    <button class="btn btn-flat btn-primary" onclick="submitEdit()" id="editButton" style="visibility: collapse;">Save</button>
                   </div>
                 </div>
               </div>
@@ -405,11 +392,11 @@
 </div>
 <script src="/js/dropdown.js"></script>
 <script>
-  const inputList = ['firstname', 'lastname', 'mother', 'father', 'nationality', 'tin', 'passport', 'license', 'nid', 'birthday', 'phone', 'email'];
+  const inputList = ['firstname', 'lastname', 'mother', 'father', 'tin', 'passport', 'license', 'nid', 'birthday', 'phone', 'email'];
   const selectList = ['religion', 'blood', 'gender', 'relationship'];
   let allDivisions = [];
   let allEmployees = [];
-  let divisionMap;
+  let divisionMap, selectedEmployee;
 
   getEmployee();
 
@@ -427,28 +414,38 @@
     $.get('/api/employees', (res) => {
       allEmployees = res;
       let string = '';
-      res.forEach(element => {
+      res.forEach((element, index) => {
         string += '<tr><td>' + element.firstname + ' ' + element.lastname + '</td>';
-        string += '<td>' + element.userid + '</td><td>' + element.middlename + '</td>';
-        string += '<td><i class="fa fa-edit fa_edt"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt"></i></td>'
+        string += '<td>' + element.phone + '</td><td>' + element.email + '</td>';
+        string += '<td><i class="fa fa-edit fa_edt" onclick=editEmployee(' + index + ')></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteEmployee(' + index + ')"></i></td>'
         document.getElementById('usertable').innerHTML = string;
-        /*
-                <td>whatever</td>
-                <td>descriptiom</td>
-                <td>Software</td>
-                <td>Application Software</td>
-                <td>Perpetual</td>
-                <td><i class="fa fa-edit fa_edt"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i
-                    class="fa fa-trash-o fa_dlt"></i></td>
-                    */
-      })
-    })
+      });
+    });
   }
 
   function getInputData(data) {
     inputList.forEach(id => data[id] = document.getElementById(id).value);
     selectList.forEach(id => data[id] = getSelectedText(id));
     return data;
+  }
+
+  function deleteEmployee(index) {
+    const id =  allEmployees[index].employeeid;
+    $.ajax({
+      url: '/employee', method: 'DELETE', data: { id: id }, success: res => {
+        if (res.update) getEmployee();
+      }
+    });
+  }
+
+  function editEmployee(index) {
+    selectedEmployee = allEmployees[index].employeeid;
+    inputList.forEach(id => document.getElementById(id).value = allEmployees[index][id]);
+    selectList.forEach(id => setSelectedValue(id, allEmployees[index][id]));
+
+    document.getElementById('saveButton').style.visibility = 'collapse';
+    document.getElementById('editButton').style.visibility = 'visible';
+
   }
 
   function submit() {
