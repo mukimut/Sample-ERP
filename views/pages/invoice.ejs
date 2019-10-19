@@ -3,6 +3,11 @@
 		margin: 0;
 		padding: 0;
 	}
+
+	.no_margin_padding_right {
+		margin-right: 0;
+		padding-right: 0;
+	}
 </style>
 <div class="content-wrapper">
 	<section class="content-header">
@@ -25,43 +30,134 @@
 			</div>
 		</div>
 		<div class="clear: both;"></div>
-		<!-- style="border: 1px solid #ccc;" -->
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="row">
-					<!-- <div class="col-sm-1 no_margin_padding"></div> -->
 					<div class="col-sm-12">
-						<span>Test Limited</span><br>
-						<span>Road</span><br>
-						<span>Attn</span><br>
-						<span>Contact No</span>
+						<table>
+							<tr>
+								<td></td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-6">
 				<div class="row">
-					<div class="col-sm-3">Payment Term</div>
-					<div class="col-sm-3">:</div>
-					<div class="col-sm-3">Cash</div>
-					<div class="col-sm-3"></div>
+					<table class="table pull-right">
+						<tr>
+							<td style="width:60%;">Invoice Number</td>
+							<td style="width:10%;">&nbsp;</td>
+							<td style="width:40%;">Date</td>
+						</tr>
+						<tr>
+							<td style="width:60%;">GIT-INV-</td>
+							<td style="width:10%;">&nbsp;</td>
+							<td style="width:40%;">19/10/2019</td>
+						</tr>
+					</table>
 				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right" style="background-color: #f2f2f2;">
 				<div class="row">
-					<div class="col-sm-3">Po Number</div>
-					<div class="col-sm-3">:</div>
-					<div class="col-sm-3"></div>
-					<div class="col-sm-3"></div>
+					<div class="col-sm-12">
+						<table class="table">
+							<tr>
+								<td>TEST Limited</td>
+							</tr>
+							<tr>
+								<td>Rod.#22,dhaka</td>
+							</tr>
+							<tr>
+								<td>Attn:</td>
+							</tr>
+							<tr>
+								<td>Contact Number</td>
+							</tr>
+						</table>
+					</div>
 				</div>
+			</div>
+			<div class="col-sm-6" style="background-color: #92d050;">
 				<div class="row">
-					<div class="col-sm-3">Due Within</div>
-					<div class="col-sm-3">:</div>
-					<div class="col-sm-3"></div>
-					<div class="col-sm-3"></div>
+					<table class="table pull-right">
+						<tr>
+							<td style="width:40%;">Payment Term</td>
+							<td style="width:10%;">:</td>
+							<td style="width:60%;">Cash</td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td style="width:40%;">PO Number</td>
+							<td style="width:10%;">:</td>
+							<td style="width:60%;"></td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td style="width:40%;">Due Within</td>
+							<td style="width:10%;">:</td>
+							<td style="width:60%;"></td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td style="width:40%;">Billing Period</td>
+							<td style="width:10%;">:</td>
+							<td style="width:60%;"></td>
+							<td>&nbsp;</td>
+						</tr>
+					</table>
 				</div>
+			</div>
+		</div>
+		<div class="row">
+			<!-- <div class="col-sm-6 no_margin_padding_right" style="background-color: #d9d9d9;">
 				<div class="row">
-					<div class="col-sm-3">Billing Period</div>
-					<div class="col-sm-3">:</div>
-					<div class="col-sm-3"></div>
-					<div class="col-sm-3"></div>
+					<div class="col-sm-12">
+						<table class="table">
+							<tr>
+								<td>Item Description</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6" style="background-color: #92d050;">
+				<div class="row">
+					<table class="table pull-right">
+						<tr>
+							<td style="width:25%;">Unit Price</td>
+							<td style="width:25%;">Quantity</td>
+							<td style="width:25%;">Total</td>
+							<td style="width: 25%;">&nbsp;</td>
+						</tr>
+					</table>
+				</div>
+			</div> -->
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right" style="background-color: #d9d9d9;">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table">
+							<tr>
+								<td>Item Description</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6" style="background-color: #92d050;">
+				<div class="row">
+					<table class="table pull-right">
+						<tr>
+							<td style="width:25%;">Unit Price</td>
+							<td style="width:25%;">Quantity</td>
+							<td style="width:25%;">Total</td>
+							<td style="width: 25%;">&nbsp;</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>
