@@ -458,4 +458,15 @@
     })
   }
 
+  function submitEdit() {
+    const data = getInputData({});
+    data['id'] = selectedEmployee;
+
+    $.post('/employee', data, (res) => {
+      if (res) {
+        getEmployee();
+      }
+    })
+  }
+
 </script>
