@@ -1,4 +1,7 @@
 <style>
+	* {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
 	.no_margin_padding {
 		margin: 0;
 		padding: 0;
@@ -7,6 +10,23 @@
 	.no_margin_padding_right {
 		margin-right: 0;
 		padding-right: 0;
+	}
+
+	.table>thead>tr>td,
+	.table>thead>tr>th {
+		border-top: 0;
+	}
+
+	.table>tbody>tr>td,
+	.table>tfoot>tr>td {
+		border-top: 0;
+	}
+	.tbl_heading{
+		font-weight: bold;
+		font-size: 15px;
+	}
+	.font_color_wht{
+		color: white;
 	}
 </style>
 <div class="content-wrapper">
@@ -65,7 +85,7 @@
 					<div class="col-sm-12">
 						<table class="table">
 							<tr>
-								<td>TEST Limited</td>
+								<td><span class="tbl_heading">TEST Limited </span></td>
 							</tr>
 							<tr>
 								<td>Rod.#22,dhaka</td>
@@ -82,7 +102,7 @@
 			</div>
 			<div class="col-sm-6" style="background-color: #92d050;">
 				<div class="row">
-					<table class="table pull-right">
+					<table class="table pull-right font_color_wht">
 						<tr>
 							<td style="width:40%;">Payment Term</td>
 							<td style="width:10%;">:</td>
@@ -111,30 +131,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<!-- <div class="col-sm-6 no_margin_padding_right" style="background-color: #d9d9d9;">
-				<div class="row">
-					<div class="col-sm-12">
-						<table class="table">
-							<tr>
-								<td>Item Description</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-6" style="background-color: #92d050;">
-				<div class="row">
-					<table class="table pull-right">
-						<tr>
-							<td style="width:25%;">Unit Price</td>
-							<td style="width:25%;">Quantity</td>
-							<td style="width:25%;">Total</td>
-							<td style="width: 25%;">&nbsp;</td>
-						</tr>
-					</table>
-				</div>
-			</div> -->
+		<div class="row" style="height: 25px;">
 		</div>
 		<div class="row">
 			<div class="col-sm-6 no_margin_padding_right" style="background-color: #d9d9d9;">
@@ -142,13 +139,13 @@
 					<div class="col-sm-12">
 						<table class="table">
 							<tr>
-								<td>Item Description</td>
+								<td><span class="tbl_heading">Item Description</span></td>
 							</tr>
 						</table>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6" style="background-color: #92d050;">
+			<div class="col-sm-6 tbl_heading font_color_wht" style="background-color: #92d050;">
 				<div class="row">
 					<table class="table pull-right">
 						<tr>
@@ -161,7 +158,143 @@
 				</div>
 			</div>
 		</div>
-		<div class="clearfix"></div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right" style="background-color: #ffffff; height: 50px;">
+			</div>
+			<div class="col-sm-6" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+			<div class="col-sm-6" style="background-color: #d9d9d9; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right" style="background-color: #ffffff; height: 50px;">
+			</div>
+			<div class="col-sm-6" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+			<div class="col-sm-6" style="background-color: #d9d9d9; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right" style="background-color: #ffffff; height: 50px;">
+			</div>
+			<div class="col-sm-6" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+			<div class="col-sm-6" style="background-color: #d9d9d9; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right" style="background-color: #ffffff; height: 50px;">
+			</div>
+			<div class="col-sm-6" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+			<div class="col-sm-6" style="background-color: #d9d9d9; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right">
+			</div>
+			<div class="col-sm-6">
+				<table class="table" style="border: none;">
+					<tr>
+						<td style="width:10%;"></td>
+						<td style="width:50%;">Sub Total</td>
+						<td style="width:40%;">0</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width:10%;"></td>
+						<td style="width:50%;">Tax (VAT 4.5%)</td>
+						<td style="width:40%;"></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width:10%;"></td>
+						<td style="width:50%;">Discount (2%)</td>
+						<td style="width:40%;"></td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right">
+			</div>
+			<div class="col-sm-6" style="background-color: #92d050;">
+				<table class="table">
+					<tr>
+						<td style="width:10%;"></td>
+						<td style="width:50%;">Grand Total</td>
+						<td style="width:40%;">0</td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table">
+							<tr>
+								<td><span style="color: #375623; font-size: 25px;"> Terms &</span> <span style="color: #92d050; font-size: 25px;">Conditions-</span></td>
+							</tr>
+							<tr>
+								<td>Payment msut be done in favour of Goinnovior Technology</td>
+							</tr>
+							<tr>
+								<td>Warranty/Guaranty will not cover for burn and broken case.</td>
+							</tr>
+							<tr>
+								<td>Warranty/Guaranty will not cover for adapter and power supply.</td>
+							</tr>
+							<tr>
+								<td>The afforementioned price is excluding VAT & TAX</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="row">
+				</div>
+			</div>
+		</div>
+		<div class="row tbl_heading">
+			<div class="col-sm-6 no_margin_padding_right">
+					<table class="table">
+							<tr>
+								<td class="tbl_heading">Authorized Signature</td>
+							</tr>
+						</table>
+					
+			</div>
+			<div class="col-sm-6" style="background-color: #92d050;">
+				<table class="table">
+					<tr>
+						<td class="tbl_heading font_color_wht" style="text-align: center;">Received with good condition</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<img src="/images/invoice_footer.png">
+		</div>
 </div>
 </section>
 </div>

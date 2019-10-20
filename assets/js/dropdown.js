@@ -9,13 +9,13 @@ function setSelectionList(id, inputList, title=null) {
 	document.getElementById(id).innerHTML = string;
 }
 
-function getSelectedValues(selectList) {
-	selectList.forEach(element => {
-		const selector = document.getElementById(element);
-		data[element] = selector.options[selector.selectedIndex].text;
-	});
-	return data;
-}
+// function getSelectedValues(selectList) {
+// 	selectList.forEach(element => {
+// 		const selector = document.getElementById(element);
+// 		data[element] = selector.options[selector.selectedIndex].text;
+// 	});
+// 	return data;
+// }
 
 function getSelectedText(id) {
 	const selection = document.getElementById(id);
