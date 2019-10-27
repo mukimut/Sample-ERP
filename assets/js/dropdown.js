@@ -40,4 +40,4 @@ function setLovData(link, id, title) {
         resolve(data[0]);
       });
     });
-  }
+}
