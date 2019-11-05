@@ -463,11 +463,15 @@
 
     const address = `<div class="col-md-12 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
       + generateDropDown(`addressType` + addressSize, 'form-control', addressTypes)
-      + generateDropDown(`division` + addressSize, 'form-control', allDivisions, 'divisionSelected(' + addressSize + ')') + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'])
-      + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code') + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
+      + generateDropDown(`country` + addressSize, 'form-control', allCountries, null, 'leftMargin') 
+      + generateDropDown(`division` + addressSize, 'form-control', allDivisions, 'divisionSelected(' + addressSize + ')') 
+      + generateDropDown(`district` + addressSize, 'form-control', [], null, 'leftMargin')
+      + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'])
       + '</div></div><div class="col-md-6"><div class="row">'
-      + generateDropDown(`country` + addressSize, 'form-control', allCountries, null, 'leftMargin') + generateDropDown(`district` + addressSize, 'form-control', [], null, 'leftMargin')
-      + generateDropDown(`postoffice` + addressSize, 'form-control', [], null, 'leftMargin') + generateInputForm('text', 'form-control', 'var' + addressSize, null, 'Village/Road', 'leftMargin')
+      + generateDropDown(`postoffice` + addressSize, 'form-control', [], null, 'leftMargin') 
+      + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code')
+      + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
+      + generateInputForm('text', 'form-control', 'var' + addressSize, null, 'Village/Road', 'leftMargin')
       + '<div class="form-group leftMargin"><div class="col-sm-12"><button class="btn btn-flat btn-danger">Delete</button></div></div></div></div></div></div></div>';
 
     addressSize++;
@@ -496,6 +500,7 @@
     if (!parentClass) parentClass = '';
     if (!onSelect) onSelect = '';
     let string = `<div class="form-group ` + parentClass + `" onchange="` + onSelect + `"><div class="col-sm-12"><select id="` + idvalue + `" class="` + className + `">`;
+    string += '<option hidden disabled selected value>Select ' + idvalue.substring(0, idvalue.length - 1) + '</option>'
     list.forEach(element => string += '<option>' + element + '</option>');
     string += '</select></div></div>';
 

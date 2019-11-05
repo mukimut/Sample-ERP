@@ -2,10 +2,10 @@ CREATE TABLE public.productreceive
 (
     receiveid bigserial NOT NULL,
     item text NOT NULL,
-    itremid integer NOT NULL,
+    itemid integer NOT NULL,
     date date NOT NULL default CURRENT_DATE,
     unitprice numeric(10, 2) NOT NULL,
-    quantity real NOT NULL,
+    quantity numeric(10, 2) NOT NULL,
     batch text,
     employee text,
     employeeid integer,
