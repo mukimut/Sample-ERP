@@ -447,10 +447,13 @@
   function addContact() {
 
     const string = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
-      + generateInputForm('text', 'form-control', 'name' + contactSize, null, 'Contact Person') + generateDropDown(`designation` + contactSize, 'form-control', allDesignations)
-      + generateInputForm('text', 'form-control', 'email' + contactSize, null, 'Email') + '</div></div><div class="col-md-6"><div class="row">'
-      + generateDropDown(`department` + contactSize, 'form-control', allDepartments) + generateDropDown(`section` + contactSize, 'form-control', allSections)
-      + generateInputForm('text', 'form-control', 'phone' + contactSize, null, 'Phone Number') + '</div></div></div></div></div>';
+      + generateInputForm('text', 'form-control', 'name' + contactSize, null, 'Contact Person') 
+      + generateDropDown(`department` + contactSize, 'form-control', allDepartments) 
+      + generateDropDown(`designation` + contactSize, 'form-control', allDesignations)
+      + '</div></div><div class="col-md-6"><div class="row">'
+      + generateDropDown(`section` + contactSize, 'form-control', allSections)
+      + generateInputForm('text', 'form-control', 'email' + contactSize, null, 'Email') 
+      + generateInputForm('text', 'form-control', 'phone' + contactSize, null, 'Contact No') + '</div></div></div></div></div>';
 
     contactSize++;
     let dom = document.getElementById('contactPerson').innerHTML;
