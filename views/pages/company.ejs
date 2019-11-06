@@ -531,6 +531,8 @@
       keyList.forEach(element => {
         document.getElementById(element + '' + i).value = addresses[i][element];
       });
+      divisionSelected(i);
+      document.getElementById('district' + i).value = addresses[i]['district']; 
     }
 
     document.getElementById('contactPerson').innerHTML = '';
