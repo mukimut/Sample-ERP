@@ -1,0 +1,221 @@
+<style>
+	.card {
+		/* Add shadows to create the "card" effect */
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+		transition: 0.3s;
+	}
+
+	.boxbdymt {
+		margin-top: 25px;
+	}
+
+	.fa_edt {
+		font-size: 22px;
+		color: rgb(4, 117, 161);
+		font-weight: bold;
+	}
+
+	.fa_dlt {
+		font-size: 22px;
+		color: red;
+		font-weight: bold;
+	}
+
+	.fa_detail {
+		font-size: 24px;
+		color: rgb(202, 132, 3);
+		font-weight: bold;
+	}
+</style>
+<div class="content-wrapper">
+	<section class="content-header">
+		<h1>Material Receive<small>Settings</small></h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="#">Master Settings</a></li>
+		</ol>
+	</section>
+	<section class="invoice">
+		<div class="row">
+			<div class="card col-md-6 form-horizontal col-md-offset-3">
+				<div class="box-body boxbdymt">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<select id="item" class="form-control">
+								<option>Select Item</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<select id="brand" class="form-control">
+								<option>Select Brand</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="unitprice" placeholder="Unit Price">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="quantity" placeholder="Quantity">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="access" placeholder="Batch">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea class="form-control" rows="3" placeholder="Remark"></textarea>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 20px;">
+						<div class="col-md-10">
+							<div class="row">
+								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
+									<button class="btn btn-flat btn-success" onclick="submit()">Save</button>
+									<button class="btn btn-flat btn-primary" onclick="edit()" disabled
+										id="submitEdit">Edit</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><br><br><br>
+
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">List of Material Receive</h3>
+						<div class="box-tools">
+							<div class="input-group input-group-sm" style="width: 150px;">
+								<input type="text" name="table_search" class="form-control pull-right"
+									placeholder="Search">
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-flat btn-success"><i
+											class="fa fa-search"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-body table-responsive no-padding">
+						<table class="table table-hover">
+							<tbody id="usertable"></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="clearfix"></div>
+</div>
+
+<!-- <div class="control-sidebar-bg"></div> -->
+<script src="/dependencies/jquery.js"></script>
+<script>
+	getUser();
+
+	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'employeeid'];
+	let userList = [];
+	let selectedUserId;
+
+	function getUser() {
+		let listData = `<tr><th>User Name</th><th>Access</th><th>Email</th><th>Action</th></tr>`;
+		$.get('/getUser', (data) => {
+			data.forEach((element, index) => {
+				listData += '<tr><td>' + element.username + '</td><td>' + element.access + '</td><td>' + element.email + '</td>'
+				listData += '<td><i class="fa fa-edit fa_edt" onclick="editEntry(' + index + ')"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteEntry(' + index + ')"></i></td></tr>';
+			});
+			document.getElementById('usertable').innerHTML = listData;
+			userList = data;
+		});
+	}
+
+	function logout() {
+		localStorage.removeItem('token');
+		window.open('/login', '_self');
+	}
+
+	function editEntry(index) {
+		document.getElementById('submitEdit').disabled = false;
+
+		inputList.forEach(element => document.getElementById(element).value = userList[index][element]);
+		document.getElementById('pass2').value = userList[index].password;
+		selectedUserId = userList[index].id;
+	}
+
+	function getInputData() {
+		data = {};
+		const length = inputList.length;
+		let success = true;
+
+		for (let i = 0; i < length; i++) {
+			const currentValue = document.getElementById(inputList[i]).value;
+			if (!currentValue) {
+				success = false;
+				alert('Enter value for ' + inputList[i]);
+				break;
+			}
+			data[inputList[i]] = currentValue;
+		}
+
+		if (!success) return false;
+
+		if (data.password != document.getElementById('pass2').value) {
+			alert('Password mismatch');
+			return false;
+		}
+
+		return data;
+	}
+
+	function setNull() {
+		inputList.forEach(element => document.getElementById(element).value = null);
+		document.getElementById('pass2').value = null;
+	}
+
+	function deleteEntry(index) {
+		$.ajax({
+			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
+				if (res.update) {
+					getUser();
+					selectedUserId = null;
+				}
+			}
+		});
+	}
+
+	function edit() {
+		let data = getInputData();
+		if (!data) return;
+		data.userid = selectedUserId;
+
+		$.ajax({
+			url: '/editUser', method: 'PUT', data: data, success: res => {
+				if (res.update) {
+					getUser();
+					selectedUserId = null;
+					setNull();
+				}
+				else alert(res.message);
+			}
+		});
+	}
+
+	function submit() {
+		let data = getInputData();
+		if (!data) return;
+
+		$.post('/register', data, (res) => {
+			if (!res.unique) alert('Username already exists');
+			else getUser();
+		});
+	}
+</script>

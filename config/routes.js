@@ -48,11 +48,12 @@ module.exports.routes = {
   'get /products': {view: 'pages/products', locals:{layout: 'layouts/dashboard'}},
   'get /api/products': {action: 'products/get-products'},
   'get /api/employees': {action: 'employee/get-employees'},
-  'get /invoice': {view: 'pages/invoice', locals:{layout: 'layouts/dashboard'}},
+  'get /invoice': {view: 'pages/invoice', locals:{layout: 'layouts/login'}},
   'post /api/products': {action: 'products/update-product'},
   'put /api/products': {action: 'products/update-product'},
   'get /employee': {view: 'pages/employee', locals:{layout: 'layouts/dashboard'}},
   'post /employee': {action: 'employee/save-employee'},
+  'get /material_receive': {view: 'pages/material_receive', locals:{layout: 'layouts/dashboard'}},
 
 
   /***************************************************************************
