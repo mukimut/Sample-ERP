@@ -1,57 +1,96 @@
-<style>
-	* {
-      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    }
-	.no_margin_padding {
-		margin: 0;
-		padding: 0;
-	}
+<body class="hold-transition login-page">
+	<style>
+		* {
+			font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		}
 
-	.no_margin_padding_right {
-		margin-right: 0;
-		padding-right: 0;
-	}
+		.no_margin_padding {
+			margin: 0;
+			padding: 0;
+		}
 
-	.table>thead>tr>td,
-	.table>thead>tr>th {
-		border-top: 0;
-	}
+		.no_margin_padding_right {
+			margin-right: 0;
+			padding-right: 0;
+		}
 
-	.table>tbody>tr>td,
-	.table>tfoot>tr>td {
-		border-top: 0;
-	}
-	.tbl_heading{
-		font-weight: bold;
-		font-size: 15px;
-	}
-	.font_color_wht{
-		color: white;
-	}
-</style>
-<div class="content-wrapper">
-	<section class="content-header">
-		<h1>Invoice<small>Generate</small></h1>
-		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li><a href="#">Invoice</a></li>
-			<li class="active">generate</li>
-		</ol>
-	</section>
+		.table>thead>tr>td,
+		.table>thead>tr>th {
+			border-top: 0;
+		}
+
+		.table>tbody>tr>td,
+		.table>tfoot>tr>td {
+			border-top: 0;
+		}
+
+		.tbl_heading {
+			font-weight: bold;
+			font-size: 15px;
+		}
+
+		.font_color_wht {
+			color: white;
+		}
+
+		@media print {
+			.print-left {
+				float: left;
+				width: 50%;
+			}
+			.print-right {
+				float: right;
+				Width: 50%;
+			}
+			.print-left-bgcolor .table>tbody>tr>td {
+				background-color: #f2f2f2 !important;
+				-webkit-print-color-adjust: exact;
+			}
+			.print-right-bgcolor .table>tbody>tr>td  {
+				background-color: #92d050 !important;
+				-webkit-print-color-adjust: exact;
+				color: #ffffff !important;
+			}
+			.print-left-itembgcolor .table>tbody>tr>td{
+				background-color: #d9d9d9 !important;
+				-webkit-print-color-adjust: exact;
+			}
+			.print-left-white{
+				background-color: #ffffff !important;
+				-webkit-print-color-adjust: exact;
+			}
+			.print-right-offwhite{
+				background-color: #f2f2f2 !important;
+				-webkit-print-color-adjust: exact;
+			}
+			.print-right-ash{
+				background-color: #d9d9d9 !important;
+				-webkit-print-color-adjust: exact;
+			}
+			.print_terms{
+				color: #375623 !important; 
+				font-size: 25px !important;
+			}
+			.print_condition{
+				color: #92d050 !important; 
+				font-size: 25px !important;
+			}
+
+		}
+	</style>
 	<section class="invoice">
 		<div class="row">
-			<div class="col-sm-6" style="margin-top: 12px; font-size: 45px;">
+			<div class="col-sm-6 print-left" style="margin-top: 12px; font-size: 45px;">
 				Invoice
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-6 print-right">
 				<div class="pull-right">
 					<img src="images/logo.png" />
 				</div>
 			</div>
 		</div>
-		<div class="clear: both;"></div>
 		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-6 print-left">
 				<div class="row">
 					<div class="col-sm-12">
 						<table>
@@ -62,7 +101,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-6 print-right">
 				<div class="row">
 					<table class="table pull-right">
 						<tr>
@@ -80,10 +119,10 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right" style="background-color: #f2f2f2;">
+			<div class="col-sm-6 no_margin_padding_right print-left print-left-bgcolor" style="background-color: #f2f2f2;">
 				<div class="row">
 					<div class="col-sm-12">
-						<table class="table">
+						<table class="print-left-bgcolor table">
 							<tr>
 								<td><span class="tbl_heading">TEST Limited </span></td>
 							</tr>
@@ -100,7 +139,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6" style="background-color: #92d050;">
+			<div class="col-sm-6 print-right print-right-bgcolor" style="background-color: #92d050;">
 				<div class="row">
 					<table class="table pull-right font_color_wht">
 						<tr>
@@ -134,7 +173,7 @@
 		<div class="row" style="height: 25px;">
 		</div>
 		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right" style="background-color: #d9d9d9;">
+			<div class="col-sm-6 no_margin_padding_right print-left print-left-itembgcolor" style="background-color: #d9d9d9;">
 				<div class="row">
 					<div class="col-sm-12">
 						<table class="table">
@@ -145,7 +184,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6 tbl_heading font_color_wht" style="background-color: #92d050;">
+			<div class="col-sm-6 tbl_heading font_color_wht print-right print-right-bgcolor" style="background-color: #92d050;">
 				<div class="row">
 					<table class="table pull-right">
 						<tr>
@@ -159,57 +198,57 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right" style="background-color: #ffffff; height: 50px;">
+			<div class="col-sm-6 no_margin_padding_right print-left print-left-white" style="background-color: #ffffff; height: 50px;">
 			</div>
-			<div class="col-sm-6" style="background-color: #f2f2f2; height: 50px;">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right" style="background-color: #f2f2f2; height: 50px;">
-			</div>
-			<div class="col-sm-6" style="background-color: #d9d9d9; height: 50px;">
+			<div class="col-sm-6 print-right print-right-offwhite" style="background-color: #f2f2f2; height: 50px;">
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right" style="background-color: #ffffff; height: 50px;">
+			<div class="col-sm-6 no_margin_padding_right print-left print-right-offwhite" style="background-color: #f2f2f2; height: 50px;">
 			</div>
-			<div class="col-sm-6" style="background-color: #f2f2f2; height: 50px;">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right" style="background-color: #f2f2f2; height: 50px;">
-			</div>
-			<div class="col-sm-6" style="background-color: #d9d9d9; height: 50px;">
+			<div class="col-sm-6 print-right print-right-ash" style="background-color: #d9d9d9; height: 50px;">
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right" style="background-color: #ffffff; height: 50px;">
+			<div class="col-sm-6 no_margin_padding_right print-left print-left-white" style="background-color: #ffffff; height: 50px;">
 			</div>
-			<div class="col-sm-6" style="background-color: #f2f2f2; height: 50px;">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right" style="background-color: #f2f2f2; height: 50px;">
-			</div>
-			<div class="col-sm-6" style="background-color: #d9d9d9; height: 50px;">
+			<div class="col-sm-6 print-right print-right-offwhite" style="background-color: #f2f2f2; height: 50px;">
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right" style="background-color: #ffffff; height: 50px;">
+			<div class="col-sm-6 no_margin_padding_right print-left print-right-offwhite" style="background-color: #f2f2f2; height: 50px;">
 			</div>
-			<div class="col-sm-6" style="background-color: #f2f2f2; height: 50px;">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right" style="background-color: #f2f2f2; height: 50px;">
-			</div>
-			<div class="col-sm-6" style="background-color: #d9d9d9; height: 50px;">
+			<div class="col-sm-6 print-right print-right-ash" style="background-color: #d9d9d9; height: 50px;">
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right">
+			<div class="col-sm-6 no_margin_padding_right print-left print-left-white" style="background-color: #ffffff; height: 50px;">
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-6 print-right print-right-offwhite" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right print-left print-right-offwhite" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+			<div class="col-sm-6 print-right print-right-ash" style="background-color: #d9d9d9; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right print-left print-left-white" style="background-color: #ffffff; height: 50px;">
+			</div>
+			<div class="col-sm-6 print-right print-right-offwhite" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right print-left print-right-offwhite" style="background-color: #f2f2f2; height: 50px;">
+			</div>
+			<div class="col-sm-6 print-right print-right-ash" style="background-color: #d9d9d9; height: 50px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 no_margin_padding_right print-left">
+			</div>
+			<div class="col-sm-6 print-right">
 				<table class="table" style="border: none;">
 					<tr>
 						<td style="width:10%;"></td>
@@ -233,9 +272,9 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right">
+			<div class="col-sm-6 no_margin_padding_right print-left print-left-white">
 			</div>
-			<div class="col-sm-6" style="background-color: #92d050;">
+			<div class="col-sm-6 pull-right print-right print-right-bgcolor" style="background-color: #92d050;">
 				<table class="table">
 					<tr>
 						<td style="width:10%;"></td>
@@ -247,12 +286,13 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 no_margin_padding_right">
+			<div class="col-sm-6 no_margin_padding_right print-left">
 				<div class="row">
 					<div class="col-sm-12">
 						<table class="table">
 							<tr>
-								<td><span style="color: #375623; font-size: 25px;"> Terms &</span> <span style="color: #92d050; font-size: 25px;">Conditions-</span></td>
+								<td><span class="print_terms" style="color: #375623; font-size: 25px;"> Terms &</span>
+									<span class="print_condition" style="color: #92d050; font-size: 25px;">Conditions-</span></td>
 							</tr>
 							<tr>
 								<td>Payment msut be done in favour of Goinnovior Technology</td>
@@ -270,33 +310,31 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-6 print-right">
 				<div class="row">
 				</div>
 			</div>
 		</div>
 		<div class="row tbl_heading">
-			<div class="col-sm-6 no_margin_padding_right">
-					<table class="table">
-							<tr>
-								<td class="tbl_heading">Authorized Signature</td>
-							</tr>
-						</table>
-					
-			</div>
-			<div class="col-sm-6" style="background-color: #92d050;">
+			<div class="col-sm-6 no_margin_padding_right print-left">
 				<table class="table">
 					<tr>
-						<td class="tbl_heading font_color_wht" style="text-align: center;">Received with good condition</td>
+						<td class="tbl_heading">Authorized Signature</td>
+					</tr>
+				</table>
+
+			</div>
+			<div class="col-sm-6 print-right print-right-bgcolor" style="background-color: #92d050;">
+				<table class="table">
+					<tr>
+						<td class="tbl_heading font_color_wht" style="text-align: center;">Received with good condition
+						</td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		<div class="row">
-			<img src="/images/invoice_footer.png">
+			<img src="/images/invoice_footer.png" style="width: 100%;">
 		</div>
-</div>
-</section>
-</div>
-<div class="control-sidebar-bg"></div>
-<script src="/dependencies/jquery.js"></script>
+	</section>
+</body>
