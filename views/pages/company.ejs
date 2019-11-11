@@ -397,21 +397,24 @@
   }
 
   function districtSelected(index) {
-    setFilteredSelection('district' + index, 'District', 'Police Station', 'thana' + index, 'Select Thana');
+    return setFilteredSelection('district' + index, 'District', 'Police Station', 'thana' + index, 'Select Thana');
   }
 
   function thanaSelected(index) {
-    setFilteredSelection('thana' + index, 'Police Station', 'Post Office', 'postoffice' + index, 'Select Post Office');
+    return setFilteredSelection('thana' + index, 'Police Station', 'Post Office', 'postoffice' + index, 'Select Post Office');
   }
 
   function setFilteredSelection(sourceId, linkType, filterKey, destinationId, title) {
     const selectedItem = getSelectedText(sourceId);
-    $.get('/api/tovValue?type=' + linkType + '&value=' + selectedItem, (res) => {
-      let filteredList;
-      if(!res) filteredList = [];
-      else filteredList = res.map(element => element[filterKey]);
+    return new Promise((resolve, reject) => {
+      $.get('/api/tovValue?type=' + linkType + '&value=' + selectedItem, (res) => {
+        let filteredList;
+        if(!res) filteredList = [];
+        else filteredList = res.map(element => element[filterKey]);
 
-      setSelectionList(destinationId, filteredList, title);
+        setSelectionList(destinationId, filteredList, title);
+        resolve();
+      });
     });
   }
 
@@ -465,8 +468,8 @@
       + generateDropDown(`addressType` + addressSize, 'form-control', addressTypes)
       + generateDropDown(`country` + addressSize, 'form-control', allCountries, null, 'leftMargin') 
       + generateDropDown(`division` + addressSize, 'form-control', allDivisions, 'divisionSelected(' + addressSize + ')') 
-      + generateDropDown(`district` + addressSize, 'form-control', [], null, 'leftMargin')
-      + generateDropDown(`thana` + addressSize, 'form-control', ['Akkelpur', 'Adamdighi', 'Atrai'])
+      + generateDropDown(`district` + addressSize, 'form-control', [], 'districtSelected(' + addressSize + ')', 'leftMargin')
+      + generateDropDown(`thana` + addressSize, 'form-control', [], 'thanaSelected(' + addressSize + ')')
       + '</div></div><div class="col-md-6"><div class="row">'
       + generateDropDown(`postoffice` + addressSize, 'form-control', [], null, 'leftMargin') 
       + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code')
@@ -528,8 +531,14 @@
       keyList.forEach(element => {
         document.getElementById(element + '' + i).value = addresses[i][element];
       });
+
       divisionSelected(i);
-      document.getElementById('district' + i).value = addresses[i]['district']; 
+      document.getElementById('district' + i).value = addresses[i]['district'];
+      
+      districtSelected(i).then(() => {
+        setSelectedValue('thana' + i, addresses[i]['thana']);
+        return thanaSelected(i);
+      }).then(() => setSelectedValue('postoffice' + i, addresses[i]['postoffice']));
     }
 
     document.getElementById('contactPerson').innerHTML = '';
