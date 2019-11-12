@@ -41,7 +41,7 @@
 				<div class="box-body boxbdymt">
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="item" class="form-control">
+							<select id="item" class="form-control" onchange="itemSelected(this)">
 								<option>Select Item</option>
 							</select>
 						</div>
@@ -65,12 +65,12 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="text" class="form-control" id="access" placeholder="Batch">
+							<input type="text" class="form-control" id="batch" placeholder="Batch">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<textarea class="form-control" rows="3" placeholder="Remark"></textarea>
+							<textarea class="form-control" rows="3" id="remark" placeholder="Remark"></textarea>
 						</div>
 					</div>
 					<div class="row" style="margin-bottom: 20px;">
@@ -119,23 +119,29 @@
 
 <!-- <div class="control-sidebar-bg"></div> -->
 <script src="/dependencies/jquery.js"></script>
+<script src="/js/dropdown.js"></script>
 <script>
-	getUser();
+	let allProducts = [];
+	const dropdownIds = ['brand', 'item'];
+	const inputIds = ['unitprice', 'quantity', 'batch', 'remark'];
 
-	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'employeeid'];
-	let userList = [];
-	let selectedUserId;
+	getProducts();
+	setLovData('tov?type=Product Brand', 'brand', 'Select Brand');
 
-	function getUser() {
-		let listData = `<tr><th>User Name</th><th>Access</th><th>Email</th><th>Action</th></tr>`;
-		$.get('/getUser', (data) => {
-			data.forEach((element, index) => {
-				listData += '<tr><td>' + element.username + '</td><td>' + element.access + '</td><td>' + element.email + '</td>'
-				listData += '<td><i class="fa fa-edit fa_edt" onclick="editEntry(' + index + ')"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteEntry(' + index + ')"></i></td></tr>';
+	function getProducts() {
+		$.get('/api/products', (data) => {
+			const productNames = [];
+			allProducts = data.map(element => {
+				productNames.push(element.name);
+				return {name: element.name, id: element.id};
 			});
-			document.getElementById('usertable').innerHTML = listData;
-			userList = data;
+			setSelectionList('item', productNames, 'Select Product');
 		});
+	}
+
+	function itemSelected(element) {
+		const name = element.value;
+		const id = allProducts.find(element => element.name === name).id;
 	}
 
 	function logout() {
@@ -174,39 +180,6 @@
 		}
 
 		return data;
-	}
-
-	function setNull() {
-		inputList.forEach(element => document.getElementById(element).value = null);
-		document.getElementById('pass2').value = null;
-	}
-
-	function deleteEntry(index) {
-		$.ajax({
-			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
-				if (res.update) {
-					getUser();
-					selectedUserId = null;
-				}
-			}
-		});
-	}
-
-	function edit() {
-		let data = getInputData();
-		if (!data) return;
-		data.userid = selectedUserId;
-
-		$.ajax({
-			url: '/editUser', method: 'PUT', data: data, success: res => {
-				if (res.update) {
-					getUser();
-					selectedUserId = null;
-					setNull();
-				}
-				else alert(res.message);
-			}
-		});
 	}
 
 	function submit() {
