@@ -209,7 +209,7 @@
                 <div class="col-md-10">
                   <div class="row">
                     <div class="box-footer pull-left" style="border-top: 0px">
-                      <button class="btn btn-flat btn-success" onclick="addAddress()">Add</button>
+                      <button class="btn btn-flat btn-success" onclick="addNewAddress()">Add</button>
                       <button class="btn btn-flat btn-success" onclick="submit()">Save</button>
                       <button class="btn btn-flat btn-primary" onclick="submitEdit()">Save</button>
                     </div>
@@ -336,7 +336,7 @@
   contactInputs = ['email', 'name', 'phone'];
   let allCompanies = [], allDepartments = [], allDesignations = [], allSections = [], allCountries = [], allDivisions = [], allPO = [], diplayCompanies = [];
   let addressTypes = [];
-  let selectedId, departmentMap, divisionMap;
+  let selectedId, selectedIndex, departmentMap, divisionMap;
   let addressSize = 1;
   let contactSize = 1;
 
@@ -515,6 +515,7 @@
 
   function edit(index) {
     selectedId = diplayCompanies[index].id;
+    selectedIndex = index;
     editMode();
 
     idList.forEach(element => {
@@ -562,6 +563,12 @@
   function editMode() {
     document.getElementById('saveButton').style.visibility = 'hidden';
     document.getElementById('editButton').style.visibility = 'visible';
+  }
+
+  function addNewAddress() {
+    const newAddress = {hpf: null, var: null, thana: null, country: null, district: null, division: null, postcode: null, postoffice: null, addressType: null}
+    diplayCompanies[selectedIndex].address.push(newAddress);
+    edit(selectedIndex);
   }
 
   function submit() {
