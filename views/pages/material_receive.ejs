@@ -107,7 +107,10 @@
 					</div>
 					<div class="box-body table-responsive no-padding">
 						<table class="table table-hover">
-							<tbody id="usertable"></tbody>
+							<thead>
+								<th>Item</th><th>Brand</th><th>Price</th><th>Quantity</th><th>Amount</th><th>Delete</th>
+							</thead>
+							<tbody id="receiveTable"></tbody>
 						</table>
 					</div>
 				</div>
@@ -121,9 +124,9 @@
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
-	let allProducts = [];
+	let allProducts = [], addedItems = [];
 	const dropdownIds = ['brand', 'item'];
-	const inputIds = ['unitprice', 'quantity', 'batch', 'remark'];
+	const inputList = ['unitprice', 'quantity', 'batch', 'remark'];
 
 	getProducts();
 	setLovData('tov?type=Product Brand', 'brand', 'Select Brand');
@@ -139,56 +142,58 @@
 		});
 	}
 
-	function itemSelected(element) {
-		const name = element.value;
-		const id = allProducts.find(element => element.name === name).id;
-	}
-
 	function logout() {
 		localStorage.removeItem('token');
 		window.open('/login', '_self');
 	}
 
-	function editEntry(index) {
-		document.getElementById('submitEdit').disabled = false;
-
-		inputList.forEach(element => document.getElementById(element).value = userList[index][element]);
-		document.getElementById('pass2').value = userList[index].password;
-		selectedUserId = userList[index].id;
-	}
-
-	function getInputData() {
-		data = {};
+	function addData() {
 		const length = inputList.length;
 		let success = true;
 
+		const item = getSelectedText('item');
+		const brand = getSelectedText('brand');
+		const itemid = allProducts.find(element => element.name === item).id;
+
+		let data = {item, brand, itemid};
+		
 		for (let i = 0; i < length; i++) {
 			const currentValue = document.getElementById(inputList[i]).value;
-			if (!currentValue) {
-				success = false;
-				alert('Enter value for ' + inputList[i]);
-				break;
-			}
+			if (!currentValue) currentValue = '';
 			data[inputList[i]] = currentValue;
 		}
 
-		if (!success) return false;
+		data.unitprice = Number.parseFloat(data.unitprice);
+		data.quantity = Number.parseFloat(data.quantity);
 
-		if (data.password != document.getElementById('pass2').value) {
-			alert('Password mismatch');
-			return false;
-		}
-
-		return data;
+		addedItems.push(data);
+		updateTable();
 	}
 
-	function submit() {
-		let data = getInputData();
-		if (!data) return;
+	function updateTable() {
+		const tableBody = document.getElementById('receiveTable');
+		tableBody.innerHTML = '';
+		addedItems.forEach((element, index) => {
+			let row = tableBody.insertRow();
+			let cell;
 
-		$.post('/register', data, (res) => {
-			if (!res.unique) alert('Username already exists');
-			else getUser();
+			cell = row.insertCell();
+			cell.append(element.item);
+			cell = row.insertCell();
+			cell.append(element.brand);
+			cell = row.insertCell();
+			cell.append(element.unitprice);
+			cell = row.insertCell();
+			cell.append(element.quantity);
+			cell = row.insertCell();
+			cell.append(element.unitprice * element.quantity);
+			cell = row.insertCell();
+			cell.innerHTML = '<button onclick="deleteRow(' + index + ')">Delete</button>'
 		});
+	}
+
+	function deleteRow(index) {
+		addedItems.splice(index, 1);
+		updateTable();
 	}
 </script>
