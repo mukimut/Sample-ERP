@@ -3,7 +3,7 @@ module.exports = {
         id: {type: 'number', columnName: 'receiveid', autoIncrement: true}, 
         item: {type: 'string', allowNull: false}, itemid: {type: 'string', allowNull: false},
         date: {type: 'string'}, batch: {type: 'string'}, brand: {type: 'string'},
-        unitprice: {type: 'string', allowNull: false}, quantity: {type: 'string', allowNull: false},
+        unitprice: {type: 'string', allowNull: false}, quantity: {type: 'string', allowNull: false}, unit: {type: 'string', allowNull: false},
         employee: {type: 'string'}, employeeid: {type: 'number'},
         remark: {type: 'string'}
     },
@@ -25,6 +25,7 @@ CREATE TABLE public.productreceive
     employee text,
     employeeid integer,
     remark text,
+    unit text,
     PRIMARY KEY (receiveid)
 )
 WITH (

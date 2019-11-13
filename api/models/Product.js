@@ -6,6 +6,7 @@ module.exports = {
         group: {type: 'string'},
         category: {type: 'string'},
         type: {type: 'string'},
+        unit: {type: 'string'}
         
     },
     tableName: 'products'
@@ -20,6 +21,7 @@ CREATE TABLE public.products
     "group" text COLLATE pg_catalog."default",
     category text COLLATE pg_catalog."default",
     type text COLLATE pg_catalog."default",
+    unit text
     CONSTRAINT product_pkey PRIMARY KEY ("productId")
 )
 WITH (
