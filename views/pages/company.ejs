@@ -469,14 +469,14 @@
 
     const address = `<div class="col-md-12 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
       + generateDropDown(`addressType` + addressSize, 'form-control', addressTypes)
-      + generateDropDown(`country` + addressSize, 'form-control', allCountries, null, 'leftMargin') 
+      + generateDropDown(`country` + addressSize, 'form-control', allCountries, null) 
       + generateDropDown(`division` + addressSize, 'form-control', allDivisions, 'divisionSelected(' + addressSize + ')') 
-      + generateDropDown(`district` + addressSize, 'form-control', [], 'districtSelected(' + addressSize + ')', 'leftMargin')
+      + generateDropDown(`district` + addressSize, 'form-control', [], 'districtSelected(' + addressSize + ')')
       + generateDropDown(`thana` + addressSize, 'form-control', [], 'thanaSelected(' + addressSize + ')')
       + '</div></div><div class="col-md-6"><div class="row">'
       + generateDropDown(`postoffice` + addressSize, 'form-control', [], null, 'leftMargin') 
-      + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code')
-      + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'Hose/Plot/Flat')
+      + generateInputForm('text', 'form-control', 'postcode' + addressSize, null, 'Post Code', 'leftMargin')
+      + generateInputForm('text', 'form-control', 'hpf' + addressSize, null, 'House/Plot/Flat', 'leftMargin')
       + generateInputForm('text', 'form-control', 'var' + addressSize, null, 'Village/Road', 'leftMargin')
       + '<div class="form-group leftMargin"><div class="col-sm-12"><button class="btn btn-flat btn-danger">Delete</button></div></div></div></div></div></div></div>';
 
