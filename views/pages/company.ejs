@@ -259,7 +259,7 @@
                 <div class="col-md-10">
                   <div class="row">
                     <div class="box-footer pull-left" style="border-top: 0px">
-                      <button class="btn btn-flat btn-success" onclick="addNewContact()">Add</button>
+                      <button class="btn btn-flat btn-success" onclick="addContact()">Add</button>
                     </div>
                   </div>
                 </div>
@@ -447,9 +447,9 @@
       + generateDropDown(`department` + contactSize, 'form-control', allDepartments) 
       + generateDropDown(`designation` + contactSize, 'form-control', allDesignations)
       + '</div></div><div class="col-md-6"><div class="row">'
-      + generateDropDown(`section` + contactSize, 'form-control', allSections)
-      + generateInputForm('text', 'form-control', 'email' + contactSize, null, 'Email') 
-      + generateInputForm('text', 'form-control', 'phone' + contactSize, null, 'Contact No') + '</div></div></div></div></div>';
+      + generateDropDown(`section` + contactSize, 'form-control', allSections, 'leftMargin')
+      + generateInputForm('text', 'form-control', 'email' + contactSize, null, 'Email', 'leftMargin') 
+      + generateInputForm('text', 'form-control', 'phone' + contactSize, null, 'Contact No', 'leftMargin') + '</div></div></div></div></div>';
 
     contactSize++;
     let dom = document.getElementById('contactPerson').innerHTML;
@@ -554,19 +554,13 @@
   }
 
   function editMode() {
-    document.getElementById('saveButton').style.visibility = 'hidden';
-    document.getElementById('editButton').style.visibility = 'visible';
+    document.getElementById('saveButton').style.display = 'none';
+    document.getElementById('editButton').style.display = 'block';
   }
 
   function addNewAddress() {
     const newAddress = {hpf: null, var: null, thana: null, country: null, district: null, division: null, postcode: null, postoffice: null, addressType: null}
     diplayCompanies[selectedIndex].address.push(newAddress);
-    edit(selectedIndex);
- }
-
- function addNewContact() {
-    const newCntact = {name: null, email: null, phone: null, designation: null, department: null, section: null}
-    diplayCompanies[selectedIndex].contact.push(newAddress);
     edit(selectedIndex);
  }
 
