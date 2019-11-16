@@ -1,0 +1,144 @@
+<style>
+  .leftMargin {
+    margin-left: 5px !important;
+  }
+
+  .btnMarginTop {
+    margin-top: 8px;
+  }
+
+  .secMargin {
+    margin-left: 10px;
+  }
+
+  .btn_lm {
+    margin-left: -4px;
+  }
+
+  .fa_edt {
+    font-size: 22px;
+    color: rgb(4, 117, 161);
+    font-weight: bold;
+  }
+
+  .fa_dlt {
+    font-size: 22px;
+    color: red;
+    font-weight: bold;
+  }
+
+  .fa_detail {
+    font-size: 24px;
+    color: rgb(202, 132, 3);
+    font-weight: bold;
+  }
+
+  @media all and (max-width: 991px) {
+    .leftMargin {
+      margin-left: -14px !important;
+    }
+  }
+</style>
+<div class="content-wrapper">
+  <section class="content-header secMargin">
+    <h1>Organization<small>Setup</small></h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Master</a></li>
+      <li class="active">Company</li>
+    </ol>
+  </section>
+  <section class="invoice">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_1" data-toggle="tab">Basic Info</a></li>
+            <li><a href="#tab_2" data-toggle="tab">Address</a></li>
+            <li><a href="#tab_3" data-toggle="tab">Contact</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_1">
+              <div class="row">
+                <div class="col-md-12 form-horizontal">
+                  <div class="box-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <select id="companyType" class="form-control">
+                                <option>Select Company Type</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <input type="text" class="form-control" id="name" placeholder="Company Name">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <input type="text" class="form-control" id="shortname" placeholder="Company Short Name">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                              <div class="col-sm-12">
+                                <input type="text" class="form-control" id="phone" placeholder="Phone">
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="row">
+                            <div class="form-group leftMargin">
+                                <div class="col-sm-12">
+                                  <input type="email" class="form-control" id="email" placeholder="Email">
+                                </div>
+                              </div>
+                              <div class="form-group leftMargin">
+                                <div class="col-sm-12">
+                                  <input type="text" class="form-control" id="tin" placeholder="TIN No">
+                                </div>
+                              </div>
+                          <div class="form-group leftMargin">
+                            <div class="col-sm-12">
+                              <input type="url" class="form-control" id="website" placeholder="Website">
+                            </div>
+                          </div>
+                          <div class="form-group leftMargin">
+                            <div class="col-sm-12">
+                              <input type="text" class="form-control" id="tin" placeholder="BIN No">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_2">
+              <div class="row" id="addressArea">
+                <div class="col-md-12 form-horizontal">
+                  <div class="box-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="form-group">
+                            <div class="col-sm-12">
+                              <select id="addressType0" class="form-control">
+                                <option>Select Address Type</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                              <div class="col-sm-12"><select id="country0" class="form-control">
+                                  <option>Select Country</option>
+                              </select></div>
+                            </div>
+                          <div class="form-group">
+                            <div class="col-sm-12">

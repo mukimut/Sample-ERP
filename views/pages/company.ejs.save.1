@@ -58,7 +58,7 @@
             <li><a href="#tab_2" data-toggle="tab">Address</a></li>
             <li><a href="#tab_3" data-toggle="tab">Contact</a></li>
           </ul>
-          <div class="tab-content" style="padding-bottom: 0px;">
+          <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
               <div class="row">
                 <div class="col-md-12 form-horizontal">
@@ -199,7 +199,7 @@
               <div class="row">
                 <div class="col-md-10">
                   <div class="row">
-                    <div class="box-footer pull-left" style="border-top: 0px; padding-top: 0px;">
+                    <div class="box-footer pull-left" style="border-top: 0px">
                       <button class="btn btn-flat btn-success" onclick="addNewAddress()">Add</button>
                     </div>
                   </div>
@@ -268,9 +268,9 @@
             <!-- /.tab-pane -->
           </div>
               <div class="row" style="margin-left: -5px;">
-                <div class="box-footer pull-left" style="border-top: 0px; padding-top: 0px;">
+                <div class="box-footer pull-left" style="border-top: 0px">
                   <button class="btn btn-flat btn-success" onclick="submit()" id="saveButton">Save</button>
-                  <button class="btn btn-flat btn-primary" onclick="submitEdit()" id="editButton" style="display:none;">Edit</button>
+                  <button class="btn btn-flat btn-primary" onclick="submitEdit()" id="editButton" >Edit</button>
                 </div>
               </div>
           <!-- /.tab-content -->
@@ -287,14 +287,10 @@
               <h3 class="box-title">Organization List</h3>
 
               <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 350px;">
-<div class="col-md-6" style="padding-right: 0px;">
+                <div class="input-group input-group-sm" style="width: 150px;">
                   <select id="searchType" class="form-control" onchange="typeFilter()"></select>
-</div>
-<div class="col-md-6">                  
-<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-</div>       
-           <div class="input-group-btn">
+                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                  <div class="input-group-btn">
                     <button type="submit" class="btn btn-flat btn-success"><i class="fa fa-search"></i></button>
                   </div>
                 </div>
@@ -439,8 +435,7 @@
       string += '<tr><td>' + currentCompany.name + '</td><td>' + currentCompany.shortname + '</td>'
       string += '<td>' + currentCompany.phone + '</td><td>' + currentCompany.email + '</td>';
       string += '<td>' + currentCompany.website + '</td>';
-string += '<td>' + currentCompany.companytype + '</td>';      
-string += `<td> <i class="fa fa-edit fa_edt" onclick="edit(` + i + `)"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteRecord(` + i + `)"></i></td></tr>`;
+      string += `<td> <i class="fa fa-edit fa_edt" onclick="edit(` + i + `)"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteRecord(` + i + `)"></i></td></tr>`;
     }
     document.getElementById('companylist').innerHTML = string;
   }
