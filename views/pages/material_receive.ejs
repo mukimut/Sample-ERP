@@ -63,12 +63,31 @@
 							<input type="text" class="form-control" id="quantity" placeholder="Quantity">
 						</div>
 					</div>
-<div class="form-group">
-	<div class="col-sm-12">
-<input type="text" class="form-control" id="warrenty" placeholder="Warrenty">
-</div>
-</div>
-
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="radio" id="warrenty" name="warrenty" value="warrenty"> Warrenty &nbsp; &nbsp;
+							&nbsp;
+							<input type="radio" id="guarantee" name="warrenty" value="guarantee"> Guarantee
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12"><select id="country0" class="form-control">
+								<option>Select Warrenty</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12"><select id="country0" class="form-control">
+								<option>Select Origin</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12"><select id="country0" class="form-control">
+								<option>Select Made</option>
+							</select>
+						</div>
+					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
 							<textarea class="form-control" rows="3" id="remark" placeholder="Remark"></textarea>
@@ -212,4 +231,13 @@
 		addedItems.splice(index, 1);
 		updateTable();
 	}
+
+	// function yesnoCheck() {
+	// 	if (document.getElementById('warrenty').checked) {
+	// 		document.getElementById('ifYes').style.display = 'block';
+	// 	}
+	// 	else document.getElementById('ifYes').style.display = 'none';
+
+	// }
+
 </script>
