@@ -232,6 +232,13 @@
 		updateTable();
 	}
 
+	function submit() {
+		$.post('/api/receive', {data: addedItems.map(element => {
+			element.date = moment().format('YYYY-MM-DD');
+			return element;
+		})}, (res) => console.log(res));
+	}
+
 	// function yesnoCheck() {
 	// 	if (document.getElementById('warrenty').checked) {
 	// 		document.getElementById('ifYes').style.display = 'block';
