@@ -41,16 +41,12 @@
 				<div class="box-body boxbdymt">
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="item" class="form-control" onchange="itemSelected(this)">
-								<option>Select Item</option>
-							</select>
+							<select id="item" class="form-control"></select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="brand" class="form-control">
-								<option>Select Brand</option>
-							</select>
+							<select id="brand" class="form-control"></select>
 						</div>
 					</div>
 					<div class="form-group">
@@ -65,27 +61,23 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="radio" id="warrenty" name="warrenty" value="warrenty"> Warrenty &nbsp; &nbsp;
+							<input type="radio" name="warrenty" value="warrenty" checked> Warrenty &nbsp; &nbsp;
 							&nbsp;
 							<input type="radio" id="guarantee" name="warrenty" value="guarantee"> Guarantee
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-12"><select id="country0" class="form-control">
+						<div class="col-sm-12"><select id="warrenty" class="form-control">
 								<option>Select Warrenty</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-12"><select id="country0" class="form-control">
-								<option>Select Origin</option>
-							</select>
+						<div class="col-sm-12"><select id="origin" class="form-control"></select>
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-12"><select id="country0" class="form-control">
-								<option>Select Made</option>
-							</select>
+						<div class="col-sm-12"><select id="madein" class="form-control"></select>
 						</div>
 					</div>
 					<div class="form-group">
@@ -160,11 +152,13 @@
 <script src="/js/dropdown.js"></script>
 <script>
 	let allProducts = [], addedItems = [];
-	const dropdownIds = ['brand', 'item'];
+	const dropdownIds = ['brand', 'item', 'origin', 'madein', 'warrenty'];
 	const inputList = ['unitprice', 'quantity', 'remark'];
 
 	getProducts();
 	setLovData('tov?type=Product Brand', 'brand', 'Select Brand');
+	setLovData('tov?type=Country', 'origin', 'Select Source ountry').then(lov => setSelectionList('madein', lov.values, 'Select Assembling Country'));
+	setLovData('tov?type=Warrenty', 'warrenty', 'Select Warrenty');
 
 	function getProducts() {
 		$.get('/api/products', (data) => {
@@ -185,12 +179,16 @@
 	function addData() {
 		const length = inputList.length;
 		let success = true;
+		const data = {};
 
-		const item = getSelectedText('item');
-		const brand = getSelectedText('brand');
-		const itemEntry = allProducts.find(element => element.name === item);
+		let warrentyType = 'Warrenty';
+		if(document.getElementById('guarantee').checked) warrentyType = 'Guarantee'
 
-		let data = { item, brand, itemid: itemEntry.id, unit: itemEntry.unit };
+		dropdownIds.forEach(id => data[id] = getSelectedText(id));
+		const itemEntry = allProducts.find(element => element.name === data.item);
+		data['itemid'] = itemEntry.id;
+		data['unit'] = itemEntry.unit;
+		data['warrenty'] += ' ' + warrentyType;
 
 		for (let i = 0; i < length; i++) {
 			const currentValue = document.getElementById(inputList[i]).value;
@@ -238,13 +236,4 @@
 			return element;
 		})}, (res) => console.log(res));
 	}
-
-	// function yesnoCheck() {
-	// 	if (document.getElementById('warrenty').checked) {
-	// 		document.getElementById('ifYes').style.display = 'block';
-	// 	}
-	// 	else document.getElementById('ifYes').style.display = 'none';
-
-	// }
-
 </script>

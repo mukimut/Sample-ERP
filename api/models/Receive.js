@@ -2,10 +2,10 @@ module.exports = {
     attributes: {
         id: {type: 'number', columnName: 'receiveid', autoIncrement: true}, 
         item: {type: 'string', allowNull: false}, itemid: {type: 'string', allowNull: false}, serial: {type: 'string'},
-        date: {type: 'string', allowNull: true, columnType: 'date'}, batch: {type: 'string'}, brand: {type: 'string'}, warranty: {type: 'string'}, madein: {type: 'string'},
+        date: {type: 'string', allowNull: true, columnType: 'date'}, batch: {type: 'string'}, brand: {type: 'string'}, warrenty: {type: 'string'},
         unitprice: {type: 'string', allowNull: false}, quantity: {type: 'string', allowNull: false}, unit: {type: 'string', allowNull: false},
         employee: {type: 'string'}, employeeid: {type: 'number'},
-        remark: {type: 'string'}
+        remark: {type: 'string'}, madein: {type: 'string'}, origin: {type: 'string'}
     },
     tableName: 'productreceive'
 }
@@ -25,8 +25,9 @@ CREATE TABLE public.productreceive
     employee text,
     employeeid integer,
     serial text,
-    warranty text,
+    warrenty text,
     madein text,
+    origin text,
     remark text,
     unit text,
     PRIMARY KEY (receiveid)
