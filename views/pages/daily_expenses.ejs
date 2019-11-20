@@ -29,7 +29,7 @@
 </style>
 <div class="content-wrapper">
 	<section class="content-header">
-		<h1>Material Receive<small>Settings</small></h1>
+		<h1>Daily Expenses<small>Settings</small></h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li><a href="#">Master Settings</a></li>
@@ -41,54 +41,36 @@
 				<div class="box-body boxbdymt">
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="item" class="form-control"></select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<select id="brand" class="form-control"></select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<input type="text" class="form-control" id="unitprice" placeholder="Unit Price">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<input type="text" class="form-control" id="quantity" placeholder="Quantity">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<input type="radio" name="warrenty" value="warrenty" checked> Warrenty &nbsp; &nbsp;
-							&nbsp;
-							<input type="radio" id="guarantee" name="warrenty" value="guarantee"> Guarantee
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12"><select id="warrenty" class="form-control">
-								<option>Select Warrenty</option>
+							<select id="expense_type" class="form-control">
+								<option>Select Expense Type</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-12"><select id="origin" class="form-control"></select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12"><select id="supplier" class="form-control">
-							<option>Select Supplier</option>
-						</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12"><select id="madein" class="form-control"></select>
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="purpose" placeholder="Purpose">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<textarea class="form-control" rows="3" id="remark" placeholder="Remark"></textarea>
+							<select id="expense_type" class="form-control">
+								<option>Select Project/ Customer</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="number" class="form-control" id="quantity" placeholder="Quantity">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="number" class="form-control" id="amount" placeholder="Amount">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="number" class="form-control" id="total" placeholder="Total">
 						</div>
 					</div>
 					<div class="row" style="margin-bottom: 20px;">
@@ -96,7 +78,6 @@
 							<div class="row">
 								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
 									<button class="btn btn-flat btn-success" onclick="addData()">Add</button>
-									<!-- <button class="btn btn-flat btn-primary" onclick="edit()" disabled id="submitEdit">Edit</button> -->
 								</div>
 							</div>
 						</div>
@@ -109,16 +90,17 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">Add Material Receive</h3>
+						<h3 class="box-title">Add Daily Expense</h3>
 					</div>
 					<div class="box-body table-responsive no-padding">
 						<table class="table table-hover">
 							<thead>
-								<th>Item</th>
-								<th>Brand</th>
-								<th>Price</th>
-								<th>Quantity</th>
+								<th>Expense Type</th>
+								<th>Purpose</th>
+								<th>Project/ Customer</th>
 								<th>Amount</th>
+								<th>Quantity</th>
+								<th>Total</th>
 								<th>Action</th>
 							</thead>
 							<tbody id="receiveTable"></tbody>
@@ -144,7 +126,7 @@
 				<div class="row">
 					<div class="box">
 						<div class="box-header">
-							<h3 class="box-title">List of Material Receive</h3>
+							<h3 class="box-title">List of Daily Expenses</h3>
 							<div class="box-tools">
 								<div class="input-group input-group-sm" style="width: 150px;">
 									<input type="text" name="table_search" class="form-control pull-right"
@@ -159,11 +141,12 @@
 						<div class="box-body table-responsive no-padding">
 							<table class="table table-hover">
 								<thead>
-									<th>Item</th>
-									<th>Brand</th>
-									<th>Price</th>
-									<th>Quantity</th>
+									<th>Expense Type</th>
+									<th>Purpose</th>
+									<th>Project/ Customer</th>
 									<th>Amount</th>
+									<th>Quantity</th>
+									<th>Total</th>
 									<th>Action</th>
 								</thead>
 								<tbody id="receiveTable"></tbody>
