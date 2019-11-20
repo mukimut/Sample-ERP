@@ -161,12 +161,12 @@
 								<thead>
 									<th>Item</th>
 									<th>Brand</th>
-									<th>Price</th>
 									<th>Quantity</th>
 									<th>Amount</th>
+									<th>Batch</th>
 									<th>Action</th>
 								</thead>
-								<tbody id="receiveTable"></tbody>
+								<tbody id="viewTable"></tbody>
 							</table>
 						</div>
 					</div>
@@ -181,15 +181,23 @@
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
-	let allProducts = [], addedItems = [];
+	let allProducts = [], addedItems = [], previousReceives = [];
 	const dropdownIds = ['brand', 'item', 'origin', 'madein', 'warrenty'];
 	const inputList = ['unitprice', 'quantity', 'remark'];
 
 	getProducts();
+	getReceives();
 	setLovData('tov?type=Product Brand', 'brand', 'Select Brand');
 	setLovData('tov?type=Country', 'origin', 'Select Source ountry').then(lov => setSelectionList('madein', lov.values, 'Select Assembling Country'));
 	setLovData('tov?type=Warrenty', 'warrenty', 'Select Warrenty');
 
+	function getReceives() {
+		$.get('/api/receives', (data) => {
+			previousReceives = data;
+			updateViewTable();
+		});
+	}
+	
 	function getProducts() {
 		$.get('/api/products', (data) => {
 			const productNames = [];
@@ -255,6 +263,41 @@
 		});
 	}
 
+	function updateViewTable() {
+		const viewTable = document.getElementById('viewTable');
+		viewTable.innerHTML = '';
+		let row, cell;
+
+		previousReceives.forEach((element, index) => {
+			row = viewTable.insertRow();
+
+			cell = row.insertCell();
+			cell.append(element.item);
+			cell = row.insertCell();
+			cell.append(element.brand);
+			cell = row.insertCell();
+			cell.append(element.quantity);
+			cell = row.insertCell();
+			cell.append(element.quantity * element.unitprice);
+			cell = row.insertCell();
+			cell.append(element.batch);			
+			cell = row.insertCell();
+			cell.innerHTML = '<button onclick="editReceive(' + index + ')">Edit</button>'
+		})
+	}
+
+	function editReceive(index) {
+		const selectedReceive = previousReceives[index];
+
+		inputList.forEach(id => {
+			const currentValue = selectedReceive[id];
+			if(!currentValue) currentValue = '';
+			document.getElementById(id).value = currentValue;
+		});
+
+		dropdownIds.forEach(id => setSelectedValue(id, selectedReceive[id]));
+	}
+
 	function deleteRow(index) {
 		addedItems.splice(index, 1);
 		updateTable();
@@ -266,6 +309,6 @@
 				element.date = moment().format('YYYY-MM-DD');
 				return element;
 			})
-		}, (res) => console.log(res));
+		}, (res) => getReceives());
 	}
 </script>

@@ -1,4 +1,3 @@
-
 module.exports = async function updateReceive(req, res) {
     const id = req.body.id;
     const data = req.body.data;
