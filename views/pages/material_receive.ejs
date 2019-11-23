@@ -61,13 +61,13 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="radio" name="warrenty" value="warrenty" checked> Warrenty &nbsp; &nbsp;
+							<input type="radio" id="warrenty" name="warrenty" value="warrenty" checked> Warrenty &nbsp; &nbsp;
 							&nbsp;
 							<input type="radio" id="guarantee" name="warrenty" value="guarantee"> Guarantee
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-12"><select id="warrenty" class="form-control">
+						<div class="col-sm-12"><select id="warrentyPeriod" class="form-control">
 								<option>Select Warrenty</option>
 							</select>
 						</div>
@@ -181,15 +181,15 @@
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
-	let allProducts = [], addedItems = [], previousReceives = [];
-	const dropdownIds = ['brand', 'item', 'origin', 'madein', 'warrenty'];
+	let allProducts = [], addedItems = [], previousReceives = [], selectedId = 0;
+	const dropdownIds = ['brand', 'item', 'origin', 'madein', 'warrentyPeriod'];
 	const inputList = ['unitprice', 'quantity', 'remark'];
 
 	getProducts();
 	getReceives();
 	setLovData('tov?type=Product Brand', 'brand', 'Select Brand');
 	setLovData('tov?type=Country', 'origin', 'Select Source ountry').then(lov => setSelectionList('madein', lov.values, 'Select Assembling Country'));
-	setLovData('tov?type=Warrenty', 'warrenty', 'Select Warrenty');
+	setLovData('tov?type=Warrenty', 'warrentyPeriod', 'Select Warrenty');
 
 	function getReceives() {
 		$.get('/api/receives', (data) => {
@@ -226,7 +226,7 @@
 		const itemEntry = allProducts.find(element => element.name === data.item);
 		data['itemid'] = itemEntry.id;
 		data['unit'] = itemEntry.unit;
-		data['warrenty'] += ' ' + warrentyType;
+		data['warrenty'] = data['warrentyPeriod'] + ' ' + warrentyType;
 
 		for (let i = 0; i < length; i++) {
 			const currentValue = document.getElementById(inputList[i]).value;
@@ -288,6 +288,7 @@
 
 	function editReceive(index) {
 		const selectedReceive = previousReceives[index];
+		selectedId = selectedReceive.id;
 
 		inputList.forEach(id => {
 			const currentValue = selectedReceive[id];
@@ -296,6 +297,15 @@
 		});
 
 		dropdownIds.forEach(id => setSelectedValue(id, selectedReceive[id]));
+
+		const warrenty = previousReceives[index].warrenty;
+		let end = warrenty.length - 1;
+		while(warrenty.charAt(end) != ' ') end--;
+		const warrentyPeriod = warrenty.substring(0, end);
+		setSelectedValue('warrentyPeriod', warrentyPeriod);
+
+		document.getElementById('guarantee').checked = warrenty.charAt(end + 1) === 'G';
+		document.getElementById('warrenty').checked = warrenty.charAt(end + 1) === 'W';
 	}
 
 	function deleteRow(index) {
