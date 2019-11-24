@@ -25,6 +25,10 @@ module.exports = async function updateReceive(req, res) {
             element.batch = 'RCV-' + serialString;
             await Receive.create(element);
         };
-    } 
+    }
+    else {
+        await Receive.update({id: id}).set(data);
+        res.send({update: true});
+    }
     res.send(true);
 }

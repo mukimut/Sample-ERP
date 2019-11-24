@@ -321,4 +321,18 @@
 			})
 		}, (res) => getReceives());
 	}
+
+	function submitEdit() {
+		addData();
+		$.ajax({
+			url: '/api/receive', method: 'PUT', data: {data: addedItems[0], id: selectedId}, success: res => {
+				if (res.update) {
+					getReceives();
+					selectedId = null;
+					addedItems = [];
+				}
+				else alert(res.message);
+			}
+		});
+	}
 </script>
