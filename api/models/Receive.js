@@ -5,6 +5,7 @@ module.exports = {
         date: {type: 'string', allowNull: true, columnType: 'date'}, batch: {type: 'string'}, brand: {type: 'string'}, warrenty: {type: 'string'},
         unitprice: {type: 'string', allowNull: false}, quantity: {type: 'string', allowNull: false}, unit: {type: 'string', allowNull: false},
         employee: {type: 'string'}, employeeid: {type: 'number'},
+        supplier: {type: 'string'}, supplierid: {type: 'number'},
         remark: {type: 'string'}, madein: {type: 'string'}, origin: {type: 'string'}
     },
     tableName: 'productreceive'
@@ -30,6 +31,8 @@ CREATE TABLE public.productreceive
     origin text,
     remark text,
     unit text,
+    supplier text,
+    supplierid integer,
     PRIMARY KEY (receiveid)
 )
 WITH (
