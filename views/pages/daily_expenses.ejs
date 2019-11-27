@@ -41,50 +41,30 @@
 				<div class="box-body boxbdymt">
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="expense_type" class="form-control">
-								<option>Select Expense Type</option>
-							</select>
+							<select id="expense" class="form-control"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12"><input type="text" class="form-control" id="purpose" placeholder="Purpose"></div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<select id="project" class="form-control"></select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="text" class="form-control" id="purpose" placeholder="Purpose">
+							<select id="customer" class="form-control"></select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="expense_type" class="form-control">
-								<option>Select Project</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<select id="expense_type" class="form-control">
-								<option>Select Customer</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<select id="expense_type" class="form-control">
-								<option>Select Supplier</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<input type="number" class="form-control" id="quantity" placeholder="Quantity">
+							<select id="supplier" class="form-control"></select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
 							<input type="number" class="form-control" id="amount" placeholder="Amount">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<input type="number" class="form-control" id="total" placeholder="Total">
 						</div>
 					</div>
 					<div class="row" style="margin-bottom: 20px;">
@@ -111,10 +91,9 @@
 							<thead>
 								<th>Expense Type</th>
 								<th>Purpose</th>
-								<th>Project/ Customer</th>
+								<th>Project</th>
+								<th>Customer/Supplier</th>
 								<th>Amount</th>
-								<th>Quantity</th>
-								<th>Total</th>
 								<th>Action</th>
 							</thead>
 							<tbody id="receiveTable"></tbody>
@@ -178,25 +157,29 @@
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
-	let allProducts = [], addedItems = [];
-	const dropdownIds = ['brand', 'item', 'origin', 'madein', 'warrenty'];
-	const inputList = ['unitprice', 'quantity', 'remark'];
+	let addedExpanses = [], allCompanies = [];
+	const dropdownIds = ['expense', 'project', 'customer', 'supplier'];
+	const inputList = ['purpose', 'amount'];
 
-	getProducts();
-	setLovData('tov?type=Product Brand', 'brand', 'Select Brand');
-	setLovData('tov?type=Country', 'origin', 'Select Source ountry').then(lov => setSelectionList('madein', lov.values, 'Select Assembling Country'));
-	setLovData('tov?type=Warrenty', 'warrenty', 'Select Warrenty');
-
-	function getProducts() {
-		$.get('/api/products', (data) => {
-			const productNames = [];
-			allProducts = data.map(element => {
-				productNames.push(element.name);
-				return { name: element.name, id: element.id, unit: element.unit };
-			});
-			setSelectionList('item', productNames, 'Select Product');
+	setLovData('tov?type=Expense Type', 'expense', 'Select Expense Type');
+	setLovData('tov?type=Projects', 'project', 'Select Project');
+	
+	$.get('/api/companies', (res) => {
+		const supplierList = [], customerList = [];
+		allCompanies = res.filter(element => {
+			const name = element.name, id = element.id;
+			let include = true;
+			if(element.companytype === 'Customer') customerList.push(name);
+			else if(element.companytype === 'Supplier') supplierList.push(name);
+			else include = false;
+			return include;
+		}).map(element => {
+			return {id: element.id, name: element.name};
 		});
-	}
+
+		setSelectionList('supplier', supplierList, 'Select Supplier');
+		setSelectionList('customer', customerList, 'Select Customer');
+	});
 
 	function logout() {
 		localStorage.removeItem('token');
