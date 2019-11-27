@@ -98,7 +98,7 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">Add Material Receive</h3>
+						<h3 class="box-title">Add Issue Note</h3>
 					</div>
 					<div class="box-body table-responsive no-padding">
 						<table class="table table-hover">
@@ -131,7 +131,7 @@
 				<div class="row">
 					<div class="box">
 						<div class="box-header">
-							<h3 class="box-title">List of Material Receive</h3>
+							<h3 class="box-title">List of Issue Notes</h3>
 							<div class="box-tools">
 								<div class="input-group input-group-sm" style="width: 150px;">
 									<input type="text" name="table_search" class="form-control pull-right"
@@ -173,17 +173,9 @@
 	const inputList = ['unitprice', 'quantity', 'remark'];
 
 	getProducts();
-	getReceives();
 	getCustomers();
 	setLovData('tov?type=Product Brand', 'brand', 'Select Brand');
 	setLovData('tov?type=Warrenty', 'warrentyPeriod', 'Select Warrenty');
-
-	function getReceives() {
-		$.get('/api/receives', (data) => {
-			previousReceives = data;
-			updateViewTable();
-		});
-	}
 	
 	function getProducts() {
 		$.get('/api/products', (data) => {
