@@ -1,0 +1,338 @@
+<style>
+	.card {
+		/* Add shadows to create the "card" effect */
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+		transition: 0.3s;
+	}
+
+	.boxbdymt {
+		margin-top: 25px;
+	}
+
+	.fa_edt {
+		font-size: 22px;
+		color: rgb(4, 117, 161);
+		font-weight: bold;
+	}
+
+	.fa_dlt {
+		font-size: 22px;
+		color: red;
+		font-weight: bold;
+	}
+
+	.fa_detail {
+		font-size: 24px;
+		color: rgb(202, 132, 3);
+		font-weight: bold;
+	}
+</style>
+<div class="content-wrapper">
+	<section class="content-header">
+		<h1>Issue<small>Settings</small></h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="#">Master Settings</a></li>
+		</ol>
+	</section>
+	<section class="invoice">
+		<div class="row">
+			<div class="card col-md-6 form-horizontal col-md-offset-3">
+				<div class="box-body boxbdymt">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<select id="item" class="form-control"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<select id="brand" class="form-control"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="unitprice" placeholder="Unit Price">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="quantity" placeholder="Quantity">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="radio" id="warrenty" name="warrenty" value="warrenty" checked> Warrenty &nbsp; &nbsp;
+							&nbsp;
+							<input type="radio" id="guarantee" name="warrenty" value="guarantee"> Guarantee
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12"><select id="warrentyPeriod" class="form-control">
+								<option>Select Warrenty</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12"><select id="customer" class="form-control"></select></div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea class="form-control" rows="3" id="remark" placeholder="Remark"></textarea>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 20px;">
+						<div class="col-md-10">
+							<div class="row">
+								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
+									<button class="btn btn-flat btn-success" id="addBtn" onclick="addData()">Add</button>
+									<button class="btn btn-flat btn-primary" id="editBtn" onclick="submitEdit()" style="display:none;" id="submitEdit"> Save </button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><br><br><br>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">Add Material Receive</h3>
+					</div>
+					<div class="box-body table-responsive no-padding">
+						<table class="table table-hover">
+							<thead>
+								<th>Item</th>
+								<th>Brand</th>
+								<th>Price</th>
+								<th>Quantity</th>
+								<th>Amount</th>
+								<th>Action</th>
+							</thead>
+							<tbody id="receiveTable"></tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row" style="margin-bottom: 20px;">
+					<div class="col-md-10">
+						<div class="row">
+							<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
+								<button class="btn btn-flat btn-success" onclick="submit()">Save</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">List of Material Receive</h3>
+							<div class="box-tools">
+								<div class="input-group input-group-sm" style="width: 150px;">
+									<input type="text" name="table_search" class="form-control pull-right"
+										placeholder="Search">
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-flat btn-success"><i
+												class="fa fa-search"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box-body table-responsive no-padding">
+							<table class="table table-hover">
+								<thead>
+									<th>Item</th>
+									<th>Brand</th>
+									<th>Quantity</th>
+									<th>Amount</th>
+									<th>Batch</th>
+									<th>Action</th>
+								</thead>
+								<tbody id="viewTable"></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="clearfix"></div>
+</div>
+
+<!-- <div class="control-sidebar-bg"></div> -->
+<script src="/dependencies/jquery.js"></script>
+<script src="/js/dropdown.js"></script>
+<script>
+	let allProducts = [], addedItems = [], previousReceives = [], customers = [], selectedId = 0;
+	const dropdownIds = ['brand', 'item', 'warrentyPeriod', 'customer'];
+	const inputList = ['unitprice', 'quantity', 'remark'];
+
+	getProducts();
+	getReceives();
+	getCustomers();
+	setLovData('tov?type=Product Brand', 'brand', 'Select Brand');
+	setLovData('tov?type=Warrenty', 'warrentyPeriod', 'Select Warrenty');
+
+	function getReceives() {
+		$.get('/api/receives', (data) => {
+			previousReceives = data;
+			updateViewTable();
+		});
+	}
+	
+	function getProducts() {
+		$.get('/api/products', (data) => {
+			const productNames = [];
+			allProducts = data.map(element => {
+				productNames.push(element.name);
+				return { name: element.name, id: element.id, unit: element.unit };
+			});
+			setSelectionList('item', productNames, 'Select Product');
+		});
+	}
+
+	function getCustomers() {
+		$.get('/api/companies?type=Customer', (data) => {
+			const customerNames = [];
+			customers = data.map(element => {
+				customerNames.push(element.name);
+				return { name: element.name, id: element.id };
+			});
+			setSelectionList('customer', customerNames, 'Select Customer');
+		});
+	}
+
+	function logout() {
+		localStorage.removeItem('token');
+		window.open('/login', '_self');
+	}
+
+	function addData() {
+		const length = inputList.length;
+		let success = true;
+		const data = {};
+
+		let warrentyType = 'Warrenty';
+		if (document.getElementById('guarantee').checked) warrentyType = 'Guarantee'
+
+		dropdownIds.forEach(id => data[id] = getSelectedText(id));
+		const itemEntry = allProducts.find(element => element.name === data.item);
+		data['itemid'] = itemEntry.id;
+		data['unit'] = itemEntry.unit;
+		data['warrenty'] = data['warrentyPeriod'] + ' ' + warrentyType;
+		data['supplierid'] = suppliers.find(element => element.name === data.supplier).id;
+
+		for (let i = 0; i < length; i++) {
+			const currentValue = document.getElementById(inputList[i]).value;
+			if (!currentValue) currentValue = '';
+			data[inputList[i]] = currentValue;
+		}
+
+		data.unitprice = Number.parseFloat(data.unitprice);
+		data.quantity = Number.parseFloat(data.quantity);
+
+		addedItems.push(data);
+		updateTable();
+	}
+
+	function updateTable() {
+		const tableBody = document.getElementById('receiveTable');
+		tableBody.innerHTML = '';
+		addedItems.forEach((element, index) => {
+			let row = tableBody.insertRow();
+
+			addCell(row, element.item);
+			addCell(row, element.brand);
+			addCell(row, element.unitprice);
+			addCell(row, element.quantity);
+			addCell(row, element.unitprice * element.quantity);
+			
+			const cell = row.insertCell();
+			cell.innerHTML = '<i class="fa fa-trash-o fa_dlt" onclick="deleteRow(' + index + ')"></i>'
+		});
+	}
+
+	function updateViewTable() {
+		const viewTable = document.getElementById('viewTable');
+		viewTable.innerHTML = '';
+		let row;
+
+		previousReceives.forEach((element, index) => {
+			row = viewTable.insertRow();
+
+			addCell(row, element.item);
+			addCell(row, element.brand);
+			addCell(row, element.quantity);
+			addCell(row, element.quantity * element.unitprice);
+			addCell(row, element.batch);
+
+			const cell = row.insertCell();
+			cell.innerHTML = '<i class="fa fa-edit fa_edt" onclick="editReceive(' + index + ')"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteRecord(` + i + `)"></i>'
+		});
+	}
+
+	function addCell(row, data) {
+		const cell = row.insertCell();
+		cell.append(data);
+	}
+
+	function editReceive(index) {
+		const selectedReceive = previousReceives[index];
+		selectedId = selectedReceive.id;
+
+		inputList.forEach(id => {
+			const currentValue = selectedReceive[id];
+			if(!currentValue) currentValue = '';
+			document.getElementById(id).value = currentValue;
+		});
+
+		dropdownIds.forEach(id => setSelectedValue(id, selectedReceive[id]));
+
+		const warrenty = previousReceives[index].warrenty;
+		let end = warrenty.length - 1;
+		while(warrenty.charAt(end) != ' ') end--;
+		const warrentyPeriod = warrenty.substring(0, end);
+		setSelectedValue('warrentyPeriod', warrentyPeriod);
+
+		document.getElementById('guarantee').checked = warrenty.charAt(end + 1) === 'G';
+		document.getElementById('warrenty').checked = warrenty.charAt(end + 1) === 'W';
+
+		document.getElementById('addBtn').style.display= 'None';
+		document.getElementById('editBtn').style.display = 'Block';
+	}
+
+	function deleteRow(index) {
+		addedItems.splice(index, 1);
+		updateTable();
+	}
+
+	// function submit() {
+	// 	$.post('/api/receive', {
+	// 		data: addedItems.map(element => {
+	// 			element.date = moment().format('YYYY-MM-DD');
+	// 			return element;
+	// 		})
+	// 	}, (res) => getReceives());
+	// }
+
+	// function submitEdit() {
+	// 	addData();
+	// 	$.ajax({
+	// 		url: '/api/receive', method: 'PUT', data: {data: addedItems[0], id: selectedId}, success: res => {
+	// 			if (res.update) {
+	// 				getReceives();
+	// 				selectedId = null;
+	// 				addedItems = [];
+	// 				updateTable();
+	// 			}
+	// 			else alert(res.message);
+	// 		}
+	// 	});
+	// }
+	
+</script>

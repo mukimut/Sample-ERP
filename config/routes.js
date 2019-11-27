@@ -58,6 +58,7 @@ module.exports.routes = {
   'post /employee': {action: 'employee/save-employee'},
   'get /material_receive': {view: 'pages/material_receive', locals:{layout: 'layouts/dashboard'}},
   'get /daily_expenses': {view: 'pages/daily_expenses', locals:{layout: 'layouts/dashboard'}},
+  'get /issue': {view: 'pages/issue_note', locals:{layout: 'layouts/dashboard'}},
 
 
   /***************************************************************************
