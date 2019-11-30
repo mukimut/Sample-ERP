@@ -56,6 +56,8 @@ module.exports.routes = {
   'put /api/products': {action: 'products/update-product'},
   'get /employee': {view: 'pages/employee', locals:{layout: 'layouts/dashboard'}},
   'post /employee': {action: 'employee/save-employee'},
+  'post /api/expense': {action: 'expenses/save-expense'},
+  'get /api/expense': {action: 'expenses/get-expense'},
   'get /material_receive': {view: 'pages/material_receive', locals:{layout: 'layouts/dashboard'}},
   'get /daily_expenses': {view: 'pages/daily_expenses', locals:{layout: 'layouts/dashboard'}},
   'get /issue': {view: 'pages/issue_note', locals:{layout: 'layouts/dashboard'}},

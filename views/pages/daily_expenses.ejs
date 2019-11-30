@@ -41,7 +41,7 @@
 				<div class="box-body boxbdymt">
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="expense" class="form-control"></select>
+							<select id="type" class="form-control"></select>
 						</div>
 					</div>
 					<div class="form-group">
@@ -71,7 +71,7 @@
 						<div class="col-md-10">
 							<div class="row">
 								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
-									<button class="btn btn-flat btn-success" onclick="addData()">Add</button>
+									<button class="btn btn-flat btn-success" onclick="submit()">Save</button>
 								</div>
 							</div>
 						</div>
@@ -79,40 +79,6 @@
 				</div>
 			</div>
 		</div><br><br><br>
-
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="box">
-					<div class="box-header">
-						<h3 class="box-title">Add Daily Expense</h3>
-					</div>
-					<div class="box-body table-responsive no-padding">
-						<table class="table table-hover">
-							<thead>
-								<th>Expense Type</th>
-								<th>Purpose</th>
-								<th>Project</th>
-								<th>Customer/Supplier</th>
-								<th>Amount</th>
-								<th>Action</th>
-							</thead>
-							<tbody id="receiveTable"></tbody>
-						</table>
-					</div>
-				</div>
-				<div class="row" style="margin-bottom: 20px;">
-					<div class="col-md-10">
-						<div class="row">
-							<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
-								<button class="btn btn-flat btn-success" onclick="submit()">Save</button>
-								<button class="btn btn-flat btn-primary" onclick="edit()" disabled
-									id="submitEdit">Edit</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<div class="row">
 			<div class="col-xs-12">
@@ -134,15 +100,14 @@
 						<div class="box-body table-responsive no-padding">
 							<table class="table table-hover">
 								<thead>
-									<th>Expense Type</th>
+									<th>Project</th>
 									<th>Purpose</th>
-									<th>Project/ Customer</th>
+									<th>Supplier</th>
+									<th>Customer</th>
 									<th>Amount</th>
-									<th>Quantity</th>
-									<th>Total</th>
 									<th>Action</th>
 								</thead>
-								<tbody id="receiveTable"></tbody>
+								<tbody id="showTable"></tbody>
 							</table>
 						</div>
 					</div>
@@ -157,12 +122,13 @@
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
-	let addedExpanses = [], allCompanies = [];
-	const dropdownIds = ['expense', 'project', 'customer', 'supplier'];
+	let allCompanies = [];
+	const dropdownIds = ['type', 'project', 'customer', 'supplier'];
 	const inputList = ['purpose', 'amount'];
 
-	setLovData('tov?type=Expense Type', 'expense', 'Select Expense Type');
+	setLovData('tov?type=Expense Type', 'type', 'Select Expense Type');
 	setLovData('tov?type=Projects', 'project', 'Select Project');
+	getExpenses();
 	
 	$.get('/api/companies', (res) => {
 		const supplierList = [], customerList = [];
@@ -181,24 +147,37 @@
 		setSelectionList('customer', customerList, 'Select Customer');
 	});
 
+	function getExpenses() {
+		$.get('/api/expense', (res) => {
+			const table = document.getElementById('showTable');
+			res.forEach(element => {
+				const row = table.insertRow();
+
+				addCell(row, element.project);
+				addCell(row, element.purpose);
+				addCell(row, element.supplier);
+				addCell(row, element.customer);
+				addCell(row, element.amount);
+			})
+		})
+	}
+
+	function addCell(row, data) {
+		const cell = row.insertCell();
+		cell.append(data);
+	}
+
 	function logout() {
 		localStorage.removeItem('token');
 		window.open('/login', '_self');
 	}
 
-	function addData() {
+	function getData() {
 		const length = inputList.length;
 		let success = true;
 		const data = {};
 
-		let warrentyType = 'Warrenty';
-		if (document.getElementById('guarantee').checked) warrentyType = 'Guarantee'
-
 		dropdownIds.forEach(id => data[id] = getSelectedText(id));
-		const itemEntry = allProducts.find(element => element.name === data.item);
-		data['itemid'] = itemEntry.id;
-		data['unit'] = itemEntry.unit;
-		data['warrenty'] += ' ' + warrentyType;
 
 		for (let i = 0; i < length; i++) {
 			const currentValue = document.getElementById(inputList[i]).value;
@@ -206,46 +185,27 @@
 			data[inputList[i]] = currentValue;
 		}
 
-		data.unitprice = Number.parseFloat(data.unitprice);
-		data.quantity = Number.parseFloat(data.quantity);
+		const customerid = findId(data.customer);
+		if(customerid === -1) delete data.customer;
+		else data['customerid'] = customerid;
 
-		addedItems.push(data);
-		updateTable();
+		const supplierid = findId(data.supplier);
+		if(supplierid === -1) delete data.supplier;
+		else data['supplierid'] = supplierid;
+
+		return data;
 	}
 
-	function updateTable() {
-		const tableBody = document.getElementById('receiveTable');
-		tableBody.innerHTML = '';
-		addedItems.forEach((element, index) => {
-			let row = tableBody.insertRow();
-			let cell;
-
-			cell = row.insertCell();
-			cell.append(element.item);
-			cell = row.insertCell();
-			cell.append(element.brand);
-			cell = row.insertCell();
-			cell.append(element.unitprice);
-			cell = row.insertCell();
-			cell.append(element.quantity);
-			cell = row.insertCell();
-			cell.append(element.unitprice * element.quantity);
-			cell = row.insertCell();
-			cell.innerHTML = '<button onclick="deleteRow(' + index + ')">Delete</button>'
-		});
-	}
-
-	function deleteRow(index) {
-		addedItems.splice(index, 1);
-		updateTable();
+	function findId(compnayName) {
+		let id = -1;
+		const company =	allCompanies.find((element) => element.name === compnayName);
+		if(company) id = company.id;
+		return id;
 	}
 
 	function submit() {
-		$.post('/api/receive', {
-			data: addedItems.map(element => {
-				element.date = moment().format('YYYY-MM-DD');
-				return element;
-			})
-		}, (res) => console.log(res));
+		const data = getData();
+		data['date'] = moment().format('YYYY-MM-DD');
+		$.post('/api/expense', data, (res) => console.log(res));
 	}
 </script>
