@@ -118,6 +118,7 @@
 <!-- <div class="control-sidebar-bg"></div> -->
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
+<!-- <script src="/js/table.js"></script> -->
 <script>
 	let allCompanies = [];
 	const dropdownIds = ['type', 'project', 'customer', 'supplier'];
@@ -158,11 +159,6 @@
 				addCell(row, element.amount);
 			})
 		})
-	}
-
-	function addCell(row, data) {
-		const cell = row.insertCell();
-		cell.append(data);
 	}
 
 	function logout() {

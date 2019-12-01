@@ -175,6 +175,7 @@
 <!-- <div class="control-sidebar-bg"></div> -->
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
+<script src="/js/table.js"></script>
 <script>
 	let allProducts = [], addedItems = [], previousReceives = [], suppliers = [], selectedId = 0;
 	const dropdownIds = ['brand', 'item', 'origin', 'madein', 'warrentyPeriod', 'supplier'];
@@ -283,11 +284,6 @@
 			const cell = row.insertCell();
 			cell.innerHTML = '<i class="fa fa-edit fa_edt" onclick="editReceive(' + index + ')"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteRecord(` + i + `)"></i>'
 		});
-	}
-
-	function addCell(row, data) {
-		const cell = row.insertCell();
-		cell.append(data);
 	}
 
 	function editReceive(index) {
