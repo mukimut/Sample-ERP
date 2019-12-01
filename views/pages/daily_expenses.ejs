@@ -206,6 +206,6 @@
 	function submit() {
 		const data = getData();
 		data['date'] = moment().format('YYYY-MM-DD');
-		$.post('/api/expense', data, (res) => console.log(res));
+		$.post('/api/expense', data, (res) => getExpenses());
 	}
 </script>
