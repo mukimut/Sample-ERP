@@ -1,5 +1,5 @@
 module.exports = async function getExpenses(req, res) {
-  console.log(req.query);
-  const expenses = await Expense.find();
+  const project = req.query.project;
+  const expenses = await Expense.find({project: project});
   res.send(expenses);
 }

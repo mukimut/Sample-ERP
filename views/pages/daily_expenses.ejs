@@ -88,16 +88,13 @@
 							<h3 class="box-title">List of Daily Expenses</h3>
 							<div class="box-tools">
 								<div class="input-group input-group-sm" style="width: 150px;">
-									
-										<select id="projectSearch" class="form-control"></select>
-								
+										<select id="projectSearch" class="form-control" onchange="getExpenses(this)"></select>
 								</div>
 							</div>
 						</div>
 						<div class="box-body table-responsive no-padding">
 							<table class="table table-hover">
 								<thead>
-									<th>Project</th>
 									<th>Purpose</th>
 									<th>Supplier</th>
 									<th>Customer</th>
@@ -108,6 +105,7 @@
 							</table>
 						</div>
 					</div>
+					Total Cost: <span id="totalCost"></span>
 				</div>
 			</div>
 		</div>
@@ -118,15 +116,14 @@
 <!-- <div class="control-sidebar-bg"></div> -->
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
-<!-- <script src="/js/table.js"></script> -->
+<script src="/js/table.js"></script>
 <script>
 	let allCompanies = [];
 	const dropdownIds = ['type', 'project', 'customer', 'supplier'];
 	const inputList = ['purpose', 'amount'];
 
 	setLovData('tov?type=Expense Type', 'type', 'Select Expense Type');
-	setLovData('tov?type=Projects', 'project', 'Select Project').then(data => setSelectionList("projectSearch", data.values, "Search by Project"))
-	getExpenses();
+	setLovData('tov?type=Projects', 'project', 'Select Project').then(data => setSelectionList("projectSearch", data.values, "Search by Project"));
 	
 	$.get('/api/companies', (res) => {
 		const supplierList = [], customerList = [];
@@ -145,19 +142,23 @@
 		setSelectionList('customer', customerList, 'Select Customer');
 	});
 
-	function getExpenses() {
-		$.get('/api/expense', (res) => {
+	function getExpenses(element) {
+		let total = 0;
+
+		$.get('/api/expense?project=' + element.value, (res) => {
 			const table = document.getElementById('showTable');
 			table.innerHTML = '';
 			res.forEach(element => {
 				const row = table.insertRow();
 
-				addCell(row, element.project);
 				addCell(row, element.purpose);
 				addCell(row, element.supplier);
 				addCell(row, element.customer);
 				addCell(row, element.amount);
-			})
+
+				total += Number.parseFloat(element.amount);
+			});
+			document.getElementById('totalCost').append(total);
 		})
 	}
 
