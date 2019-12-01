@@ -119,6 +119,7 @@
                 </div>
               </div>
               
+
             </div>
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_2">
@@ -449,7 +450,7 @@ string += `<td> <i class="fa fa-edit fa_edt" onclick="edit(` + i + `)"></i>&nbsp
 
   function addContact() {
 
-    const string = `<div class="col-md-11 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
+    const string = `<div class="col-md-12 form-horizontal"><div class="box-body"><div class="row"><div class="col-md-6"><div class="row">`
       + generateInputForm('text', 'form-control', 'name' + contactSize, null, 'Contact Person') 
       + generateDropDown(`department` + contactSize, 'form-control', allDepartments) 
       + generateDropDown(`designation` + contactSize, 'form-control', allDesignations)
