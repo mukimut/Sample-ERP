@@ -88,12 +88,9 @@
 							<h3 class="box-title">List of Daily Expenses</h3>
 							<div class="box-tools">
 								<div class="input-group input-group-sm" style="width: 150px;">
-									<input type="text" name="table_search" class="form-control pull-right"
-										placeholder="Search">
-									<div class="input-group-btn">
-										<button type="submit" class="btn btn-flat btn-success"><i
-												class="fa fa-search"></i></button>
-									</div>
+									
+										<select id="projectSearch" class="form-control"></select>
+								
 								</div>
 							</div>
 						</div>
@@ -121,13 +118,14 @@
 <!-- <div class="control-sidebar-bg"></div> -->
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
+<!-- <script src="/js/table.js"></script> -->
 <script>
 	let allCompanies = [];
 	const dropdownIds = ['type', 'project', 'customer', 'supplier'];
 	const inputList = ['purpose', 'amount'];
 
 	setLovData('tov?type=Expense Type', 'type', 'Select Expense Type');
-	setLovData('tov?type=Projects', 'project', 'Select Project');
+	setLovData('tov?type=Projects', 'project', 'Select Project').then(data => setSelectionList("projectSearch", data.values, "Search by Project"))
 	getExpenses();
 	
 	$.get('/api/companies', (res) => {
@@ -150,6 +148,7 @@
 	function getExpenses() {
 		$.get('/api/expense', (res) => {
 			const table = document.getElementById('showTable');
+			table.innerHTML = '';
 			res.forEach(element => {
 				const row = table.insertRow();
 
@@ -160,11 +159,6 @@
 				addCell(row, element.amount);
 			})
 		})
-	}
-
-	function addCell(row, data) {
-		const cell = row.insertCell();
-		cell.append(data);
 	}
 
 	function logout() {
