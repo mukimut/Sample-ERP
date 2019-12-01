@@ -88,13 +88,9 @@
 							<h3 class="box-title">List of Daily Expenses</h3>
 							<div class="box-tools">
 								<div class="input-group input-group-sm" style="width: 150px;">
-									<!-- <input type="text" name="table_search" class="form-control pull-right"
-										placeholder="Search"> -->
+									
 										<select id="projectSearch" class="form-control"></select>
-									<div class="input-group-btn">
-										<button type="submit" class="btn btn-flat btn-success"><i
-												class="fa fa-search"></i></button>
-									</div>
+								
 								</div>
 							</div>
 						</div>
@@ -128,7 +124,7 @@
 	const inputList = ['purpose', 'amount'];
 
 	setLovData('tov?type=Expense Type', 'type', 'Select Expense Type');
-	setLovData('tov?type=Projects', 'project', 'Select Project').then(value => setSelectionList("projectSearch", value, "Search by Project"))
+	setLovData('tov?type=Projects', 'project', 'Select Project').then(data => setSelectionList("projectSearch", data.values, "Search by Project"))
 	getExpenses();
 	
 	$.get('/api/companies', (res) => {
