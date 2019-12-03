@@ -238,7 +238,7 @@
 		data['supplierid'] = suppliers.find(element => element.name === data.supplier).id;
 
 		for (let i = 0; i < length; i++) {
-			const currentValue = document.getElementById(inputList[i]).value;
+			let currentValue = document.getElementById(inputList[i]).value;
 			if (!currentValue) currentValue = '';
 			data[inputList[i]] = currentValue;
 		}
