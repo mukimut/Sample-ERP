@@ -1,6 +1,6 @@
 module.exports = {
     attributes: {
-        id: {type: 'number', columnName: 'expense_id', autoIncrement: true},
+        id: {type: 'number', columnName: 'expense_id', autoIncrement: true}, invoice: {type: 'string'},
         type: {type: 'string', required: true}, project: {type: 'string', required: true},
         purpose: {type: 'string'},
         customer: {type: 'string'}, customerid: {type: 'number'},
