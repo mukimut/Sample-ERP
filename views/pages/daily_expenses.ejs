@@ -122,7 +122,7 @@
 									<th>Project</th>
 									<th>Actions</th>
 								</thead>
-								<tbody id="expenses"></tbody>
+								<tbody id="newData"></tbody>
 							</table>
 						</div>
 					</div>
@@ -139,7 +139,7 @@
 <script src="/js/dropdown.js"></script>
 <script src="/js/table.js"></script>
 <script>
-	let allCompanies = [], addedExpense = [];
+	let allCompanies = [], addedExpense = [], newExpenses = [], oldExpenses = [];
 	const dropdownIds = ['type', 'project', 'customer', 'supplier'];
 	const inputList = ['purpose', 'amount'];
 
@@ -164,19 +164,42 @@
 		setSelectionList('customer', customerList, 'Select Customer');
 	});
 
-	function getExpenses(element) {
+	function getExpenses() {
 		$.get('/api/expense', (res) => {
-			const table = document.getElementById('expenses');
-			table.innerHTML = '';
-			res.forEach(element => {
-				const row = table.insertRow();
+			const newDataTable = document.getElementById('newData');
+			newDataTable.innerHTML = '';
+
+			//const oldDataTable = document.getElementById('approvedTable');
+			//approvedDataTable.innerHTML = '';
+
+			res.forEach((element, index) => {
+				let row;
+				if(element.approved) {
+					row = oldDataTable.insertRow();
+					oldExpenses.push(element);
+				} 
+				else {
+					row = newDataTable.insertRow();
+					newExpenses.push(element);
+				}
 
 				addCell(row, element.purpose);
 				addCell(row, element.invoice);
 				addCell(row, element.customer);
 				addCell(row, element.amount);
 				addCell(row, element.project);
+
+				const cell = row.insertCell();
+    		cell.innerHTML = '<button onclick="varifyExpense(' + index + ', 1)">Approve</button><button onclick="varifyExpense(' + index + ', 2)">Reject</button>';
 			});
+		});
+	}
+
+	function varifyExpense(index, status) {
+		$.ajax({
+			url: '/api/expense', method: 'PUT', data: {data: {approved: status}, id: newExpenses[index].id}, success: res => {
+				getExpenses();
+			}
 		});
 	}
 
@@ -189,7 +212,7 @@
 		dropdownIds.forEach(id => data[id] = getSelectedText(id));
 
 		for (let i = 0; i < length; i++) {
-			const currentValue = document.getElementById(inputList[i]).value;
+			let currentValue = document.getElementById(inputList[i]).value;
 			if (!currentValue) currentValue = '';
 			data[inputList[i]] = currentValue;
 		}

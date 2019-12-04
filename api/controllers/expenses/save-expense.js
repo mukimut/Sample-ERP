@@ -28,4 +28,8 @@ module.exports = async function saveExpense(req, res) {
     };
     res.send({update: true});
   }
+  else {
+    await Expense.update({id: id}).set(req.body.data);
+    res.send({update: true});
+  }
 }
