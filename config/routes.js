@@ -62,6 +62,7 @@ module.exports.routes = {
   'get /material_receive': {view: 'pages/material_receive', locals:{layout: 'layouts/dashboard'}},
   'get /daily_expenses': {view: 'pages/daily_expenses', locals:{layout: 'layouts/dashboard'}},
   'get /issue': {view: 'pages/issue_note', locals:{layout: 'layouts/dashboard'}},
+  'get /dailyexpenses_dashboard': {view: 'pages/dailyexpenses_dashboard', locals:{layout: 'layouts/dashboard'}},
 
 
   /***************************************************************************

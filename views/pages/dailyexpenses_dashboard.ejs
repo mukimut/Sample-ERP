@@ -1,0 +1,194 @@
+<style>
+	.card {
+		/* Add shadows to create the "card" effect */
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+		transition: 0.3s;
+	}
+
+	.boxbdymt {
+		margin-top: 25px;
+	}
+
+	.fa_edt {
+		font-size: 22px;
+		color: rgb(4, 117, 161);
+		font-weight: bold;
+	}
+
+	.fa_dlt {
+		font-size: 22px;
+		color: red;
+		font-weight: bold;
+	}
+
+	.fa_detail {
+		font-size: 24px;
+		color: rgb(202, 132, 3);
+		font-weight: bold;
+	}
+</style>
+<div class="content-wrapper">
+	<section class="invoice">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">Dashboard of Daily Expenses</h3>
+						</div>
+						<div class="box-body table-responsive no-padding">
+							<table class="table table-hover">
+								<thead>
+									<th>Purpose</th>
+									<th>Supplier</th>
+									<th>Customer</th>
+									<th>Amount</th>
+									<th>Project</th>
+									<th>Delete</th>
+								</thead>
+								<tbody>
+									<td>test</td>
+									<td>test</td>
+									<td>Test</td>
+									<td><input type="number" class="form-control" id="amount" placeholder="Amount"></td>
+									<td>test</td>
+									<td><i class="fa fa-trash-o fa_dlt"></i></td>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<button class="btn btn-flat btn-success" onclick="submit()">Save</button>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="clearfix"></div>
+</div>
+
+<!-- <div class="control-sidebar-bg"></div> -->
+<script src="/dependencies/jquery.js"></script>
+<script src="/js/dropdown.js"></script>
+<script src="/js/table.js"></script>
+<script>
+	let allCompanies = [], addedExpense = [], newExpenses = [], oldExpenses = [];
+	const dropdownIds = ['type', 'project', 'customer', 'supplier'];
+	const inputList = ['purpose', 'amount'];
+
+	setLovData('tov?type=Expense Type', 'type', 'Select Expense Type');
+	setLovData('tov?type=Projects', 'project', 'Select Project');
+	getExpenses();
+	
+	$.get('/api/companies', (res) => {
+		const supplierList = [], customerList = [];
+		allCompanies = res.filter(element => {
+			const name = element.name, id = element.id;
+			let include = true;
+			if(element.companytype === 'Customer') customerList.push(name);
+			else if(element.companytype === 'Supplier') supplierList.push(name);
+			else include = false;
+			return include;
+		}).map(element => {
+			return {id: element.id, name: element.name};
+		});
+
+		setSelectionList('supplier', supplierList, 'Select Supplier');
+		setSelectionList('customer', customerList, 'Select Customer');
+	});
+
+	function getExpenses() {
+		$.get('/api/expense', (res) => {
+			const newDataTable = document.getElementById('newData');
+			newDataTable.innerHTML = '';
+
+			//const oldDataTable = document.getElementById('approvedTable');
+			//approvedDataTable.innerHTML = '';
+
+			res.forEach((element, index) => {
+				let row;
+				if(element.approved) {
+					row = oldDataTable.insertRow();
+					oldExpenses.push(element);
+				} 
+				else {
+					row = newDataTable.insertRow();
+					newExpenses.push(element);
+				}
+
+				addCell(row, element.purpose);
+				addCell(row, element.invoice);
+				addCell(row, element.customer);
+				addCell(row, element.amount);
+				addCell(row, element.project);
+
+				const cell = row.insertCell();
+    		cell.innerHTML = '<button onclick="varifyExpense(' + index + ', 1)">Approve</button><button onclick="varifyExpense(' + index + ', 2)">Reject</button>';
+			});
+		});
+	}
+
+	function varifyExpense(index, status) {
+		$.ajax({
+			url: '/api/expense', method: 'PUT', data: {data: {approved: status}, id: newExpenses[index].id}, success: res => {
+				getExpenses();
+			}
+		});
+	}
+
+
+	function add(update) {
+		const length = inputList.length;
+		let success = true;
+		const data = {date: moment().format('YYYY-MM-DD')};
+
+		dropdownIds.forEach(id => data[id] = getSelectedText(id));
+
+		for (let i = 0; i < length; i++) {
+			let currentValue = document.getElementById(inputList[i]).value;
+			if (!currentValue) currentValue = '';
+			data[inputList[i]] = currentValue;
+		}
+
+		const customerid = findId(data.customer);
+		if(customerid === -1) delete data.customer;
+		else data['customerid'] = customerid;
+
+		const supplierid = findId(data.supplier);
+		if(supplierid === -1) delete data.supplier;
+		else data['supplierid'] = supplierid;
+
+		addedExpense.push(data);
+		if(update) updateTable();
+	}
+
+	function deleteEntry(index) {
+		addedExpense.splice(index, 1);
+		updateTable();
+	}
+
+	function updateTable() {
+		const table = document.getElementById('table');
+		table.innerHTML = '';
+		addedExpense.forEach((element, index) => {
+			const row = table.insertRow();
+			addCell(row, element.purpose);
+			addCell(row, element.supplier);
+			addCell(row, element.customer);
+			addCell(row, element.amount);
+			addCell(row, element.project);
+
+			const cell = row.insertCell();
+    	cell.innerHTML = '<button onclick=deleteEntry(' + index + ')>Delete</button>'
+		});
+	}
+
+	function findId(compnayName) {
+		let id = -1;
+		const company =	allCompanies.find((element) => element.name === compnayName);
+		if(company) id = company.id;
+		return id;
+	}
+
+	function submit() {
+		$.post('/api/expense', {data: addedExpense}, (res) => getExpenses());
+	}
+</script>
