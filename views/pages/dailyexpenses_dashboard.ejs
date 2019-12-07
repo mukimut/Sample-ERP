@@ -4,26 +4,32 @@
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 		transition: 0.3s;
 	}
-
 	.boxbdymt {
 		margin-top: 25px;
 	}
-
 	.fa_edt {
 		font-size: 22px;
 		color: rgb(4, 117, 161);
 		font-weight: bold;
 	}
-
 	.fa_dlt {
 		font-size: 22px;
 		color: red;
 		font-weight: bold;
 	}
-
 	.fa_detail {
 		font-size: 24px;
 		color: rgb(202, 132, 3);
+		font-weight: bold;
+	}
+	.fa_chk {
+		font-size: 22px;
+		color:green;
+		font-weight: bold;
+	}
+	.fa_cros {
+		font-size: 22px;
+		color:red;
 		font-weight: bold;
 	}
 </style>
@@ -44,7 +50,7 @@
 									<th>Customer</th>
 									<th>Amount</th>
 									<th>Project</th>
-									<th>Delete</th>
+									<th>Action</th>
 								</thead>
 								<tbody>
 									<td>test</td>
@@ -52,7 +58,7 @@
 									<td>Test</td>
 									<td><input type="number" class="form-control" id="amount" placeholder="Amount"></td>
 									<td>test</td>
-									<td><i class="fa fa-trash-o fa_dlt"></i></td>
+									<td><i class="fa fa-check fa_chk" alt="Approve"></i>&nbsp; &nbsp;<i class="fa fa-times fa_cros"></i></td>
 								</tbody>
 							</table>
 						</div>
