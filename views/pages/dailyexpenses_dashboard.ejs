@@ -45,20 +45,20 @@
 						<div class="box-body table-responsive no-padding">
 							<table class="table table-hover">
 								<thead>
+									<th>Invoice</th>
 									<th>Purpose</th>
-									<th>Supplier</th>
-									<th>Customer</th>
-									<th>Amount</th>
 									<th>Project</th>
+									<th>Type</th>
+									<th>Amount</th>
 									<th>Action</th>
 								</thead>
-								<tbody>
-									<td>test</td>
+								<tbody id="cashTable">
+									<!-- <td>test</td>
 									<td>test</td>
 									<td>Test</td>
 									<td><input type="number" class="form-control" id="amount" placeholder="Amount"></td>
 									<td>test</td>
-									<td><i class="fa fa-check fa_chk" alt="Approve"></i>&nbsp; &nbsp;<i class="fa fa-times fa_cros"></i></td>
+									<td><i class="fa fa-check fa_chk" alt="Approve"></i>&nbsp; &nbsp;<i class="fa fa-times fa_cros"></i></td> -->
 								</tbody>
 							</table>
 						</div>
@@ -76,65 +76,36 @@
 <script src="/js/dropdown.js"></script>
 <script src="/js/table.js"></script>
 <script>
-	let allCompanies = [], addedExpense = [], newExpenses = [], oldExpenses = [];
-	const dropdownIds = ['type', 'project', 'customer', 'supplier'];
-	const inputList = ['purpose', 'amount'];
-
-	setLovData('tov?type=Expense Type', 'type', 'Select Expense Type');
-	setLovData('tov?type=Projects', 'project', 'Select Project');
+	let cashData = [];
+	
 	getExpenses();
 	
-	$.get('/api/companies', (res) => {
-		const supplierList = [], customerList = [];
-		allCompanies = res.filter(element => {
-			const name = element.name, id = element.id;
-			let include = true;
-			if(element.companytype === 'Customer') customerList.push(name);
-			else if(element.companytype === 'Supplier') supplierList.push(name);
-			else include = false;
-			return include;
-		}).map(element => {
-			return {id: element.id, name: element.name};
-		});
-
-		setSelectionList('supplier', supplierList, 'Select Supplier');
-		setSelectionList('customer', customerList, 'Select Customer');
-	});
-
 	function getExpenses() {
-		$.get('/api/expense', (res) => {
-			const newDataTable = document.getElementById('newData');
-			newDataTable.innerHTML = '';
-
-			//const oldDataTable = document.getElementById('approvedTable');
-			//approvedDataTable.innerHTML = '';
-
+		$.get('/api/expense?status=1', (res) => {
+			const cashTable = document.getElementById('cashTable');
+			cashTable.innerHTML = '';
 			res.forEach((element, index) => {
-				let row;
-				if(element.approved) {
-					row = oldDataTable.insertRow();
-					oldExpenses.push(element);
-				} 
-				else {
-					row = newDataTable.insertRow();
-					newExpenses.push(element);
-				}
+				cashData.push(element);
+				let row = cashTable.insertRow();
 
-				addCell(row, element.purpose);
 				addCell(row, element.invoice);
-				addCell(row, element.customer);
-				addCell(row, element.amount);
+				addCell(row, element.purpose);
 				addCell(row, element.project);
+				addCell(row, element.type);
 
-				const cell = row.insertCell();
-    		cell.innerHTML = '<button onclick="varifyExpense(' + index + ', 1)">Approve</button><button onclick="varifyExpense(' + index + ', 2)">Reject</button>';
+				let cell = row.insertCell();
+				cell.innerHTML = '<input type="number" id="amount' + index + '" value="' + element.amount + '">';
+				cell = row.insertCell();
+    		cell.innerHTML = '<i class="fa fa-check fa_chk" onclick="varifyExpense(' + index + ', 3)">Approve</i><i class="fa fa-times fa_cros" onclick="varifyExpense(' + index + ', 4)">Reject</i>';
 			});
 		});
 	}
 
 	function varifyExpense(index, status) {
+		const amount = document.getElementById('amount' + index).value;
 		$.ajax({
-			url: '/api/expense', method: 'PUT', data: {data: {approved: status}, id: newExpenses[index].id}, success: res => {
+			url: '/api/expense', method: 'PUT', data: {data: {approved: status, amount: amount}, id: cashData[index].id}, success: res => {
+				cashData = [];
 				getExpenses();
 			}
 		});

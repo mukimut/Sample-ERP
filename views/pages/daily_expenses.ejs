@@ -139,7 +139,7 @@
 <script src="/js/dropdown.js"></script>
 <script src="/js/table.js"></script>
 <script>
-	let allCompanies = [], addedExpense = [], newExpenses = [], oldExpenses = [];
+	let allCompanies = [], addedExpense = [], newExpenses = [];
 	const dropdownIds = ['type', 'project', 'customer', 'supplier'];
 	const inputList = ['purpose', 'amount'];
 
@@ -165,23 +165,13 @@
 	});
 
 	function getExpenses() {
-		$.get('/api/expense', (res) => {
+		$.get('/api/expense?status=0', (res) => {
 			const newDataTable = document.getElementById('newData');
 			newDataTable.innerHTML = '';
 
-			//const oldDataTable = document.getElementById('approvedTable');
-			//approvedDataTable.innerHTML = '';
-
 			res.forEach((element, index) => {
-				let row;
-				if(element.approved) {
-					row = oldDataTable.insertRow();
-					oldExpenses.push(element);
-				} 
-				else {
-					row = newDataTable.insertRow();
-					newExpenses.push(element);
-				}
+				newExpenses.push(element);
+				let row = newDataTable.insertRow();
 
 				addCell(row, element.purpose);
 				addCell(row, element.invoice);
