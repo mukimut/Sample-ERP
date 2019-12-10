@@ -4,33 +4,50 @@
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 		transition: 0.3s;
 	}
+
 	.boxbdymt {
 		margin-top: 25px;
 	}
+
 	.fa_edt {
 		font-size: 22px;
 		color: rgb(4, 117, 161);
 		font-weight: bold;
 	}
+
 	.fa_dlt {
 		font-size: 22px;
 		color: red;
 		font-weight: bold;
 	}
+
 	.fa_detail {
 		font-size: 24px;
 		color: rgb(202, 132, 3);
 		font-weight: bold;
 	}
+
 	.fa_chk {
 		font-size: 22px;
-		color:green;
+		color: green;
 		font-weight: bold;
 	}
+
 	.fa_cros {
 		font-size: 22px;
-		color:red;
+		color: red;
 		font-weight: bold;
+	}
+
+	input[type="date"].form-control,
+	input[type="datetime-local"].form-control,
+	input[type="month"].form-control,
+	input[type="time"].form-control {
+		line-height: 13px;
+	}
+	.nav-tabs-custom>.nav-tabs>li.active {
+		border-top-color:
+			#519f45;
 	}
 </style>
 <div class="content-wrapper">
@@ -38,25 +55,140 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="row">
-					<div class="box">
-						<div class="box-header">
-							<h3 class="box-title">Dashboard of Daily Expenses</h3>
+					<div class="nav-tabs-custom">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#tab_1" data-toggle="tab">Dashboard</a></li>
+							<li><a href="#tab_2" data-toggle="tab">Payment</a></li>
+							<li><a href="#tab_3" data-toggle="tab">Search</a></li>
+						</ul>
+						<div class="tab-content" style="padding-bottom: 0px;">
+							<div class="tab-pane active" id="tab_1">
+								<div class="row">
+									<div class="col-md-12 form-horizontal">
+										<div class="box">
+											<!-- <div class="box-header">
+												<h3 class="box-title">Daily Expenses</h3>
+											</div> -->
+											<div class="box-body table-responsive no-padding">
+												<table class="table table-hover">
+													<thead>
+														<th>Invoice</th>
+														<th>Purpose</th>
+														<th>Project</th>
+														<th>Type</th>
+														<th>Amount</th>
+														<th>Action</th>
+													</thead>
+													<tbody id="approveTable"></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane" id="tab_2">
+								<div class="row">
+									<div class="col-md-12 form-horizontal">
+										<div class="box">
+											<!-- <div class="box-header">
+												<h3 class="box-title">Daily Expenses</h3>
+											</div> -->
+											<div class="box-body table-responsive no-padding">
+												<table class="table table-hover">
+													<thead>
+														<th>Invoice</th>
+														<th>Purpose</th>
+														<th>Project</th>
+														<th>Type</th>
+														<th>Amount</th>
+														<th>Status</th>
+													</thead>
+													<tbody id="cashTable"></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.tab-pane -->
+							<div class="tab-pane" id="tab_3">
+								<div class="row" id="addressArea">
+									<div class="col-md-12 form-horizontal">
+										<div class="box-body">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<div class="col-sm-12">
+															<label>From</label>
+															<input type="date" class="form-control" name="bday">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<div class="col-sm-12 ">
+															<label>To</label>
+															<input type="date" class="form-control" id="name0"
+																placeholder="dd/mm/yyyy">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<div class="col-sm-12">
+															<input type="text" class="form-control" id="name0"
+																placeholder="Expenses No">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<div class="col-sm-12 "><select id="department0"
+																class="form-control" onchange="departmentSelected(0)">
+																<option>Select Project</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<button class="btn btn-flat btn-primary"> Search </button>
+												</div>
+											</div>
+											<br />
+											<div class="row">
+												<div class="col-md-12 form-horizontal">
+													<div class="box">
+														<!-- <div class="box-header">
+																	<h3 class="box-title">Daily Expenses</h3>
+																</div> -->
+														<div class="box-body table-responsive no-padding">
+															<table class="table table-hover">
+																<thead>
+																	<th>Invoice</th>
+																	<th>Purpose</th>
+																	<th>Project</th>
+																	<th>Type</th>
+																	<th>Amount</th>
+																	<th>Action</th>
+																</thead>
+																<tbody id="cashTable"></tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.tab-pane -->
 						</div>
-						<div class="box-body table-responsive no-padding">
-							<table class="table table-hover">
-								<thead>
-									<th>Invoice</th>
-									<th>Purpose</th>
-									<th>Project</th>
-									<th>Type</th>
-									<th>Amount</th>
-									<th>Action</th>
-								</thead>
-								<tbody id="cashTable"></tbody>
-							</table>
-						</div>
+						<!-- /.tab-content -->
 					</div>
-					<button class="btn btn-flat btn-success" onclick="submit()">Save</button>
 				</div>
 			</div>
 		</div>
@@ -69,35 +201,54 @@
 <script src="/js/dropdown.js"></script>
 <script src="/js/table.js"></script>
 <script>
-	let cashData = [];
-	
+	let cashData = [], approveData = [];
 	getExpenses();
-	
+
 	function getExpenses() {
-		$.get('/api/expense?status=1', (res) => {
+		cashData = [], approveData = [];
+		$.get('/api/expense?status=1,0', (res) => {
 			const cashTable = document.getElementById('cashTable');
-			cashTable.innerHTML = '';
-			res.forEach((element, index) => {
-				cashData.push(element);
-				let row = cashTable.insertRow();
+			const approveTable = document.getElementById('approveTable');
+			let approvedIndex = 0, cashIndex = 0;
+
+			cashTable.innerHTML = '', approveTable.innerHTML = [];
+			res.forEach((element) => {
+				let row, buttonString;
+				if(element.approved === 1) {
+					cashData.push(element);
+					row = cashTable.insertRow();
+					buttonString = '<i class="fa fa-check fa_chk" onclick="varifyExpense(' + cashIndex + ', 3, ' + element.id + ')">Paid</i>';
+					cashIndex++;
+				}
+				else {
+					approveData.push(element);
+					row = approveTable.insertRow();
+					buttonString = '<i class="fa fa-check fa_chk" onclick="varifyExpense(' + approvedIndex + ', 1, ' + element.id + ')">Approve</i><i class="fa fa-times fa_cros" onclick="varifyExpense(' + approvedIndex + ', 2, ' + element.id + ')">Reject</i>';
+				}
 
 				addCell(row, element.invoice);
 				addCell(row, element.purpose);
 				addCell(row, element.project);
 				addCell(row, element.type);
 
-				let cell = row.insertCell();
-				cell.innerHTML = '<input type="number" id="amount' + index + '" value="' + element.amount + '">';
+				if(!element.approved) {
+					let cell = row.insertCell();
+					cell.innerHTML = '<input type="number" id="amount' + approvedIndex + '" value="' + element.amount + '">';
+					approvedIndex++;
+				}
+				else addCell(row, element.amount);
+				
 				cell = row.insertCell();
-    		cell.innerHTML = '<i class="fa fa-check fa_chk" onclick="varifyExpense(' + index + ', 3)">Approve</i><i class="fa fa-times fa_cros" onclick="varifyExpense(' + index + ', 4)">Reject</i>';
+				cell.innerHTML = buttonString;
 			});
 		});
 	}
 
-	function varifyExpense(index, status) {
-		const amount = document.getElementById('amount' + index).value;
+	function varifyExpense(index, status, id) {
+		const data = {approved: status};
+		if(status === 1) data.amount = document.getElementById('amount' + index).value;
 		$.ajax({
-			url: '/api/expense', method: 'PUT', data: {data: {approved: status, amount: amount}, id: cashData[index].id}, success: res => {
+			url: '/api/expense', method: 'PUT', data: { data: data, id: id }, success: res => {
 				cashData = [];
 				getExpenses();
 			}
@@ -120,7 +271,7 @@
 			addCell(row, element.project);
 
 			const cell = row.insertCell();
-    	cell.innerHTML = '<button onclick=deleteEntry(' + index + ')>Delete</button>'
+			cell.innerHTML = '<button onclick=deleteEntry(' + index + ')>Delete</button>'
 		});
 	}
 </script>
