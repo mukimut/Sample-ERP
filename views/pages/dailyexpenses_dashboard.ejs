@@ -52,14 +52,7 @@
 									<th>Amount</th>
 									<th>Action</th>
 								</thead>
-								<tbody id="cashTable">
-									<!-- <td>test</td>
-									<td>test</td>
-									<td>Test</td>
-									<td><input type="number" class="form-control" id="amount" placeholder="Amount"></td>
-									<td>test</td>
-									<td><i class="fa fa-check fa_chk" alt="Approve"></i>&nbsp; &nbsp;<i class="fa fa-times fa_cros"></i></td> -->
-								</tbody>
+								<tbody id="cashTable"></tbody>
 							</table>
 						</div>
 					</div>
@@ -110,33 +103,6 @@
 			}
 		});
 	}
-
-
-	function add(update) {
-		const length = inputList.length;
-		let success = true;
-		const data = {date: moment().format('YYYY-MM-DD')};
-
-		dropdownIds.forEach(id => data[id] = getSelectedText(id));
-
-		for (let i = 0; i < length; i++) {
-			let currentValue = document.getElementById(inputList[i]).value;
-			if (!currentValue) currentValue = '';
-			data[inputList[i]] = currentValue;
-		}
-
-		const customerid = findId(data.customer);
-		if(customerid === -1) delete data.customer;
-		else data['customerid'] = customerid;
-
-		const supplierid = findId(data.supplier);
-		if(supplierid === -1) delete data.supplier;
-		else data['supplierid'] = supplierid;
-
-		addedExpense.push(data);
-		if(update) updateTable();
-	}
-
 	function deleteEntry(index) {
 		addedExpense.splice(index, 1);
 		updateTable();
@@ -156,16 +122,5 @@
 			const cell = row.insertCell();
     	cell.innerHTML = '<button onclick=deleteEntry(' + index + ')>Delete</button>'
 		});
-	}
-
-	function findId(compnayName) {
-		let id = -1;
-		const company =	allCompanies.find((element) => element.name === compnayName);
-		if(company) id = company.id;
-		return id;
-	}
-
-	function submit() {
-		$.post('/api/expense', {data: addedExpense}, (res) => getExpenses());
 	}
 </script>
