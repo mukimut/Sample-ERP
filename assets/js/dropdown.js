@@ -10,10 +10,7 @@ function setSelectionList(id, inputList, title=null) {
 }
 
 function getSelectedText(id) {
-	const selection = document.getElementById(id);
-	const selectedIndex = selection.selectedIndex;
-	if(selectedIndex === -1) return null;
-	return selection.options[selectedIndex].innerHTML;
+	return document.getElementById(id).value;
 }
 
 function setSelectedValue(id, value) {

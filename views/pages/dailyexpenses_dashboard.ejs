@@ -136,7 +136,7 @@
 													<div class="form-group">
 														<div class="col-sm-12">
 															<label>From</label>
-															<input type="date" class="form-control" name="bday">
+															<input type="date" class="form-control" name="bday" id="fromDate">
 														</div>
 													</div>
 												</div>
@@ -144,8 +144,7 @@
 													<div class="form-group">
 														<div class="col-sm-12 ">
 															<label>To</label>
-															<input type="date" class="form-control" id="name0"
-																placeholder="dd/mm/yyyy">
+															<input type="date" class="form-control" id="toDate">
 														</div>
 													</div>
 												</div>
@@ -154,8 +153,7 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<div class="col-sm-12">
-															<input type="text" class="form-control" id="name0"
-																placeholder="Expenses No">
+															<input type="text" class="form-control" id="invoice" placeholder="Invoice No">
 														</div>
 													</div>
 												</div>
@@ -168,7 +166,7 @@
 											</div>
 											<div class="row">
 												<div class="col-md-6">
-													<button class="btn btn-flat btn-primary"> Search </button>
+													<button class="btn btn-flat btn-primary" onclick="search()"> Search </button>
 												</div>
 											</div>
 											<br />
@@ -183,9 +181,8 @@
 																	<th>Project</th>
 																	<th>Type</th>
 																	<th>Amount</th>
-																	<th>Action</th>
 																</thead>
-																<tbody id="allTable"></tbody>
+																<tbody id="reportTable"></tbody>
 															</table>
 														</div>
 													</div>
@@ -278,24 +275,31 @@
 			}
 		});
 	}
-	function deleteEntry(index) {
-		addedExpense.splice(index, 1);
-		updateTable();
-	}
 
-	function updateTable() {
-		const table = document.getElementById('table');
-		table.innerHTML = '';
-		addedExpense.forEach((element, index) => {
-			const row = table.insertRow();
-			addCell(row, element.purpose);
-			addCell(row, element.supplier);
-			addCell(row, element.customer);
-			addCell(row, element.amount);
-			addCell(row, element.project);
+	function search() {
+		const invoice = document.getElementById('invoice').value;
+		const fromDate = document.getElementById('fromDate').value;
+		const toDate = document.getElementById('toDate').value;
+		const project = getSelectedText('project');
 
-			const cell = row.insertCell();
-			cell.innerHTML = '<button onclick=deleteEntry(' + index + ')>Delete</button>'
-		});
+		let link = '/api/expense?';
+		if(invoice) link += 'invoice=' + invoice + '&';
+		if(project) link += 'project=' + project + '&';
+		if(fromDate) link += 'from=' + fromDate + '&';
+		if(toDate) link += 'to=' + toDate + '&';
+
+		$.get(link, (res) => {
+			const reportTable = document.getElementById('reportTable');
+
+			res.forEach(element => {
+				const row = reportTable.insertRow();
+
+				addCell(row, element.invoice);
+				addCell(row, element.purpose);
+				addCell(row, element.project);
+				addCell(row, element.type);
+				addCell(row, element.amount);
+			})
+		})
 	}
 </script>
