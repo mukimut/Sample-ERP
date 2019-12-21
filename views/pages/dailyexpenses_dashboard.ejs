@@ -226,7 +226,7 @@
 						currentIndex = hdIndex;
 						hdData.push(element);
 						row = hdTable.insertRow();
-						buttonString = `<i class="fa fa-check fa_chk" onclick="varifyExpense(` + hdIndex + `, 1, ` + element.id + `)">Approve</i>
+						buttonString = `<i class="fa fa-check fa_chk" onclick="varifyExpense(` + hdIndex + `, 1, ` + element.id + `, 0)">Approve</i>
 														<i class="fa fa-times fa_cros" onclick="varifyExpense(` + hdIndex + `, 2, ` + element.id + `)">Reject</i>`;
 						hdIndex++;
 						break;
@@ -235,7 +235,7 @@
 						currentIndex = approvedIndex;
 						approveData.push(element);
 						row = approveTable.insertRow();
-						buttonString = `<i class="fa fa-check fa_chk" onclick="varifyExpense(` + approvedIndex + `, 3, ` + element.id + `)">Approve</i>
+						buttonString = `<i class="fa fa-check fa_chk" onclick="varifyExpense(` + approvedIndex + `, 3, ` + element.id + `, 1)">Approve</i>
 													<i class="fa fa-times fa_cros" onclick="varifyExpense(` + approvedIndex + `, 4, ` + element.id + `)">Reject</i>`;
 						approvedIndex++;
 						break;
@@ -255,7 +255,7 @@
 
 				if(element.approved != 3) {
 					let cell = row.insertCell();
-					cell.innerHTML = '<input type="number" id="amount' + currentIndex + '" value="' + element.amount + '">';
+					cell.innerHTML = '<input type="number" id="amount' + element.approved + '_' + currentIndex + '" value="' + element.amount + '">';
 				}
 				else addCell(row, element.amount);
 				
@@ -265,9 +265,9 @@
 		});
 	}
 
-	function varifyExpense(index, status, id) {
+	function varifyExpense(index, status, id, fieldSerial) {
 		const data = {approved: status};
-		if(status === 1) data.amount = document.getElementById('amount' + index).value;
+		if(status === 1 || status === 3) data.amount = document.getElementById('amount' + fieldSerial + '_' + index).value;
 		$.ajax({
 			url: '/api/expense', method: 'PUT', data: { data: data, id: id }, success: res => {
 				cashData = [];
