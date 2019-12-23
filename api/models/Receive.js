@@ -6,7 +6,8 @@ module.exports = {
         unitprice: {type: 'string', allowNull: false}, quantity: {type: 'string', allowNull: false}, unit: {type: 'string', allowNull: false},
         employee: {type: 'string'}, employeeid: {type: 'number'},
         supplier: {type: 'string'}, supplierid: {type: 'number'},
-        remark: {type: 'string'}, madein: {type: 'string'}, origin: {type: 'string'}
+        remark: {type: 'string'}, madein: {type: 'string'}, origin: {type: 'string'},
+        payment_date: {type: 'string'}, due: {type: 'string'}, payment_method: {type: 'string'}
     },
     tableName: 'productreceive'
 }
@@ -33,6 +34,9 @@ CREATE TABLE public.productreceive
     unit text,
     supplier text,
     supplierid integer,
+    due numeric,
+    payment_method text,
+    payment_date date
     PRIMARY KEY (receiveid)
 )
 WITH (
