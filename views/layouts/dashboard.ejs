@@ -239,10 +239,6 @@
               <li><a href="/company"><i class="fa fa-circle-o"></i> Organization</a></li>
               <li><a href="/products"><i class="fa fa-circle-o"></i> Products</a></li>
               <li><a href="/employee"><i class="fa fa-circle-o"></i> Employee</a></li>
-              <li><a href="/material_receive"><i class="fa fa-circle-o"></i> Material Receive</a></li>
-              <li><a href="/issue"><i class="fa fa-circle-o"></i> Issue Note </a></li>
-              <li><a href="/daily_expenses"><i class="fa fa-circle-o"></i> Daily Expenses</a></li>
-              <li><a href="/dailyexpenses_dashboard"><i class="fa fa-circle-o"></i>Expenses Dashboard</a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -255,6 +251,30 @@
             <ul class="treeview-menu">
               <li><a href="/tovpage"><i class="fa fa-circle-o"></i> List Of Value</a></li>
               <li><a href="/mapping"><i class="fa fa-circle-o"></i> Mapping</a></li>
+            </ul>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-folder"></i> <span>Inventory Management</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="/material_receive"><i class="fa fa-circle-o"></i> Material Receive</a></li>
+              <li><a href="/issue"><i class="fa fa-circle-o"></i> Issue Note </a></li>
+            </ul>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-folder"></i> <span>Account Management</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="/daily_expenses"><i class="fa fa-circle-o"></i> Daily Expenses</a></li>
+              <li><a href="/dailyexpenses_dashboard"><i class="fa fa-circle-o"></i>Expenses Dashboard</a></li>
             </ul>
           </li>
         </ul>
@@ -441,6 +461,29 @@
       </div>
     </aside>
     <div class="control-sidebar-bg"></div>
+    <div class="box-body">
+      <div class="alert alert-danger alert-dismissible" id="error_msg">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+        Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire
+        soul, like these sweet mornings of spring which I enjoy with my whole heart.
+      </div>
+      <div class="alert alert-info alert-dismissible" id="info_msg">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4><i class="icon fa fa-info"></i> Alert!</h4>
+        Info alert preview. This alert is dismissable.
+      </div>
+      <div class="alert alert-warning alert-dismissible" id="warning_msg">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+        Warning alert preview. This alert is dismissable.
+      </div>
+      <div class="alert alert-success alert-dismissible" id="success_msg">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4><i class="icon fa fa-check"></i> Alert!</h4>
+        Success alert preview. This alert is dismissable.
+      </div>
+    </div>
   </div>
 </body>
 <script>
