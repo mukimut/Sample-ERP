@@ -1,6 +1,5 @@
 <style>
 	.card {
-		/* Add shadows to create the "card" effect */
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 		transition: 0.3s;
 	}
@@ -126,7 +125,6 @@
 							</table>
 						</div>
 					</div>
-					<button class="btn btn-flat btn-success" onclick="submit()">Save</button>
 				</div>
 			</div>
 		</div>
@@ -134,7 +132,6 @@
 	<div class="clearfix"></div>
 </div>
 
-<!-- <div class="control-sidebar-bg"></div> -->
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script src="/js/table.js"></script>
@@ -165,7 +162,7 @@
 	});
 
 	function getExpenses() {
-		$.get('/api/expense?status=0', (res) => {
+		$.get('/api/expense?status=0,1,2,3,4,5', (res) => {
 			const newDataTable = document.getElementById('newData');
 			newDataTable.innerHTML = '';
 
@@ -179,8 +176,21 @@
 				addCell(row, element.amount);
 				addCell(row, element.project);
 
-				const cell = row.insertCell();
-    		cell.innerHTML = '<button onclick="varifyExpense(' + index + ', 1)">Approve</button><button onclick="varifyExpense(' + index + ', 2)">Reject</button>';
+				switch(element.approved) {
+					case 0: addCell(row, 'Waiting for Approval');
+						break;
+					case 1: addCell(row, 'Approved By Department Head');
+						break;
+					case 2: addCell(row, 'Rejected by Department Head');
+						break;
+					case 3: addCell(row, 'Approved by Management');
+						break;
+					case 4: addCell(row, 'Rejected by Management');
+						break;
+					case 5: const cell = row.insertCell();
+						cell.innerHTML = '<button onclick="varifyExpense(' + index + ', 6)">Varify</button>';
+						break;
+				}
 			});
 		});
 	}

@@ -1,6 +1,5 @@
 <style>
 	.card {
-		/* Add shadows to create the "card" effect */
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 		transition: 0.3s;
 	}
@@ -201,7 +200,6 @@
 	<div class="clearfix"></div>
 </div>
 
-<!-- <div class="control-sidebar-bg"></div> -->
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script src="/js/table.js"></script>
@@ -290,6 +288,7 @@
 
 		$.get(link, (res) => {
 			const reportTable = document.getElementById('reportTable');
+			reportTable.innerHTML = '';
 
 			res.forEach(element => {
 				const row = reportTable.insertRow();
