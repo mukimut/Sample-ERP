@@ -330,6 +330,7 @@
     <!--SCRIPTS-->
     <script src="/dependencies/sails.io.js"></script>
     <script src="/dependencies/jquery.js"></script>
+    <script src="/js/banner.js"></script>
     <script src="/js/dropdown.js"></script>
     <script src="/js/table.js"></script>
     <script src="/js/validate.js"></script>
@@ -507,6 +508,11 @@
     document.getElementById('name1').innerHTML = data.user.username;
     document.getElementById('name2').innerHTML = data.user.username;
     document.getElementById('name3').innerHTML = data.user.username;
+
+    localStorage.setItem('username', data.user.username);
+    localStorage.setItem('userid', data.user.id);
+    localStorage.setItem('department', data.user.department);
+    localStorage.setItem('designation', data.user.designation);
   });
 
   function logout() {
