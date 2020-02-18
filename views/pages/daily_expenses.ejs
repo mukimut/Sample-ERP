@@ -225,6 +225,9 @@
 		if(supplierid === -1) delete data.supplier;
 		else data['supplierid'] = supplierid;
 
+		data['createdby'] = localStorage.getItem('userid');
+		data['department'] = localStorage.getItem('department');
+
 		addedExpense.push(data);
 		if(update) updateTable();
 	}
