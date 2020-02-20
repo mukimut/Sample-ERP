@@ -74,7 +74,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="text" class="form-control" id="email" placeholder="Email">
+							<input pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required class="form-control" id="email" value="example@gmail.com">
 						</div>
 					</div>
 					<div class="form-group">
@@ -86,7 +86,7 @@
 						<div class="col-md-10">
 							<div class="row">
 								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
-									<button class="btn btn-flat btn-success" onclick="submit()" id="saveButton">New User</button>
+									<button class="btn btn-flat btn-success" onclick="submit()" id="saveButton">Save</button>
 									<button class="btn btn-flat btn-primary" onclick="edit()" id="submitEdit" style="visibility: collapse;">Save</button>
 								</div>
 							</div>
@@ -172,7 +172,11 @@
 			}
 			data[inputList[i]] = currentValue;
 		}
-
+const validEmail = IsValidEmail(data.email);
+if(!validEmail){
+success=false;
+alert("Please enter valid email.");
+}
 		if (!success) return false;
 
 		if (data.password != document.getElementById('pass2').value) {
@@ -189,12 +193,15 @@
 	}
 
 	function deleteEntry(index) {
+const proceed = confirm("If yes press OK");
+if(!proceed) return;
 		$.ajax({
 			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
 				if (res.update) {
 					getUser();
 					selectedUserId = null;
 				}
+
 			}
 		});
 	}
@@ -225,4 +232,9 @@
 			else getUser();
 		});
 	}
+
+function IsValidEmail(email) {
+            var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return expr.test(email);
+        };
 </script>
