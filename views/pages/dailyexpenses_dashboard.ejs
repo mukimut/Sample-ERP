@@ -59,9 +59,9 @@ display:none !important;
 				<div class="row">
 					<div class="nav-tabs-custom">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="#tab_1" data-toggle="tab">Department Head</a></li>
-							<li class="tab_display"><a href="#tab_4" data-toggle="tab" >Management</a></li>
-							<li><a href="#tab_2" data-toggle="tab">Payment</a></li>
+							<li class="active" id="deptHeadTab"><a href="#tab_1" data-toggle="tab">Department Head</a></li>
+							<li id="managerTab"><a href="#tab_4" data-toggle="tab" >Management</a></li>
+							<li id="paymentTab"><a href="#tab_2" data-toggle="tab">Payment</a></li>
 							<li><a href="#tab_3" data-toggle="tab">Report</a></li>
 						</ul>
 						<div class="tab-content" style="padding-bottom: 0px;">
@@ -208,12 +208,40 @@ display:none !important;
 <script src="/js/table.js"></script>
 <script>
 	let cashData = [], approveData = [], hdData = [];
-	getExpenses();
+
+	// localStorage.setItem('department', 'IT');
+	// localStorage.setItem('designation', 'Department Head');
+	
 	setLovData('tov?type=Projects', 'project', 'Select Project');
+	const statuses = [];
+	const designation = localStorage.getItem('designation');
+	const department = localStorage.getItem('department');
+
+	if(designation != 'Department Head') {
+		document.getElementById('deptHeadTab').classList.add('tab_display');
+	}
+	else {
+		statuses.push(0);
+	}
+	if(designation != 'Manager') {
+		document.getElementById('managerTab').classList.add('tab_display');
+	}
+	else{
+		statuses.push(1);
+	}
+	if(department != 'Accounts') {
+		document.getElementById('paymentTab').classList.add('tab_display');
+	}
+	else {
+		statuses.push(3);
+	}
+
+	if(statuses.length) getExpenses();
+
 
 	function getExpenses() {
 		cashData = [], approveData = [], hdData = [];
-		$.get('/api/expense?status=3,1,0', (res) => {
+		$.get('/api/expense?status=' + statuses.join(), (res) => {
 			const cashTable = document.getElementById('cashTable');
 			const approveTable = document.getElementById('approveTable');
 			const hdTable = document.getElementById('hdTable');
@@ -221,9 +249,11 @@ display:none !important;
 
 			cashTable.innerHTML = '', approveTable.innerHTML = '', hdTable.innerHTML = '';
 			res.forEach((element) => {
+				if(element.approved === 0 && element.department != department) return;
+
 				let row, buttonString, currentIndex;
 				switch(element.approved) {
-					case 0: 
+					case 0:
 						currentIndex = hdIndex;
 						hdData.push(element);
 						row = hdTable.insertRow();
