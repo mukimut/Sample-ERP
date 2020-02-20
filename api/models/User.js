@@ -1,7 +1,7 @@
 module.exports = {
     attributes: {
         id: {type: 'number', columnName: 'userid', autoIncrement: true},
-        access: {type: 'number', defaultsTo: 10},
+        access: {type: 'number', defaultsTo: 10}, department: {type: 'string'}, designation: {type: 'string'},
         password: {type: 'string', required: true},
         username: {type: 'string', required: true},
         token: {type: 'string'},
@@ -19,6 +19,8 @@ CREATE TABLE public.users
     password text,
     access integer,
     token text,
+    department text,
+    designation text,
     PRIMARY KEY (userid)
 )
 WITH (

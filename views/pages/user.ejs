@@ -62,6 +62,13 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
+							<select id="department" class="form-control" >
+								<option selected>Deparmtent</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
 							<input type="number" class="form-control" id="access" placeholder="Role">
 						</div>
 					</div>
@@ -116,12 +123,14 @@
 
 <!-- <div class="control-sidebar-bg"></div> -->
 <script src="/dependencies/jquery.js"></script>
+<script src="/js/dropdown.js"></script>
 <script>
 	getUser();
 
-	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'employeeid'];
+	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'employeeid', 'department'];
 	let userList = [];
 	let selectedUserId;
+	setLovData('tov?type=Departments', 'department', 'Select Department Name');
 
 	function getUser() {
 		let listData = `<tr><th>User Name</th><th>Access</th><th>Email</th><th>Action</th></tr>`;
