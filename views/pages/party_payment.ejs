@@ -1,0 +1,233 @@
+<style>
+	.card {
+		/* Add shadows to create the "card" effect */
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+		transition: 0.3s;
+	}
+
+	.boxbdymt {
+		margin-top: 25px;
+	}
+
+	.fa_edt {
+		font-size: 22px;
+		color: rgb(4, 117, 161);
+		font-weight: bold;
+	}
+
+	.fa_dlt {
+		font-size: 22px;
+		color: red;
+		font-weight: bold;
+	}
+
+	.fa_detail {
+		font-size: 24px;
+		color: rgb(202, 132, 3);
+		font-weight: bold;
+	}
+</style>
+<div class="content-wrapper">
+	<section class="content-header">
+		<h1>Party Payment<small>Settings</small></h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="#">Payment Receive</a></li>
+		</ol>
+	</section>
+	<section class="invoice">
+		<div class="row">
+			<div class="card col-md-6 form-horizontal col-md-offset-3">
+				<div class="box-body boxbdymt">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="date" class="form-control" id="paymentDate" placeholder="payment Date">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<select id="supplier" class="form-control" >
+								<option selected>Supplier</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="number" class="form-control" id="paymauntAmount" placeholder="Amount" min="0">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<select id="paymentMode" class="form-control" >
+								<option selected>Mode of Payment</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<select id="bankName" class="form-control" >
+								<option selected>Bank Name</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="checkNo" placeholder="Check No">
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 20px;">
+						<div class="col-md-10">
+							<div class="row">
+								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
+									<button class="btn btn-flat btn-success" onclick="submit()" id="saveButton">Save</button>
+									<button class="btn btn-flat btn-primary" onclick="edit()" id="submitEdit" style="visibility: collapse;">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><br><br><br>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">Payment History</h3>
+						<div class="box-tools">
+							<div class="input-group input-group-sm" style="width: 150px;">
+								<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-flat btn-success"><i class="fa fa-search"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-body table-responsive no-padding">
+						<table class="table table-hover">
+							<tbody id="paymentReceiveable"></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="clearfix"></div>
+</div>
+
+<!-- <div class="control-sidebar-bg"></div> -->
+<script src="/dependencies/jquery.js"></script>
+<script src="/js/dropdown.js"></script>
+<script>
+	getUser();
+
+	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'employeeid', 'department'];
+	let userList = [];
+	let selectedUserId;
+	setLovData('tov?type=Departments', 'department', 'Select Department Name');
+
+	function getUser() {
+		let listData = `<tr><th>Voucher No</th><th>Date</th><th>Account</th><th>Amount</th></tr>`;
+		$.get('/getUser', (data) => {
+			data.forEach((element, index) => {
+				listData += '<tr><td>' + element.username + '</td><td>' + element.access + '</td><td>' + element.email + '</td>'
+				listData += '<td><i class="fa fa-edit fa_edt" onclick="editEntry(' + index + ')"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteEntry(' + index + ')"></i></td></tr>';
+			});
+			document.getElementById('usertable').innerHTML = listData;
+			userList = data;
+		});
+	}
+
+	function logout() {
+		localStorage.removeItem('token');
+		window.open('/login', '_self');
+	}
+
+	function editEntry(index) {
+		document.getElementById('submitEdit').style.visibility = 'visible';
+		document.getElementById('saveButton').style.visibility = 'collapse'
+
+		inputList.forEach(element => document.getElementById(element).value = userList[index][element]);
+		document.getElementById('pass2').value = userList[index].password;
+		selectedUserId = userList[index].id;
+	}
+
+	function getInputData() {
+		data = {};
+		const length = inputList.length;
+		let success = true;
+
+		for (let i = 0; i < length; i++) {
+			const currentValue = document.getElementById(inputList[i]).value;
+			if (!currentValue) {
+				success = false;
+				alert('Enter value for ' + inputList[i]);
+				break;
+			}
+			data[inputList[i]] = currentValue;
+		}
+const validEmail = IsValidEmail(data.email);
+if(!validEmail){
+success=false;
+alert("Please enter valid email.");
+}
+		if (!success) return false;
+
+		if (data.password != document.getElementById('pass2').value) {
+			alert('Password mismatch');
+			return false;
+		}
+
+		return data;
+	}
+
+	function setNull() {
+		inputList.forEach(element => document.getElementById(element).value = null);
+		document.getElementById('pass2').value = null;
+	}
+
+	function deleteEntry(index) {
+const proceed = confirm("If yes press OK");
+if(!proceed) return;
+		$.ajax({
+			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
+				if (res.update) {
+					getUser();
+					selectedUserId = null;
+				}
+
+			}
+		});
+	}
+
+	function edit() {
+		let data = getInputData();
+		if (!data) return;
+		data.userid = selectedUserId;
+
+		$.ajax({
+			url: '/editUser', method: 'PUT', data: data, success: res => {
+				if (res.update) {
+					getUser();
+					selectedUserId = null;
+					setNull();
+				}
+				else alert(res.message);
+			}
+		});
+	}
+
+	function submit() {
+		let data = getInputData();
+		if (!data) return;
+
+		$.post('/register', data, (res) => {
+			if (!res.unique) alert('Username already exists');
+			else getUser();
+		});
+	}
+
+function IsValidEmail(email) {
+            var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return expr.test(email);
+        };
+</script>

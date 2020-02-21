@@ -63,6 +63,8 @@ module.exports.routes = {
   'get /daily_expenses': {view: 'pages/daily_expenses', locals:{layout: 'layouts/dashboard'}},
   'get /issue': {view: 'pages/issue_note', locals:{layout: 'layouts/dashboard'}},
   'get /dailyexpenses_dashboard': {view: 'pages/dailyexpenses_dashboard', locals:{layout: 'layouts/dashboard'}},
+  'get /party_payment': {view: 'pages/party_payment', locals:{layout: 'layouts/dashboard'}},
+  'get /payment_receive': {view: 'pages/payment_receive', locals:{layout: 'layouts/dashboard'}},
 
 
   /***************************************************************************
