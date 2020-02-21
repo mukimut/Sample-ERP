@@ -162,7 +162,7 @@
 	});
 
 	function getExpenses() {
-		$.get('/api/expense?status=0,1,2,3,4,5', (res) => {
+		$.get('/api/expense?status=0,1,2,3,4,5&user=' + localStorage.getItem('userid'), (res) => {
 			const newDataTable = document.getElementById('newData');
 			newDataTable.innerHTML = '';
 

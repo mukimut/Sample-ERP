@@ -1,8 +1,12 @@
 module.exports = async function getExpenses(req, res) {
   const status = req.query.status;
+  const user = req.query.user;
   if(status) {
-    const statusList = JSON.parse('[' + status + ']');
-    const expenses = await Expense.find({approved: statusList});
+    const searchObject = {approved: JSON.parse('[' + status + ']')};
+    if(user) searchObject.createdby = user;
+    const expenses = await Expense.find(searchObject);
+    //const statusList = JSON.parse('[' + status + ']');
+    // const expenses = await Expense.find({approved: statusList});
     res.send(expenses);
   }
   else {
