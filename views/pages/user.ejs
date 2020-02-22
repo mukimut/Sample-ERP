@@ -67,6 +67,14 @@
 							</select>
 						</div>
 					</div>
+<div class="form-group">
+                                                <div class="col-sm-12">
+                                                        <select id="designation" class="form-control" >
+                                                                <option selected>Designation</option>
+                                                        </select>
+                                                </div>
+                                        </div>
+
 					<div class="form-group">
 						<div class="col-sm-12">
 							<input type="number" class="form-control" id="access" placeholder="Role">
@@ -131,6 +139,7 @@
 	let userList = [];
 	let selectedUserId;
 	setLovData('tov?type=Departments', 'department', 'Select Department Name');
+setLovData('tov?type=Designations', 'designation', 'Select Designation');
 
 	function getUser() {
 		let listData = `<tr><th>User Name</th><th>Access</th><th>Email</th><th>Action</th></tr>`;
