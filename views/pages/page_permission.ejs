@@ -25,10 +25,141 @@
 	</section>
 	<section class="invoice">
 		<div class="row">
-			<div class="card col-md-5 form-horizontal col-md-offset-4">
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#tab_1" data-toggle="tab">User Permission</a></li>
+					<li><a href="#tab_2" data-toggle="tab">Group Permission</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="tab_1">
+						<div class="row">
+							<div class="col-md-12 form-horizontal">
+								<div class="box-body">
+									<div class="row">
+										<div class="card col-md-5 form-horizontal col-md-offset-4">
+											<div class="box-body boxbdymt">
+												<div class="form-group">
+													<div class="col-sm-12">
+														<div class="row">
+															<div class="col-sm-12">
+																<select class="form-control" id="users">
+																	<option hidden disabled selected value> Select User
+																	</option>
+																</select>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="form-group" style="margin-left: 0px;">
+													<input type="checkbox" id="check0">Users<br>
+													<input type="checkbox" id="check1">List of Values<br>
+													<input type="checkbox" id="check2">Daily Expanse<br>
+													<input type="checkbox" id="check3">Daily Expanse Dashboard<br>
+													<input type="checkbox" id="check4">Party Payment<br>
+													<input type="checkbox" id="check5">Payment Receive<br>
+												</div>
+												<div class="form-group">
+													<div class="col-sm-12">
+														<hr style="margin: 0px; padding: 0px;">
+													</div>
+												</div>
+												
+												<div class="row" style="margin-bottom: 20px;">
+													<div class="col-md-10">
+														<div class="row">
+															<div class="box-footer pull-left"
+																style="border-top: 0px; margin-left: 4px;">
+																<button class="btn btn-flat btn-success"
+																	onclick="save()">Save</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- /.tab-pane -->
+					<div class="tab-pane" id="tab_2">
+						<div class="row">
+							<div class="col-md-12 form-horizontal">
+								<div class="card col-md-5 form-horizontal col-md-offset-4">
+									<div class="box-body boxbdymt">
+										<div class="form-group">
+											<div class="col-sm-12">
+												<div class="row">
+													<div class="col-sm-12">
+														<input type="text" class="form-control" id="groupName"
+															placeholder="Group Name">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row" style="margin-bottom: 20px;">
+											<div class="col-md-10">
+												<div class="row">
+													<div class="box-footer pull-left"
+														style="border-top: 0px; margin-left: 4px;">
+														<button class="btn btn-flat btn-success"
+															onclick="addGroup()">Add</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-12">
+												<div class="row">
+													<div class="col-sm-12">
+														<select class="form-control" id="groupList">
+															<option hidden disabled selected value> Select Group
+															</option>
+														</select>
+													</div> 
+												</div>
+											</div>
+										</div>
+										
+										<div class="form-group" style="margin-left: 0px;">
+											<input type="checkbox" id="check0"> Users<br>
+											<input type="checkbox" id="check1"> List of Values<br>
+											<input type="checkbox" id="check2"> Daily Expanse<br>
+											<input type="checkbox" id="check3"> Daily Expanse Dashboard<br>
+											<input type="checkbox" id="check4"> Party Payment<br>
+											<input type="checkbox" id="check5"> Payment Receive<br>
+										</div>
+										
+										<div class="form-group">
+											<div class="col-sm-12">
+												<table id="valueList" style="width: 100%;"></table>
+											</div>
+										</div>
+										<div class="row" style="margin-bottom: 20px;">
+											<div class="col-md-10">
+												<div class="row">
+													<div class="box-footer pull-left"
+														style="border-top: 0px; margin-left: 4px;">
+														<button class="btn btn-flat btn-success"
+															onclick="save()">Save</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.tab-pane -->
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- <div class="card col-md-5 form-horizontal col-md-offset-4">
 				<div class="box-body boxbdymt">
 					<div class="form-group">
-						<!-- <label for="New LOV" class="col-sm-2 control-label">Select LOV Type</label> -->
 						<div class="col-sm-12">
 							<div class="row">
 								<div class="col-sm-10">
@@ -41,12 +172,12 @@
 						</div>
 					</div>
 					<div class="form-group">
-            <input type="checkbox" id="check0">Users<br>
-            <input type="checkbox" id="check1">List of Values<br>
-            <input type="checkbox" id="check2">Daily Expanse<br>
-            <input type="checkbox" id="check3">Daily Expanse Dashboard<br>
-            <input type="checkbox" id="check4">Party Payment<br>
-            <input type="checkbox" id="check5">Payment Receive<br>
+						<input type="checkbox" id="check0">Users<br>
+						<input type="checkbox" id="check1">List of Values<br>
+						<input type="checkbox" id="check2">Daily Expanse<br>
+						<input type="checkbox" id="check3">Daily Expanse Dashboard<br>
+						<input type="checkbox" id="check4">Party Payment<br>
+						<input type="checkbox" id="check5">Payment Receive<br>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
@@ -54,7 +185,6 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<!-- <label for="New LOV" class="col-sm-2 control-label">Edit LOV Type</label> -->
 						<div class="col-sm-12">
 							<table id="valueList" style="width: 100%;"></table>
 						</div>
@@ -69,30 +199,30 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</section>
 	<div class="clearfix"></div>
 </div>
 <script src="/js/dropdown.js"></script>
 <script>
-  const pages = ['Users', 'List of Values', 'Daily Expanse', 'Daily Expanse Dashboard', 'Party Payment', 'Payment Receive',]
-  let allUsers = []; //users
-  $.get('/getUser', (data) => {
-    allUsers = data;
-    const usernames = data.map(element => element.username);
-    setSelectionList('users', usernames, 'Select Users');
-  });
+	const pages = ['Users', 'List of Values', 'Daily Expanse', 'Daily Expanse Dashboard', 'Party Payment', 'Payment Receive',]
+	let allUsers = []; //users
+	$.get('/getUser', (data) => {
+		allUsers = data;
+		const usernames = data.map(element => element.username);
+		setSelectionList('users', usernames, 'Select Users');
+	});
 
-  function save() {
-    let checkList = [];
-    for(let i = 0; i < 6; i++ ) {
-      if(document.getElementById('check' + i).checked) checkList.push(pages[i]);
-    }
+	function save() {
+		let checkList = [];
+		for (let i = 0; i < 6; i++) {
+			if (document.getElementById('check' + i).checked) checkList.push(pages[i]);
+		}
 
-    console.log(checkList);
+		console.log(checkList);
 
-    const userid = allUsers.find(element => element.username === document.getElementById('users').value).id;
-    console.log(userid);
-  }
+		const userid = allUsers.find(element => element.username === document.getElementById('users').value).id;
+		console.log(userid);
+	}
 </script>
