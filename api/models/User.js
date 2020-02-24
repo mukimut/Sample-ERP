@@ -7,7 +7,7 @@ module.exports = {
         token: {type: 'string'},
         displayname: {type: 'string', required: true},
         email: {type: 'string'},
-        employeeid: {type: 'number'}
+        employeeid: {type: 'number'}, pages: {type: 'json'}
     },
     tableName: 'users'
 }
@@ -21,6 +21,7 @@ CREATE TABLE public.users
     token text,
     department text,
     designation text,
+    pages text[],
     PRIMARY KEY (userid)
 )
 WITH (
