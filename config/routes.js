@@ -66,6 +66,8 @@ module.exports.routes = {
   'get /party_payment': {view: 'pages/party_payment', locals:{layout: 'layouts/dashboard'}},
   'get /payment_receive': {view: 'pages/payment_receive', locals:{layout: 'layouts/dashboard'}},
   'get /page_permission': {view: 'pages/page_permission', locals:{layout: 'layouts/dashboard'}},
+  'post /api/group': {action: 'user/addgroup'},
+  'get /api/group': {action: 'user/get-groups'},
 
 
   /***************************************************************************
