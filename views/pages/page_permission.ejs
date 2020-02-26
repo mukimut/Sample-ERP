@@ -50,13 +50,13 @@
 														</div>
 													</div>
 												</div>
-												<div class="form-group" style="margin-left: 0px;">
-													<input type="checkbox" id="check0">Users<br>
+												<div class="form-group" id="userPages" style="margin-left: 0px;">
+													<!-- <input type="checkbox" id="check0">Users<br>
 													<input type="checkbox" id="check1">List of Values<br>
 													<input type="checkbox" id="check2">Daily Expanse<br>
 													<input type="checkbox" id="check3">Daily Expanse Dashboard<br>
 													<input type="checkbox" id="check4">Party Payment<br>
-													<input type="checkbox" id="check5">Payment Receive<br>
+													<input type="checkbox" id="check5">Payment Receive<br> -->
 												</div>
 												<div class="form-group">
 													<div class="col-sm-12">
@@ -114,22 +114,19 @@
 											<div class="col-sm-12">
 												<div class="row">
 													<div class="col-sm-12">
-														<select class="form-control" id="groupList">
-															<option hidden disabled selected value> Select Group
-															</option>
-														</select>
+														<select class="form-control" id="groupList" onchange="groupSelected()"></select>
 													</div> 
 												</div>
 											</div>
 										</div>
 										
-										<div class="form-group" style="margin-left: 0px;">
-											<input type="checkbox" id="check0"> Users<br>
+										<div class="form-group" id="groupPages" style="margin-left: 0px;">
+											<!-- <input type="checkbox" id="check0"> Users<br>
 											<input type="checkbox" id="check1"> List of Values<br>
 											<input type="checkbox" id="check2"> Daily Expanse<br>
 											<input type="checkbox" id="check3"> Daily Expanse Dashboard<br>
 											<input type="checkbox" id="check4"> Party Payment<br>
-											<input type="checkbox" id="check5"> Payment Receive<br>
+											<input type="checkbox" id="check5"> Payment Receive<br> -->
 										</div>
 										
 										<div class="form-group">
@@ -157,72 +154,85 @@
 				</div>
 				<!-- /.tab-content -->
 			</div>
-			<!-- <div class="card col-md-5 form-horizontal col-md-offset-4">
-				<div class="box-body boxbdymt">
-					<div class="form-group">
-						<div class="col-sm-12">
-							<div class="row">
-								<div class="col-sm-10">
-									<select class="form-control" id="users">
-										<option hidden disabled selected value> Select User </option>
-									</select>
-								</div>
-								<div class="col-sm-2"></div>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<input type="checkbox" id="check0">Users<br>
-						<input type="checkbox" id="check1">List of Values<br>
-						<input type="checkbox" id="check2">Daily Expanse<br>
-						<input type="checkbox" id="check3">Daily Expanse Dashboard<br>
-						<input type="checkbox" id="check4">Party Payment<br>
-						<input type="checkbox" id="check5">Payment Receive<br>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<hr style="margin: 0px; padding: 0px;">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<table id="valueList" style="width: 100%;"></table>
-						</div>
-					</div>
-					<div class="row" style="margin-bottom: 20px;">
-						<div class="col-md-10">
-							<div class="row">
-								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
-									<button class="btn btn-flat btn-success" onclick="save()">Save</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> -->
 		</div>
 	</section>
 	<div class="clearfix"></div>
 </div>
 <script src="/js/dropdown.js"></script>
 <script>
-	const pages = ['Users', 'List of Values', 'Daily Expanse', 'Daily Expanse Dashboard', 'Party Payment', 'Payment Receive',]
-	let allUsers = []; //users
+	const pages = ['Users', 'List of Values', 'Daily Expanse', 'Daily Expanse Dashboard', 'Party Payment', 'Payment Receive',];
+	let allUsers = [], groupList = [];
+
+	generateList('groupPages', 'groupCheck');
+	generateList('userPages', 'userCheck');
+	getGroups();
+
+
 	$.get('/getUser', (data) => {
 		allUsers = data;
 		const usernames = data.map(element => element.username);
 		setSelectionList('users', usernames, 'Select Users');
 	});
 
-	function save() {
-		let checkList = [];
-		for (let i = 0; i < 6; i++) {
-			if (document.getElementById('check' + i).checked) checkList.push(pages[i]);
+	function getGroups() {
+		$.get('/api/group', (data) => {
+			groupList = data;
+			setSelectionList('groupList', data.map(element => element.id), 'Select Group');
+		});
+	}
+
+	function groupSelected() {
+		deSelect();
+		const selectedGroup = groupList[getSelectedIndex('groupList') - 1];
+		if(selectedGroup.pages) selectedGroup.pages.forEach(page => {
+			const index = pages.indexOf(page);
+			document.getElementById('groupCheck' + index).checked = true;
+		});
+	}
+
+	function deSelect() {
+		const length = pages.length;
+		for(let i = 0; i < length; i++) {
+			document.getElementById('groupCheck' + i).checked = false;
+		}
+	}
+
+	function generateList(id, checkId) {
+		let listArea = document.getElementById(id).innerHTML;
+		const length = pages.length;
+		
+		for(let i=0; i < length; i++ ) {
+			listArea += '<input type="checkbox" id="' + checkId + i + '"> ' + pages[i] + '<br>';
 		}
 
-		console.log(checkList);
+		document.getElementById(id).innerHTML = listArea;
+	}
 
-		const userid = allUsers.find(element => element.username === document.getElementById('users').value).id;
-		console.log(userid);
+	function addGroup() {
+		deSelect();
+		const groupName = document.getElementById('groupName').value;
+		if(groupList.includes(groupName)) {
+			alert('Group already exists');
+			return;
+		}
+
+		$.post('/api/group', {group: groupName}, (res) => {
+			if(res.status) getGroups();
+		});
+	}
+
+	function save() {
+		let checkList = [];
+		const length = pages.length
+		for (let i = 0; i < length; i++) {
+			if (document.getElementById('groupCheck' + i).checked) checkList.push(pages[i]);
+		}
+
+		const groupName = document.getElementById('groupList').value;
+
+
+		$.post('/api/group', {group: groupName, pages: checkList}, (res) => {
+			if(res.status) getGroups();
+		});
 	}
 </script>
