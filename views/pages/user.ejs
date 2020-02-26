@@ -62,27 +62,28 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="department" class="form-control" >
+							<select id="department" class="form-control">
 								<option selected>Deparmtent</option>
 							</select>
 						</div>
 					</div>
-<div class="form-group">
-                                                <div class="col-sm-12">
-                                                        <select id="designation" class="form-control" >
-                                                                <option selected>Designation</option>
-                                                        </select>
-                                                </div>
-                                        </div>
-
 					<div class="form-group">
+						<div class="col-sm-12">
+							<select id="designation" class="form-control">
+								<option selected>Designation</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- <div class="form-group">
 						<div class="col-sm-12">
 							<input type="number" class="form-control" id="access" placeholder="Role">
 						</div>
-					</div>
+					</div> -->
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required class="form-control" id="email" placeholder="Email Address">
+							<input pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+								required class="form-control" id="email" placeholder="Email Address">
 						</div>
 					</div>
 					<div class="form-group">
@@ -94,8 +95,10 @@
 						<div class="col-md-10">
 							<div class="row">
 								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
-									<button class="btn btn-flat btn-success" onclick="submit()" id="saveButton">Save</button>
-									<button class="btn btn-flat btn-primary" onclick="edit()" id="submitEdit" style="visibility: collapse;">Save</button>
+									<button class="btn btn-flat btn-success" onclick="submit()"
+										id="saveButton">Save</button>
+									<button class="btn btn-flat btn-primary" onclick="edit()" id="submitEdit"
+										style="visibility: collapse;">Save</button>
 								</div>
 							</div>
 						</div>
@@ -107,12 +110,18 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">User Details</h3>
+						<h3 class="box-title">User Details &nbsp;
+							<button type="button" onclick="print()" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-print"></span> Print
+							</button>
+						</h3>
 						<div class="box-tools">
 							<div class="input-group input-group-sm" style="width: 150px;">
-								<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+								<input type="text" name="table_search" class="form-control pull-right"
+									placeholder="Search">
 								<div class="input-group-btn">
-									<button type="submit" class="btn btn-flat btn-success"><i class="fa fa-search"></i></button>
+									<button type="submit" class="btn btn-flat btn-success"><i
+											class="fa fa-search"></i></button>
 								</div>
 							</div>
 						</div>
@@ -135,17 +144,17 @@
 <script>
 	getUser();
 
-	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'employeeid', 'department', 'designation'];
+	const inputList = ['username', 'password', 'displayname', 'email', 'employeeid', 'department', 'designation'];
 	let userList = [];
 	let selectedUserId;
 	setLovData('tov?type=Departments', 'department', 'Select Department Name');
-setLovData('tov?type=Designations', 'designation', 'Select Designation');
+	setLovData('tov?type=Designations', 'designation', 'Select Designation');
 
 	function getUser() {
-		let listData = `<tr><th>User Name</th><th>Access</th><th>Email</th><th>Action</th></tr>`;
+		let listData = `<tr><th>User Name</th><th>Email</th><th>Department</th><th>Designation</th><th>Action</th></tr>`;
 		$.get('/getUser', (data) => {
 			data.forEach((element, index) => {
-				listData += '<tr><td>' + element.username + '</td><td>' + element.access + '</td><td>' + element.email + '</td>'
+				listData += '<tr><td>' + element.username + '</td><td>' + element.email + '</td><td>' + element.department + '</td><td>' + element.designation + '</td>'
 				listData += '<td><i class="fa fa-edit fa_edt" onclick="editEntry(' + index + ')"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteEntry(' + index + ')"></i></td></tr>';
 			});
 			document.getElementById('usertable').innerHTML = listData;
@@ -181,11 +190,11 @@ setLovData('tov?type=Designations', 'designation', 'Select Designation');
 			}
 			data[inputList[i]] = currentValue;
 		}
-const validEmail = IsValidEmail(data.email);
-if(!validEmail){
-success=false;
-alert("Please enter valid email.");
-}
+		const validEmail = IsValidEmail(data.email);
+		if (!validEmail) {
+			success = false;
+			alert("Please enter valid email.");
+		}
 		if (!success) return false;
 
 		if (data.password != document.getElementById('pass2').value) {
@@ -202,8 +211,8 @@ alert("Please enter valid email.");
 	}
 
 	function deleteEntry(index) {
-const proceed = confirm("If yes press OK");
-if(!proceed) return;
+		const proceed = confirm("If yes press OK");
+		if (!proceed) return;
 		$.ajax({
 			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
 				if (res.update) {
@@ -242,8 +251,12 @@ if(!proceed) return;
 		});
 	}
 
-function IsValidEmail(email) {
-            var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-            return expr.test(email);
-        };
+	function IsValidEmail(email) {
+		var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+		return expr.test(email);
+	};
+
+	function print() {
+		window.print();
+	}
 </script>
