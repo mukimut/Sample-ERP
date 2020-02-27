@@ -42,22 +42,15 @@
 													<div class="col-sm-12">
 														<div class="row">
 															<div class="col-sm-12">
-																<select class="form-control" id="users">
-																	<option hidden disabled selected value> Select User
-																	</option>
-																</select>
+																<select class="form-control" id="users" onchange="userSelected()"></select>
 															</div>
 														</div>
 													</div>
 												</div>
-												<div class="form-group" id="userPages" style="margin-left: 0px;">
-													<!-- <input type="checkbox" id="check0">Users<br>
-													<input type="checkbox" id="check1">List of Values<br>
-													<input type="checkbox" id="check2">Daily Expanse<br>
-													<input type="checkbox" id="check3">Daily Expanse Dashboard<br>
-													<input type="checkbox" id="check4">Party Payment<br>
-													<input type="checkbox" id="check5">Payment Receive<br> -->
-												</div>
+												Pages
+												<div class="form-group" id="userPages" style="margin-left: 0px;"></div>
+												Groups
+												<div class="form-group" id="userGroups" style="margin-left: 0px;"></div>
 												<div class="form-group">
 													<div class="col-sm-12">
 														<hr style="margin: 0px; padding: 0px;">
@@ -70,7 +63,7 @@
 															<div class="box-footer pull-left"
 																style="border-top: 0px; margin-left: 4px;">
 																<button class="btn btn-flat btn-success"
-																	onclick="save()">Save</button>
+																	onclick="saveUser()">Save</button>
 															</div>
 														</div>
 													</div>
@@ -120,15 +113,7 @@
 											</div>
 										</div>
 										
-										<div class="form-group" id="groupPages" style="margin-left: 0px;">
-											<!-- <input type="checkbox" id="check0"> Users<br>
-											<input type="checkbox" id="check1"> List of Values<br>
-											<input type="checkbox" id="check2"> Daily Expanse<br>
-											<input type="checkbox" id="check3"> Daily Expanse Dashboard<br>
-											<input type="checkbox" id="check4"> Party Payment<br>
-											<input type="checkbox" id="check5"> Payment Receive<br> -->
-										</div>
-										
+										<div class="form-group" id="groupPages" style="margin-left: 0px;"></div>
 										<div class="form-group">
 											<div class="col-sm-12">
 												<table id="valueList" style="width: 100%;"></table>
@@ -160,24 +145,44 @@
 </div>
 <script src="/js/dropdown.js"></script>
 <script>
-	const pages = ['Users', 'List of Values', 'Daily Expanse', 'Daily Expanse Dashboard', 'Party Payment', 'Payment Receive',];
+	const pages = ['Users', 'List of Values', 'Daily Expanse', 'Daily Expanse Dashboard', 'Party Payment', 'Payment Receive', 'Material Receive', 'Issue Note'];
 	let allUsers = [], groupList = [];
 
-	generateList('groupPages', 'groupCheck');
-	generateList('userPages', 'userCheck');
+	generateList('groupPages', 'groupCheck', pages);
+	generateList('userPages', 'userCheck', pages);
 	getGroups();
+	getUsers();
 
-
-	$.get('/getUser', (data) => {
+	function getUsers() {
+		$.get('/getUser', (data) => {
 		allUsers = data;
 		const usernames = data.map(element => element.username);
 		setSelectionList('users', usernames, 'Select Users');
 	});
+	}
 
 	function getGroups() {
 		$.get('/api/group', (data) => {
 			groupList = data;
-			setSelectionList('groupList', data.map(element => element.id), 'Select Group');
+			const groups = data.map(element => element.id);
+			setSelectionList('groupList', groups, 'Select Group');
+			const length = groups.length;
+			let string = '';
+			groups.forEach((group, index) => {
+				string += '<input type="checkbox" id="userGroup'  + index + '" onclick="groupClicked(' + index + ')"> ' + group + '<br>';
+			});
+			document.getElementById('userGroups').innerHTML = string;
+
+		});
+	}
+
+	function groupClicked(index) {
+		const pageList = groupList[index].pages;
+		const check = document.getElementById('userGroup' + index).checked;
+		pageList.forEach(page => {
+			const pageIndex = pages.indexOf(page);
+			if(pageIndex === -1) return;
+			document.getElementById('userCheck' + pageIndex).checked = check;
 		});
 	}
 
@@ -194,15 +199,16 @@
 		const length = pages.length;
 		for(let i = 0; i < length; i++) {
 			document.getElementById('groupCheck' + i).checked = false;
+			document.getElementById('userCheck' + i).checked = false;
 		}
 	}
 
-	function generateList(id, checkId) {
+	function generateList(id, checkId, list) {
 		let listArea = document.getElementById(id).innerHTML;
-		const length = pages.length;
+		const length = list.length;
 		
 		for(let i=0; i < length; i++ ) {
-			listArea += '<input type="checkbox" id="' + checkId + i + '"> ' + pages[i] + '<br>';
+			listArea += '<input type="checkbox" id="' + checkId + i + '"> ' + list[i] + '<br>';
 		}
 
 		document.getElementById(id).innerHTML = listArea;
@@ -221,12 +227,29 @@
 		});
 	}
 
-	function save() {
+	function userSelected() {
+		deSelect();
+		const index = getSelectedIndex('users') - 1;
+		const pageList = allUsers[index].pages;
+		pageList.forEach(page => {
+			const pageIndex = pages.indexOf(page);
+			if(pageIndex === -1) return;
+			document.getElementById('userCheck' + pageIndex).checked = true;
+		});
+	
+	}
+
+	function getCheckedPages(id) {
 		let checkList = [];
 		const length = pages.length
 		for (let i = 0; i < length; i++) {
-			if (document.getElementById('groupCheck' + i).checked) checkList.push(pages[i]);
+			if (document.getElementById(id + i).checked) checkList.push(pages[i]);
 		}
+		return checkList;
+	}
+
+	function save() {
+		const checkList = getCheckedPages('groupCheck');
 
 		const groupName = document.getElementById('groupList').value;
 
@@ -234,5 +257,21 @@
 		$.post('/api/group', {group: groupName, pages: checkList}, (res) => {
 			if(res.status) getGroups();
 		});
+	}
+
+	function saveUser() {
+		const userIndex = getSelectedIndex('users') - 1;
+		if(userIndex < 0) {
+			alert('Select User');
+			return;
+		}
+
+		const checkList = getCheckedPages('userCheck');
+		const userId = allUsers[userIndex].id;
+
+		$.post('/api/group', {user: userId, pages: checkList}, (res) => {
+			if(res.status) getUsers();
+		});
+
 	}
 </script>
