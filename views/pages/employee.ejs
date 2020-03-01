@@ -426,10 +426,20 @@
   function getInputData(data) {
     inputList.forEach(id => data[id] = document.getElementById(id).value);
     selectList.forEach(id => data[id] = getSelectedText(id));
+
+    const validEmail = IsValidEmail(data.email);
+
+    if(!validEmail){
+      alert("Please enter valid email.");
+      return null;
+    }
+
     return data;
   }
 
   function deleteEmployee(index) {
+    const proceed = confirm("Are you sure? If yes then press OK to continue");
+		if(!proceed) return;
     const id =  allEmployees[index].employeeid;
     $.ajax({
       url: '/employee', method: 'DELETE', data: { id: id }, success: res => {
@@ -450,6 +460,8 @@
 
   function submit() {
     const data = getInputData({});
+    
+    if(!data) return;
 
     $.post('/employee', data, (res) => {
       if (res) {
@@ -460,6 +472,8 @@
 
   function submitEdit() {
     const data = getInputData({});
+    if(!data) return;
+    
     data['id'] = selectedEmployee;
 
     $.post('/employee', data, (res) => {

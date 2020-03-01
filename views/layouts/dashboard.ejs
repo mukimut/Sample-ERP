@@ -273,6 +273,20 @@
             <ul class="treeview-menu">
               <li><a href="/daily_expenses"><i class="fa fa-circle-o"></i> Daily Expenses</a></li>
               <li><a href="/dailyexpenses_dashboard"><i class="fa fa-circle-o"></i>Expenses Dashboard</a></li>
+              <li><a href="/party_payment"><i class="fa fa-circle-o"></i>Party Payment</a></li>
+              <li><a href="/payment_receive"><i class="fa fa-circle-o"></i>Payment Receive</a></li>
+            </ul>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-folder"></i> <span>Authentication</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="/page_permission"><i class="fa fa-circle-o"></i> Permission </a></li>
+              
             </ul>
           </li>
         </ul>
@@ -328,6 +342,7 @@
     <!--SCRIPTS-->
     <script src="/dependencies/sails.io.js"></script>
     <script src="/dependencies/jquery.js"></script>
+    <script src="/js/banner.js"></script>
     <script src="/js/dropdown.js"></script>
     <script src="/js/table.js"></script>
     <script src="/js/validate.js"></script>
@@ -505,6 +520,11 @@
     document.getElementById('name1').innerHTML = data.user.username;
     document.getElementById('name2').innerHTML = data.user.username;
     document.getElementById('name3').innerHTML = data.user.username;
+
+    localStorage.setItem('username', data.user.username);
+    localStorage.setItem('userid', data.user.id);
+    localStorage.setItem('department', data.user.department);
+    localStorage.setItem('designation', data.user.designation);
   });
 
   function logout() {

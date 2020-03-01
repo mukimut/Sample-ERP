@@ -8,7 +8,7 @@ module.exports = async function login(req, res) {
 
         if(users[0].password === password) {
             await User.update({id: users[0].id}).set({token: token});
-            res.send({found: true, token: token});
+            res.send({found: true, token: token, userid: users[0].id, access: users[0].access});
         }
         else res.send({found: false, message: 'Wrong password'})
         

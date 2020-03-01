@@ -7,6 +7,7 @@ module.exports = {
         supplier: {type: 'string'}, supplierid: {type: 'number'},
         amount: {type: 'number'},
         date: {type: 'string', allowNull: true, columnType: 'date'},
+        createdby: {type: 'number'}, department: {type: 'string'},
         approved: {type: 'number', defaultsTo: 0}
     },
     tableName: 'expenses'
@@ -26,6 +27,8 @@ CREATE TABLE public.expenses
     amount numeric(8, 2),
     date date,
     approved smallint,
+    createdby integer,
+    department text,
     PRIMARY KEY (expense_id)
 )
 WITH (
