@@ -236,10 +236,10 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="/user"><i class="fa fa-circle-o"></i> User</a></li>
-              <li class="menu_invisible"><a href="/company"><i class="fa fa-circle-o"></i> Organization</a></li>
-              <li><a href="/products"><i class="fa fa-circle-o"></i> Products</a></li>
-              <li><a href="/employee"><i class="fa fa-circle-o"></i> Employee</a></li>
+              <li id="Users"><a href="/user"><i class="fa fa-circle-o"></i> User</a></li>
+              <li id="Company" ><a href="/company"><i class="fa fa-circle-o"></i> Organization</a></li>
+              <li id="Products"><a href="/products"><i class="fa fa-circle-o"></i> Products</a></li>
+              <li id="Employee"><a href="/employee"><i class="fa fa-circle-o"></i> Employee</a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -250,8 +250,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="menu_invisible"><a href="/tovpage"><i class="fa fa-circle-o"></i> List Of Value</a></li>
-              <li><a href="/mapping"><i class="fa fa-circle-o"></i> Mapping</a></li>
+              <li id="LOV"><a href="/tovpage"><i class="fa fa-circle-o"></i> List Of Value</a></li>
+              <li id="Mapping"><a href="/mapping"><i class="fa fa-circle-o"></i> Mapping</a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -262,8 +262,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="/material_receive"><i class="fa fa-circle-o"></i> Material Receive</a></li>
-              <li><a href="/issue"><i class="fa fa-circle-o"></i> Issue Note </a></li>
+              <li id="Material Receive"><a href="/material_receive"><i class="fa fa-circle-o"></i> Material Receive</a></li>
+              <li id="Issue Note"><a href="/issue"><i class="fa fa-circle-o"></i> Issue Note </a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -274,10 +274,10 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="/daily_expenses"><i class="fa fa-circle-o"></i> Daily Expenses</a></li>
-              <li><a href="/dailyexpenses_dashboard"><i class="fa fa-circle-o"></i>Expenses Dashboard</a></li>
-              <li><a href="/party_payment"><i class="fa fa-circle-o"></i>Party Payment</a></li>
-              <li><a href="/payment_receive"><i class="fa fa-circle-o"></i>Payment Receive</a></li>
+              <li id="Daily Expanse"><a href="/daily_expenses"><i class="fa fa-circle-o"></i> Daily Expenses</a></li>
+              <li id="Daily Expanse Dashboard"><a href="/dailyexpenses_dashboard"><i class="fa fa-circle-o"></i>Expenses Dashboard</a></li>
+              <li id="Payment"><a href="/party_payment"><i class="fa fa-circle-o"></i>Party Payment</a></li>
+              <li id="Payment Receive"><a href="/payment_receive"><i class="fa fa-circle-o"></i>Payment Receive</a></li>
             </ul>
           </li>
           <li class="treeview">
@@ -288,7 +288,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="/page_permission"><i class="fa fa-circle-o"></i> Permission </a></li>
+              <li id="Permission"><a href="/page_permission"><i class="fa fa-circle-o"></i> Permission </a></li>
               
             </ul>
           </li>
@@ -528,6 +528,20 @@
     localStorage.setItem('userid', data.user.id);
     localStorage.setItem('department', data.user.department);
     localStorage.setItem('designation', data.user.designation);
+  });
+
+  const allPages = [
+		'Users', 'Products', 'Employee', 'Company',
+		'LOV', 'Mapping', 'Permission',
+		'Daily Expanse', 'Daily Expanse Dashboard', 'Payment', 'Payment Receive', 
+		'Material Receive', 'Issue Note'
+  ];
+  const permittedPages = JSON.parse(localStorage.getItem('pages'));
+
+  allPages.forEach(page => {
+    if(!permittedPages.includes(page)) {
+      document.getElementById(page).classList.add('menu_invisible');
+    }
   });
 
   function logout() {

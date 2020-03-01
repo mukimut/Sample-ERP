@@ -32,6 +32,7 @@ function login() {
       if(!res.found) document.getElementById('message').innerHTML = res.message;
       else {
         storeToken(res.token);
+        localStorage.setItem('pages', JSON.stringify(res.access));
         openDashboard();
       }
   });
