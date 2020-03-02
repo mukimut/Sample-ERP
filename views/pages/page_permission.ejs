@@ -108,6 +108,7 @@
 												<div class="row">
 													<div class="col-sm-12">
 														<select class="form-control" id="groupList" onchange="groupSelected()"></select>
+														<input type="text" class="form-control" id="selectedGroupName">
 													</div> 
 												</div>
 											</div>
@@ -124,8 +125,8 @@
 												<div class="row">
 													<div class="box-footer pull-left"
 														style="border-top: 0px; margin-left: 4px;">
-														<button class="btn btn-flat btn-success"
-															onclick="save()">Save</button>
+														<button class="btn btn-flat btn-success" onclick="save()">Save</button>
+														<button class="btn btn-flat" onclick="deleteGroup()">Delete</button>
 													</div>
 												</div>
 											</div>
@@ -194,6 +195,7 @@
 	function groupSelected() {
 		deSelect();
 		const selectedGroup = groupList[getSelectedIndex('groupList') - 1];
+		document.getElementById('selectedGroupName').value = selectedGroup.id;
 		if(selectedGroup.pages) selectedGroup.pages.forEach(page => {
 			const index = pages.indexOf(page);
 			document.getElementById('groupCheck' + index).checked = true;
@@ -255,12 +257,19 @@
 
 	function save() {
 		const checkList = getCheckedPages('groupCheck');
-
 		const groupName = document.getElementById('groupList').value;
+		const newGroupName = document.getElementById('selectedGroupName').value;
+		
 
-
-		$.post('/api/group', {group: groupName, pages: checkList}, (res) => {
+		$.post('/api/group', {group: groupName, pages: checkList, newName: newGroupName}, (res) => {
 			if(res.status) getGroups();
+		});
+	}
+
+	function deleteGroup() {
+		const newGroupName = document.getElementById('selectedGroupName').value;
+		$.post('/api/group', {newName: newGroupName}, (res) => {
+			if(res.update) getGroups();
 		});
 	}
 
