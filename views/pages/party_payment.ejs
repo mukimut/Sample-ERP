@@ -41,11 +41,6 @@
 				<div class="box-body boxbdymt">
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="date" class="form-control" id="paymentDate" placeholder="payment Date">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
 							<select id="supplier" class="form-control" >
 								<option selected>Supplier</option>
 							</select>
@@ -58,21 +53,39 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="paymentMode" class="form-control" >
-								<option selected>Mode of Payment</option>
+							<select id="paymentMode" class="form-control" onchange="paymentChanged(this)">
+								<option selected>Payment in Cash</option>
+								<option>Bank</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="bankName" class="form-control" >
+							<select class="bank" id="bank" class="form-control" disabled="true">
 								<option selected>Bank Name</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="text" class="form-control" id="checkNo" placeholder="Check No">
+							<select class="bank" id="brunch" class="form-control" disabled="true">
+								<option selected>Brunch</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input class="bank" type="text" class="form-control" id="checkNo" placeholder="Check No" disabled="true">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							Check Date: <input class="bank" type="date" id="checkDate" disabled="true">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea placeholder="Narration" id="narration"></textarea>
 						</div>
 					</div>
 					<div class="row" style="margin-bottom: 20px;">
@@ -114,120 +127,22 @@
 	<div class="clearfix"></div>
 </div>
 
-<!-- <div class="control-sidebar-bg"></div> -->
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
-	getUser();
+	const inputList = ['supplier', 'amount', 'payment', 'narration'];
+	const bannkList = ['bank', 'brunch', 'checkno', 'checktype', 'checkdate'];
+	let supplierList = [];
 
-	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'employeeid', 'department'];
-	let userList = [];
-	let selectedUserId;
-	setLovData('tov?type=Departments', 'department', 'Select Department Name');
+	$.get('/api/companies?type=Supplier', (data) => {
+		supplierList = data;
+		setSelectionList('supplier', data.map(element => element.name), 'Select Supplier')
+	});
 
-	function getUser() {
-		let listData = `<tr><th>Voucher No</th><th>Date</th><th>Account</th><th>Amount</th></tr>`;
-		$.get('/getUser', (data) => {
-			data.forEach((element, index) => {
-				listData += '<tr><td>' + element.username + '</td><td>' + element.access + '</td><td>' + element.email + '</td>'
-				listData += '<td><i class="fa fa-edit fa_edt" onclick="editEntry(' + index + ')"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteEntry(' + index + ')"></i></td></tr>';
-			});
-			document.getElementById('usertable').innerHTML = listData;
-			userList = data;
-		});
-	}
-
-	function logout() {
-		localStorage.removeItem('token');
-		window.open('/login', '_self');
-	}
-
-	function editEntry(index) {
-		document.getElementById('submitEdit').style.visibility = 'visible';
-		document.getElementById('saveButton').style.visibility = 'collapse'
-
-		inputList.forEach(element => document.getElementById(element).value = userList[index][element]);
-		document.getElementById('pass2').value = userList[index].password;
-		selectedUserId = userList[index].id;
-	}
-
-	function getInputData() {
-		data = {};
-		const length = inputList.length;
-		let success = true;
-
-		for (let i = 0; i < length; i++) {
-			const currentValue = document.getElementById(inputList[i]).value;
-			if (!currentValue) {
-				success = false;
-				alert('Enter value for ' + inputList[i]);
-				break;
-			}
-			data[inputList[i]] = currentValue;
+	function paymentChanged(element) {
+		const banklElements = document.getElementsByClassName('bank');
+		for(let i=0; i < 4; i++) {
+			banklElements[i].disabled = element.value != 'Bank';
 		}
-const validEmail = IsValidEmail(data.email);
-if(!validEmail){
-success=false;
-alert("Please enter valid email.");
-}
-		if (!success) return false;
-
-		if (data.password != document.getElementById('pass2').value) {
-			alert('Password mismatch');
-			return false;
-		}
-
-		return data;
 	}
-
-	function setNull() {
-		inputList.forEach(element => document.getElementById(element).value = null);
-		document.getElementById('pass2').value = null;
-	}
-
-	function deleteEntry(index) {
-const proceed = confirm("If yes press OK");
-if(!proceed) return;
-		$.ajax({
-			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
-				if (res.update) {
-					getUser();
-					selectedUserId = null;
-				}
-
-			}
-		});
-	}
-
-	function edit() {
-		let data = getInputData();
-		if (!data) return;
-		data.userid = selectedUserId;
-
-		$.ajax({
-			url: '/editUser', method: 'PUT', data: data, success: res => {
-				if (res.update) {
-					getUser();
-					selectedUserId = null;
-					setNull();
-				}
-				else alert(res.message);
-			}
-		});
-	}
-
-	function submit() {
-		let data = getInputData();
-		if (!data) return;
-
-		$.post('/register', data, (res) => {
-			if (!res.unique) alert('Username already exists');
-			else getUser();
-		});
-	}
-
-function IsValidEmail(email) {
-            var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-            return expr.test(email);
-        };
 </script>
