@@ -223,8 +223,7 @@
 	}
 
 	function viewDetails(index) {
-		const viewList = inputList.splice(1,1) 
-		//['username', 'password', 'displayname', 'email', 'employeeid', 'department', 'designation']
+		const viewList = ['username', 'displayname', 'email', 'employeeid', 'department', 'designation']
 		viewList.forEach(element => document.getElementById(element + 'view').append(userList[index][element]));
 		selectedUserId = userList[index].id;
 	}
