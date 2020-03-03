@@ -150,27 +150,27 @@
 							<tbody>
 								<tr>
 									<th>Full Name</th>
-									<td>Nilufar</td>
+									<td id="displaynameview"></td>
 								</tr>
 								<tr>
 									<th>User Name</th>
-									<td>nilufar</td>
+									<td id="usernameview"></td>
 								</tr>
 								<tr>
 									<th>Department</th>
-									<td>Information & Technology</td>
+									<td id="departmentview"></td>
 								</tr>
 								<tr>
 									<th>Designation</th>
-									<td>UI/ UX Front End Developer</td>
+									<td id="designationview"></td>
 								</tr>
 								<tr>
 									<th>Email Address</th>
-									<td>yeasminnilo@gmail.com</td>
+									<td id="emailview"></td>
 								</tr>
 								<tr>
 									<th>Employee Id</th>
-									<td>1617</td>
+									<td id="employeeidview"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -201,7 +201,7 @@
 		$.get('/getUser', (data) => {
 			data.forEach((element, index) => {
 				listData += '<tr><td>' + element.username + '</td><td>' + element.email + '</td><td>' + element.department + '</td><td>' + element.designation + '</td>'
-				listData += '<td><i class="fa fa-edit fa_edt" onclick="editEntry(' + index + ')"></i>&nbsp; <i class="fa fa-eye fa_detail" data-toggle="modal" data-target="#userDetails"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteEntry(' + index + ')"></i></td></tr>';
+				listData += '<td><i class="fa fa-edit fa_edt" onclick="editEntry(' + index + ')"></i>&nbsp; <i class="fa fa-eye fa_detail" data-toggle="modal" data-target="#userDetails" onclick="viewDetails(' + index + ')"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteEntry(' + index + ')"></i></td></tr>';
 			});
 			document.getElementById('usertable').innerHTML = listData;
 			userList = data;
@@ -219,6 +219,13 @@
 
 		inputList.forEach(element => document.getElementById(element).value = userList[index][element]);
 		document.getElementById('pass2').value = userList[index].password;
+		selectedUserId = userList[index].id;
+	}
+
+	function viewDetails(index) {
+		const viewList = inputList.splice(1,1) 
+		//['username', 'password', 'displayname', 'email', 'employeeid', 'department', 'designation']
+		viewList.forEach(element => document.getElementById(element + 'view').append(userList[index][element]));
 		selectedUserId = userList[index].id;
 	}
 
