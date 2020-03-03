@@ -540,7 +540,7 @@
   const permittedPages = JSON.parse(localStorage.getItem('pages'));
 
   allPages.forEach(page => {
-    if(!permittedPages.includes(page)) {
+    if(permittedPages && !permittedPages.includes(page)) {
       document.getElementById(page).classList.add('menu_invisible');
     }
   });
