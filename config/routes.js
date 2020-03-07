@@ -68,6 +68,8 @@ module.exports.routes = {
   'get /page_permission': {view: 'pages/page_permission', locals:{layout: 'layouts/dashboard'}},
   'post /api/group': {action: 'user/addgroup'},
   'get /api/group': {action: 'user/get-groups'},
+  'post /api/payment': {action: 'expenses/save-payment'},
+  'get /api/payment': {action: 'expenses/get-payment'},
 
 
   /***************************************************************************

@@ -41,19 +41,19 @@
 				<div class="box-body boxbdymt">
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="supplier" class="form-control" >
+							<select id="company" class="form-control" >
 								<option selected>Supplier</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="number" class="form-control" id="paymauntAmount" placeholder="Amount" min="0">
+							<input type="number" class="form-control" id="amount" placeholder="Amount" min="0">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="paymentMode" class="form-control" onchange="paymentChanged(this)">
+							<select id="paymentmethod" class="form-control" onchange="paymentChanged(this)">
 								<option selected>Payment in Cash</option>
 								<option>Bank</option>
 							</select>
@@ -75,12 +75,12 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input class="bank" type="text" class="form-control" id="checkNo" placeholder="Check No" disabled="true">
+							<input class="bank" type="text" class="form-control" id="checkno" placeholder="Check No" disabled="true">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							Check Date: <input class="bank" type="date" id="checkDate" disabled="true">
+							Check Date: <input class="bank" type="date" id="checkdate" disabled="true">
 						</div>
 					</div>
 					<div class="form-group">
@@ -116,9 +116,7 @@
 						</div>
 					</div>
 					<div class="box-body table-responsive no-padding">
-						<table class="table table-hover">
-							<tbody id="paymentReceiveable"></tbody>
-						</table>
+						<table class="table table-hover" id="dataTable"></table>
 					</div>
 				</div>
 			</div>
@@ -130,19 +128,68 @@
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
-	const inputList = ['supplier', 'amount', 'payment', 'narration'];
-	const bannkList = ['bank', 'brunch', 'checkno', 'checktype', 'checkdate'];
-	let supplierList = [];
+	const inputList = ['company', 'amount', 'paymentmethod', 'narration'];
+	const bannkList = ['bank', 'brunch', 'checkno', 'checkdate'];
+	let supplierList = [], paymentList = [];
+	getPartyPayments();
+	setLovData('tov?type=Bank Name', 'bank', 'Select Bank');
+	setLovData('tov?type=Bank Branch Name', 'brunch', 'Select Bank Brunch');
 
 	$.get('/api/companies?type=Supplier', (data) => {
 		supplierList = data;
-		setSelectionList('supplier', data.map(element => element.name), 'Select Supplier')
+		setSelectionList('company', data.map(element => element.name), 'Select Supplier')
 	});
+
+	function getPartyPayments() {
+		const table = document.getElementById('dataTable');
+		table.innerHTML = '<th>Supplier</th><th>Amount</th><th>Payment Type</th><th>Date</th><th>Actions</th>';
+		$.get('/api/payment?paymenttype=Party Payment', (data) => {
+			paymentList = data;
+			data.forEach(element => {
+				const row = table.insertRow();
+				row.insertCell().append(element.company);
+				row.insertCell().append(element.amount);
+				row.insertCell().append(element.paymentmethod);			
+				row.insertCell().append(element.created.substring(0, 10));
+			});
+		});
+	}
 
 	function paymentChanged(element) {
 		const banklElements = document.getElementsByClassName('bank');
 		for(let i=0; i < 4; i++) {
 			banklElements[i].disabled = element.value != 'Bank';
 		}
+	}
+
+	function getData() {
+		const data = {};
+		inputList.forEach(id => data[id] = document.getElementById(id).value);
+
+		if(!data.company) {
+			alert('Enter Supplier');
+			return null;
+		}
+		if(!data.amount || data.amount < 0) {
+			alert('Enter Valid Amount');
+			return null;
+		}
+
+		if(data.paymentmethod === 'Bank') {
+			bannkList.forEach(id => data[id] = document.getElementById(id).value);
+		}
+
+		return data;
+
+	}
+
+	function submit() {
+		const data = getData();
+		data['created'] = moment().format('YYYY-MM-DD');
+		data['paymenttype'] = 'Party Payment';
+
+		$.post('/api/payment', data, (res) => {
+			if(res.update) getPartyPayments();
+		})
 	}
 </script>
