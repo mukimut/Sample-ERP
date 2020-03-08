@@ -93,7 +93,7 @@
 							<div class="row">
 								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
 									<button class="btn btn-flat btn-success" onclick="submit()" id="saveButton">Save</button>
-									<button class="btn btn-flat btn-primary" onclick="edit()" id="submitEdit" style="visibility: collapse;">Save</button>
+									<button class="btn btn-flat btn-primary" onclick="submitEdit()" id="submitEdit" style="visibility: visible;">Edit</button>
 								</div>
 							</div>
 						</div>
@@ -129,8 +129,9 @@
 <script src="/js/dropdown.js"></script>
 <script>
 	const inputList = ['company', 'amount', 'paymentmethod', 'narration'];
-	const bannkList = ['bank', 'brunch', 'checkno', 'checkdate'];
+	const bankList = ['bank', 'brunch', 'checkno', 'checkdate'];
 	let supplierList = [], paymentList = [];
+	let editId;
 	getPartyPayments();
 	setLovData('tov?type=Bank Name', 'bank', 'Select Bank');
 	setLovData('tov?type=Bank Branch Name', 'brunch', 'Select Bank Brunch');
@@ -145,12 +146,13 @@
 		table.innerHTML = '<th>Supplier</th><th>Amount</th><th>Payment Type</th><th>Date</th><th>Actions</th>';
 		$.get('/api/payment?paymenttype=Party Payment', (data) => {
 			paymentList = data;
-			data.forEach(element => {
+			data.forEach((element, index) => {
 				const row = table.insertRow();
 				row.insertCell().append(element.company);
 				row.insertCell().append(element.amount);
 				row.insertCell().append(element.paymentmethod);			
 				row.insertCell().append(element.created.substring(0, 10));
+				row.insertCell().innerHTML = '<button onclick = "edit(' + index + ')">Edit</button>'
 			});
 		});
 	}
@@ -176,11 +178,25 @@
 		}
 
 		if(data.paymentmethod === 'Bank') {
-			bannkList.forEach(id => data[id] = document.getElementById(id).value);
+			bankList.forEach(id => document.getElementById(id).value = data[id]);
 		}
 
 		return data;
 
+	}
+
+	function edit(index) {
+		editId = paymentList[index].id;
+		inputList.forEach(id => document.getElementById(id).value = paymentList[index][id]);
+		if(paymentList[index].paymentmethod === 'Bank') {
+			bankList.forEach(id => {
+				const element = document.getElementById(id);
+				element.value = paymentList[index][id];
+				if(id === 'checkdate') element.value = paymentList[index][id].substring(0, 10);
+				element.disabled = false;
+			});
+		}
+		else bankList.forEach(id => document.getElementById(id).disabled = true);
 	}
 
 	function submit() {
@@ -190,6 +206,16 @@
 
 		$.post('/api/payment', data, (res) => {
 			if(res.update) getPartyPayments();
-		})
+		});
+	}
+
+	function submitEdit() {
+		const data = getData();
+		$.post('/api/payment', {data: data, id: editId}, (res) => {
+			if(res.update) {
+				getPartyPayments();
+				editId = null;
+			}
+		});
 	}
 </script>

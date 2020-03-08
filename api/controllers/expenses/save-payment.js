@@ -4,7 +4,7 @@ module.exports = async function savePayment(req, res) {
         await Payment.create(req.body);
     }
     else {
-        await Payment.update({id: id}).set(req.body.data);
+        await Payment.update({id: paymentId}).set(req.body.data);
     }
     res.send({update: true});
 }
