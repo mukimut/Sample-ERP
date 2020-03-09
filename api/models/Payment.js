@@ -20,7 +20,8 @@ module.exports = {
 /*
 CREATE TABLE public.payment
 (
-    paymentid bigint NOT NULL DEFAULT nextval('payment_paymentid_seq'::regclass),
+    paymentid bigserial NOT NULL,
+    company text,
     paymenttype text COLLATE pg_catalog."default",
     amount numeric(10,2),
     paymentmethod text COLLATE pg_catalog."default",

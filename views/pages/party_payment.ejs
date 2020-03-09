@@ -31,7 +31,7 @@
 	<section class="content-header">
 		<h1>Party Payment<small>Settings</small></h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
 			<li><a href="#">Party Payment</a></li>
 		</ol>
 	</section>
@@ -41,7 +41,7 @@
 				<div class="box-body boxbdymt">
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="company" class="form-control" >
+							<select id="company" class="form-control">
 								<option selected>Supplier</option>
 							</select>
 						</div>
@@ -61,39 +61,44 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select class="bank" id="bank" class="form-control" disabled="true">
+							<!-- class="bank" -->
+							<select id="bank" class="form-control bank" disabled="true">
 								<option selected>Bank Name</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select class="bank" id="brunch" class="form-control" disabled="true">
+							<select id="brunch" class="form-control bank" disabled="true">
 								<option selected>Brunch</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input class="bank" type="text" class="form-control" id="checkno" placeholder="Check No" disabled="true">
+							<input type="text" class="form-control bank" id="checkno" placeholder="Check No"
+								disabled="true">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							Check Date: <input class="bank" type="date" id="checkdate" disabled="true">
+							<label>Check Date: </label>
+							<input class="form-control bank" type="date" id="checkdate" disabled="true">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<textarea placeholder="Narration" id="narration"></textarea>
+							<textarea placeholder="Narration" id="narration" class="form-control"></textarea>
 						</div>
 					</div>
 					<div class="row" style="margin-bottom: 20px;">
 						<div class="col-md-10">
 							<div class="row">
 								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
-									<button class="btn btn-flat btn-success" onclick="submit()" id="saveButton">Save</button>
-									<button class="btn btn-flat btn-primary" onclick="submitEdit()" id="submitEdit" style="visibility: visible;">Edit</button>
+									<button class="btn btn-flat btn-success" onclick="submit()"
+										id="saveButton">Save</button>
+									<button class="btn btn-flat btn-primary" onclick="submitEdit()" id="submitEdit"
+										style="visibility: visible;">Edit</button>
 								</div>
 							</div>
 						</div>
@@ -108,9 +113,11 @@
 						<h3 class="box-title">Payment History</h3>
 						<div class="box-tools">
 							<div class="input-group input-group-sm" style="width: 150px;">
-								<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+								<input type="text" name="table_search" class="form-control pull-right"
+									placeholder="Search">
 								<div class="input-group-btn">
-									<button type="submit" class="btn btn-flat btn-success"><i class="fa fa-search"></i></button>
+									<button type="submit" class="btn btn-flat btn-success"><i
+											class="fa fa-search"></i></button>
 								</div>
 							</div>
 						</div>
@@ -121,6 +128,101 @@
 				</div>
 			</div>
 		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="paymentDetails" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Payment Details</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-striped"
+							style="margin-bottom: 10px;width: 100%;border-collapse: collapse;">
+							<tbody>
+								<tr>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px;">
+										<strong>Supplier Name</strong><br>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px;">
+										<strong>Payment Type</strong><br>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px;">
+										<strong>Amount</strong><br>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px;">
+										<strong>Payment Method</strong><br>
+									</td>
+									<td style="border-left:1px solid #ccc;border-top:1px solid #ccc; padding:5px;">
+										<strong>Bank</strong>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px;">
+										<strong>Branch</strong><br>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; padding:5px;text-align: right;">
+										<strong>Check No</strong>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px; text-align: left;">
+										<strong>Check Type</strong><br>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px; text-align: left;">
+										<strong>Check Date</strong><br>
+									</td>
+								</tr>
+								<tr>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
+										-
+									</td>
+									<td style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:5px;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:5px; text-align: right;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px; text-align: left;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px; text-align: left;">
+										-
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- Modal-->
 	</section>
 	<div class="clearfix"></div>
 </div>
@@ -150,16 +252,17 @@
 				const row = table.insertRow();
 				row.insertCell().append(element.company);
 				row.insertCell().append(element.amount);
-				row.insertCell().append(element.paymentmethod);			
+				row.insertCell().append(element.paymentmethod);
 				row.insertCell().append(element.created.substring(0, 10));
-				row.insertCell().innerHTML = '<button onclick = "edit(' + index + ')">Edit</button>'
+				row.insertCell().innerHTML = '<i class="fa fa-edit fa_edt" onclick="edit(' + index + ')"></i> &nbsp; <i class="fa fa-eye fa_detail" data-toggle="modal" data-target="#paymentDetails"></i> &nbsp;'
+
 			});
 		});
 	}
 
 	function paymentChanged(element) {
 		const banklElements = document.getElementsByClassName('bank');
-		for(let i=0; i < 4; i++) {
+		for (let i = 0; i < 4; i++) {
 			banklElements[i].disabled = element.value != 'Bank';
 		}
 	}
@@ -168,16 +271,16 @@
 		const data = {};
 		inputList.forEach(id => data[id] = document.getElementById(id).value);
 
-		if(!data.company) {
+		if (!data.company) {
 			alert('Enter Supplier');
 			return null;
 		}
-		if(!data.amount || data.amount < 0) {
+		if (!data.amount || data.amount < 0) {
 			alert('Enter Valid Amount');
 			return null;
 		}
 
-		if(data.paymentmethod === 'Bank') {
+		if (data.paymentmethod === 'Bank') {
 			bankList.forEach(id => document.getElementById(id).value = data[id]);
 		}
 
@@ -188,11 +291,11 @@
 	function edit(index) {
 		editId = paymentList[index].id;
 		inputList.forEach(id => document.getElementById(id).value = paymentList[index][id]);
-		if(paymentList[index].paymentmethod === 'Bank') {
+		if (paymentList[index].paymentmethod === 'Bank') {
 			bankList.forEach(id => {
 				const element = document.getElementById(id);
 				element.value = paymentList[index][id];
-				if(id === 'checkdate') element.value = paymentList[index][id].substring(0, 10);
+				if (id === 'checkdate') element.value = paymentList[index][id].substring(0, 10);
 				element.disabled = false;
 			});
 		}
@@ -205,14 +308,14 @@
 		data['paymenttype'] = 'Party Payment';
 
 		$.post('/api/payment', data, (res) => {
-			if(res.update) getPartyPayments();
+			if (res.update) getPartyPayments();
 		});
 	}
 
 	function submitEdit() {
 		const data = getData();
-		$.post('/api/payment', {data: data, id: editId}, (res) => {
-			if(res.update) {
+		$.post('/api/payment', { data: data, id: editId }, (res) => {
+			if (res.update) {
 				getPartyPayments();
 				editId = null;
 			}
