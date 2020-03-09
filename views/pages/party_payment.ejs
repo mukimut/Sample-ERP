@@ -178,7 +178,7 @@
 		}
 
 		if(data.paymentmethod === 'Bank') {
-			bankList.forEach(id => document.getElementById(id).value = data[id]);
+			bankList.forEach(id => data[id] = document.getElementById(id).value);
 		}
 
 		return data;
