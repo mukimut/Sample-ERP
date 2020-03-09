@@ -11,7 +11,8 @@ module.exports = {
       brunch:  {type: 'string', allowNull: true},
       checkno:  {type: 'string', allowNull: true},
       checktype:  {type: 'string', allowNull: true},
-      checkdate:  {type: 'string', allowNull: true}
+      checkdate:  {type: 'string', allowNull: true},
+      receipt: {type: 'string'}
       
   },
   tableName: 'payment'
@@ -32,6 +33,7 @@ CREATE TABLE public.payment
     checkno text COLLATE pg_catalog."default",
     checktype text COLLATE pg_catalog."default",
     checkdate date,
+    receipt text,
     CONSTRAINT payment_pkey PRIMARY KEY (paymentid)
 )
 WITH (

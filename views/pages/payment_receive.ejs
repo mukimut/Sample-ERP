@@ -31,8 +31,8 @@
 	<section class="content-header">
 		<h1>Payment Receive<small>Settings</small></h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li><a href="#">Payment Receive</a></li>
+			<li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+			<li><a href="#">Party Payment</a></li>
 		</ol>
 	</section>
 	<section class="invoice">
@@ -41,46 +41,62 @@
 				<div class="box-body boxbdymt">
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="date" class="form-control" id="paymentDate" placeholder="payment Date">
+							<select id="company" class="form-control"></select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="customer" class="form-control" >
-								<option selected>Customer</option>
+							<input type="number" class="form-control" id="amount" placeholder="Amount" min="0">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="receipt" placeholder="Receipt No">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<select id="paymentmethod" class="form-control" onchange="paymentChanged(this)">
+								<option selected>Payment in Cash</option>
+								<option>Bank</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="number" class="form-control" id="paymauntAmount" placeholder="Amount" min="0">
+							<select id="bank" class="form-control bank" disabled="true"></select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="paymentMode" class="form-control" >
-								<option selected>Mode of Payment</option>
-							</select>
+							<select id="brunch" class="form-control bank" disabled="true"></select>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<select id="bankName" class="form-control" >
-								<option selected>Bank Name</option>
-							</select>
+							<input type="text" class="form-control bank" id="checkno" placeholder="Check No"
+								disabled="true">
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<input type="text" class="form-control" id="checkNo" placeholder="Check No">
+							<label>Check Date: </label>
+							<input class="form-control bank" type="date" id="checkdate" disabled="true">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea placeholder="Narration" id="narration" class="form-control"></textarea>
 						</div>
 					</div>
 					<div class="row" style="margin-bottom: 20px;">
 						<div class="col-md-10">
 							<div class="row">
 								<div class="box-footer pull-left" style="border-top: 0px; margin-left: 4px;">
-									<button class="btn btn-flat btn-success" onclick="submit()" id="saveButton">Save</button>
-									<button class="btn btn-flat btn-primary" onclick="edit()" id="submitEdit" style="visibility: collapse;">Save</button>
+									<button class="btn btn-flat btn-success" onclick="submit()"
+										id="saveButton">Save</button>
+									<button class="btn btn-flat btn-primary" onclick="submitEdit()" id="submitEdit"
+										style="visibility: visible;">Edit</button>
 								</div>
 							</div>
 						</div>
@@ -95,139 +111,212 @@
 						<h3 class="box-title">Payment History</h3>
 						<div class="box-tools">
 							<div class="input-group input-group-sm" style="width: 150px;">
-								<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+								<input type="text" name="table_search" class="form-control pull-right"
+									placeholder="Search">
 								<div class="input-group-btn">
-									<button type="submit" class="btn btn-flat btn-success"><i class="fa fa-search"></i></button>
+									<button type="submit" class="btn btn-flat btn-success"><i
+											class="fa fa-search"></i></button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="box-body table-responsive no-padding">
-						<table class="table table-hover">
-							<tbody id="paymentReceiveable"></tbody>
-						</table>
+						<table class="table table-hover" id="dataTable"></table>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="paymentDetails" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Payment Details</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-striped"
+							style="margin-bottom: 10px;width: 100%;border-collapse: collapse;">
+							<tbody>
+								<tr>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px;">
+										<strong>Supplier Name</strong><br>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px;">
+										<strong>Payment Type</strong><br>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px;">
+										<strong>Amount</strong><br>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px;">
+										<strong>Payment Method</strong><br>
+									</td>
+									<td style="border-left:1px solid #ccc;border-top:1px solid #ccc; padding:5px;">
+										<strong>Bank</strong>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px;">
+										<strong>Branch</strong><br>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; padding:5px;text-align: right;">
+										<strong>Check No</strong>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px; text-align: left;">
+										<strong>Check Type</strong><br>
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc;padding:5px; text-align: left;">
+										<strong>Check Date</strong><br>
+									</td>
+								</tr>
+								<tr>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
+										-
+									</td>
+									<td style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:5px;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:5px; text-align: right;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px; text-align: left;">
+										-
+									</td>
+									<td
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px; text-align: left;">
+										-
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- Modal-->
 	</section>
 	<div class="clearfix"></div>
 </div>
 
-<!-- <div class="control-sidebar-bg"></div> -->
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
-	getUser();
+	const inputList = ['company', 'amount', 'paymentmethod', 'narration', 'receipt'];
+	const bankList = ['bank', 'brunch', 'checkno', 'checkdate'];
+	let supplierList = [], paymentList = [];
+	let editId;
+	getPartyPayments();
+	setLovData('tov?type=Bank Name', 'bank', 'Select Bank');
+	setLovData('tov?type=Bank Branch Name', 'brunch', 'Select Bank Brunch');
 
-	const inputList = ['username', 'password', 'access', 'displayname', 'email', 'employeeid', 'department'];
-	let userList = [];
-	let selectedUserId;
-	setLovData('tov?type=Departments', 'department', 'Select Department Name');
+	$.get('/api/companies?type=Customer', (data) => {
+		supplierList = data;
+		setSelectionList('company', data.map(element => element.name), 'Select Customer');
+	});
 
-	function getUser() {
-		let listData = `<tr><th>Voucher No</th><th>Date</th><th>Account</th><th>Amount</th></tr>`;
-		$.get('/getUser', (data) => {
+	function getPartyPayments() {
+		const table = document.getElementById('dataTable');
+		table.innerHTML = '<th>Supplier</th><th>Amount</th><th>Payment Type</th><th>Date</th><th>Actions</th>';
+		$.get('/api/payment?paymenttype=Payment Receive', (data) => {
+			paymentList = data;
 			data.forEach((element, index) => {
-				listData += '<tr><td>' + element.username + '</td><td>' + element.access + '</td><td>' + element.email + '</td>'
-				listData += '<td><i class="fa fa-edit fa_edt" onclick="editEntry(' + index + ')"></i>&nbsp; <i class="fa fa-eye fa_detail"></i> &nbsp; <i class="fa fa-trash-o fa_dlt" onclick="deleteEntry(' + index + ')"></i></td></tr>';
+				const row = table.insertRow();
+				row.insertCell().append(element.company);
+				row.insertCell().append(element.amount);
+				row.insertCell().append(element.paymentmethod);
+				row.insertCell().append(element.created.substring(0, 10));
+				row.insertCell().innerHTML = '<i class="fa fa-edit fa_edt" onclick="edit(' + index + ')"></i> &nbsp; <i class="fa fa-eye fa_detail" data-toggle="modal" data-target="#paymentDetails"></i> &nbsp;'
+
 			});
-			document.getElementById('usertable').innerHTML = listData;
-			userList = data;
 		});
 	}
 
-	function logout() {
-		localStorage.removeItem('token');
-		window.open('/login', '_self');
-	}
-
-	function editEntry(index) {
-		document.getElementById('submitEdit').style.visibility = 'visible';
-		document.getElementById('saveButton').style.visibility = 'collapse'
-
-		inputList.forEach(element => document.getElementById(element).value = userList[index][element]);
-		document.getElementById('pass2').value = userList[index].password;
-		selectedUserId = userList[index].id;
-	}
-
-	function getInputData() {
-		data = {};
-		const length = inputList.length;
-		let success = true;
-
-		for (let i = 0; i < length; i++) {
-			const currentValue = document.getElementById(inputList[i]).value;
-			if (!currentValue) {
-				success = false;
-				alert('Enter value for ' + inputList[i]);
-				break;
-			}
-			data[inputList[i]] = currentValue;
+	function paymentChanged(element) {
+		const banklElements = document.getElementsByClassName('bank');
+		for (let i = 0; i < 4; i++) {
+			banklElements[i].disabled = element.value != 'Bank';
 		}
-const validEmail = IsValidEmail(data.email);
-if(!validEmail){
-success=false;
-alert("Please enter valid email.");
-}
-		if (!success) return false;
+	}
 
-		if (data.password != document.getElementById('pass2').value) {
-			alert('Password mismatch');
-			return false;
+	function getData() {
+		const data = {};
+		inputList.forEach(id => data[id] = document.getElementById(id).value);
+
+		if (!data.company) {
+			alert('Enter Supplier');
+			return null;
+		}
+		if (!data.amount || data.amount < 0) {
+			alert('Enter Valid Amount');
+			return null;
+		}
+
+		if(data.paymentmethod === 'Bank') {
+			bankList.forEach(id => data[id] = document.getElementById(id).value);
 		}
 
 		return data;
+
 	}
 
-	function setNull() {
-		inputList.forEach(element => document.getElementById(element).value = null);
-		document.getElementById('pass2').value = null;
-	}
-
-	function deleteEntry(index) {
-const proceed = confirm("If yes press OK");
-if(!proceed) return;
-		$.ajax({
-			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
-				if (res.update) {
-					getUser();
-					selectedUserId = null;
-				}
-
-			}
-		});
-	}
-
-	function edit() {
-		let data = getInputData();
-		if (!data) return;
-		data.userid = selectedUserId;
-
-		$.ajax({
-			url: '/editUser', method: 'PUT', data: data, success: res => {
-				if (res.update) {
-					getUser();
-					selectedUserId = null;
-					setNull();
-				}
-				else alert(res.message);
-			}
-		});
+	function edit(index) {
+		editId = paymentList[index].id;
+		inputList.forEach(id => document.getElementById(id).value = paymentList[index][id]);
+		if (paymentList[index].paymentmethod === 'Bank') {
+			bankList.forEach(id => {
+				const element = document.getElementById(id);
+				element.value = paymentList[index][id];
+				if (id === 'checkdate') element.value = paymentList[index][id].substring(0, 10);
+				element.disabled = false;
+			});
+		}
+		else bankList.forEach(id => document.getElementById(id).disabled = true);
 	}
 
 	function submit() {
-		let data = getInputData();
-		if (!data) return;
+		const data = getData();
+		data['created'] = moment().format('YYYY-MM-DD');
+		data['paymenttype'] = 'Payment Receive';
 
-		$.post('/register', data, (res) => {
-			if (!res.unique) alert('Username already exists');
-			else getUser();
+		$.post('/api/payment', data, (res) => {
+			if (res.update) getPartyPayments();
 		});
 	}
 
-function IsValidEmail(email) {
-            var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-            return expr.test(email);
-        };
+	function submitEdit() {
+		const data = getData();
+		$.post('/api/payment', { data: data, id: editId }, (res) => {
+			if (res.update) {
+				getPartyPayments();
+				editId = null;
+			}
+		});
+	}
 </script>
