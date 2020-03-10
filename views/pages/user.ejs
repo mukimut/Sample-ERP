@@ -137,8 +137,7 @@
 
 		<!-- Modal -->
 		<div class="modal fade" id="userDetails" role="dialog">
-			<div class="modal-dialog">
-
+			<div class="modal-dialog modal-lg">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
@@ -224,7 +223,11 @@
 
 	function viewDetails(index) {
 		const viewList = ['username', 'displayname', 'email', 'employeeid', 'department', 'designation']
-		viewList.forEach(element => document.getElementById(element + 'view').append(userList[index][element]));
+		viewList.forEach(element => {
+			const viewElement = document.getElementById(element + 'view');
+			viewElement.innerHTML = "";
+			viewElement.append(userList[index][element]);
+		});
 	}
 
 	function getInputData() {
