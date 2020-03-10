@@ -177,40 +177,41 @@
 									</td>
 								</tr>
 								<tr>
-									<td
+									<td id="companyview"
 										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
-										-
+
 									</td>
-									<td
+									<td id="paymentmethodview"
 										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
-										-
+
 									</td>
-									<td
+									<td id="amountview"
 										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
-										-
+
 									</td>
-									<td
+									<td id="paymentmethodview"
 										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
-										-
+
 									</td>
-									<td style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:5px;">
-										-
+									<td id="bankview"
+										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:5px;">
+
 									</td>
-									<td
+									<td id="brunchview"
 										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px;">
-										-
+
 									</td>
-									<td
+									<td id="checknoview"
 										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:5px; text-align: right;">
-										-
+
 									</td>
-									<td
+									<td id="checknoview"
 										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px; text-align: left;">
-										-
+
 									</td>
-									<td
+									<td id="checkdateview"
 										style="border-left:1px solid #ccc;border-top:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;padding:5px; text-align: left;">
-										-
+
 									</td>
 								</tr>
 							</tbody>
@@ -252,10 +253,16 @@
 				row.insertCell().append(element.amount);
 				row.insertCell().append(element.paymentmethod);
 				row.insertCell().append(element.created.substring(0, 10));
-				row.insertCell().innerHTML = '<i class="fa fa-edit fa_edt" onclick="edit(' + index + ')"></i> &nbsp; <i class="fa fa-eye fa_detail" data-toggle="modal" data-target="#paymentDetails"></i> &nbsp;'
+				row.insertCell().innerHTML = '<i class="fa fa-edit fa_edt" onclick="edit(' + index + ')"></i> &nbsp; <i class="fa fa-eye fa_detail" data-toggle="modal" data-target="#paymentDetails" onclick="viewDetails(' + index + ')"></i> &nbsp;'
 
 			});
 		});
+	}
+
+	function viewDetails(index) {
+		const viewList = ['company', 'amount', 'paymentmethod', 'narration', 'receipt', 'bank', 'brunch', 'checkno', 'checkdate'];
+		//const viewBankList = ['bank', 'brunch', 'checkno', 'checkdate'];
+		viewList.forEach(element => document.getElementById(element + 'view').append(viewList[index][element]));
 	}
 
 	function paymentChanged(element) {
@@ -278,7 +285,7 @@
 			return null;
 		}
 
-		if(data.paymentmethod === 'Bank') {
+		if (data.paymentmethod === 'Bank') {
 			bankList.forEach(id => data[id] = document.getElementById(id).value);
 		}
 
