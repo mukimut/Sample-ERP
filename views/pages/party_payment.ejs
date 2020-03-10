@@ -109,13 +109,28 @@
 				<div class="box">
 					<div class="box-header">
 						<h3 class="box-title">Payment History</h3>
+						<button type="button" onclick="print()" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-print"></span> Print
+						</button>
 						<div class="box-tools">
-							<div class="input-group input-group-sm" style="width: 150px;">
-								<input type="text" name="table_search" class="form-control pull-right"
-									placeholder="Search">
-								<div class="input-group-btn">
-									<button type="submit" class="btn btn-flat btn-success"><i
-											class="fa fa-search"></i></button>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="col-md-4">
+										<input class="form-control" type="date" id="fromDate">
+									</div>
+									<div class="col-md-4">
+										<input class="form-control" type="date" id="toDate">
+									</div>
+									<div class="col-md-4">
+										<div class="input-group input-group-sm">
+											<input type="text" name="table_search" class="form-control pull-right"
+												placeholder="Search">
+											<div class="input-group-btn">
+												<button type="submit" class="btn btn-flat btn-success"><i
+														class="fa fa-search"></i></button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -128,7 +143,7 @@
 		</div>
 		<!-- Modal -->
 		<div class="modal fade" id="paymentDetails" role="dialog">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-lg">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
@@ -262,7 +277,12 @@
 	function viewDetails(index) {
 		const viewList = ['company', 'amount', 'paymentmethod', 'narration', 'receipt', 'bank', 'brunch', 'checkno', 'checkdate'];
 		//const viewBankList = ['bank', 'brunch', 'checkno', 'checkdate'];
-		viewList.forEach(element => document.getElementById(element + 'view').append(viewList[index][element]));
+		viewList.forEach(element => { 
+			const viewElement = document.getElementById(element + 'view');
+			viewElement.innerHTML = "";
+			viewElement.append(paymentList[index][element]);
+		}
+		)
 	}
 
 	function paymentChanged(element) {
