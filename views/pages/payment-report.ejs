@@ -1,0 +1,26 @@
+From: <input type="date" id="fromDate"><br>To:<input type="date" id="toDate">
+Total: <span id="total"></span>
+<table id="reportTable"></table>
+<script>
+  const fromDate = document.getElementById('fromDate');
+  const toDate = document.getElementById('toDate');
+  fromDate.value = moment().format('YYYY-MM-DD');
+  toDate.value = moment().format('YYYY-MM-DD');
+
+  function getReport() {
+    const reportTable = document.getElementById('reportTable');
+    const from = fromDate.value;
+    const to = toDate.value;
+    const link = '/api/payment-report?fromDate=' + from + '&toDate=' + to;
+    $.get(link, (data) => {
+      data.rows.forEach(element => {
+        const row = reportTable.insertRow();
+				row.insertCell().append(element.company);
+				row.insertCell().append(element.created.substring(0, 10));
+				row.insertCell().append(element.paymentmethod);
+				row.insertCell().append(element.amount);
+      });
+    });
+    reportTable.innerHTML = '<tr><td>Company</td><td>Date</td><td>Payment Method</td><td>Amount</td></tr>'
+  }
+</script>

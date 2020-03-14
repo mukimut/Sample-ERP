@@ -249,7 +249,7 @@ display:none !important;
 
 			cashTable.innerHTML = '', approveTable.innerHTML = '', hdTable.innerHTML = '';
 			res.forEach((element) => {
-				if(element.approved === 0 && element.department != department) return;
+				//if(element.approved === 0 && element.department != department) return;
 
 				let row, buttonString, currentIndex;
 				switch(element.approved) {
