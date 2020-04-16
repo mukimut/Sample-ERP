@@ -1,4 +1,11 @@
-<html><head><title>Dashboard</title></html></head>
+<html>
+
+<head>
+	<title>Dashboard</title>
+
+</html>
+</head>
+
 <body>
 	<button onclick="logout()">Log out</button><br>
 	<p id="data">Data goes here</p>
@@ -17,7 +24,7 @@
 <script src="/dependencies/jquery.js"></script>
 <script>
 	const token = localStorage.getItem('token');
-	$.post('/tokendata', {token: token}, (user) => {
+	$.post('/tokendata', { token: token }, (user) => {
 		document.getElementById('data').innerHTML = JSON.stringify(user);
 	});
 
@@ -28,10 +35,10 @@
 
 	function submit() {
 		const data = getInputData();
-		if(!data) return; 
+		if (!data) return;
 
 		$.post('/register', data, (res) => {
-			if(!res.unique) alert('Username already exists');
+			if (!res.unique) alert('Username already exists');
 			else getUser();
 		});
 	}
@@ -40,7 +47,7 @@
 		let listData = '';
 		$.get('/getUser', (data) => {
 			data.forEach((element, index) => {
-				listData += '<li>' + JSON.stringify(element) + '<button onclick="editEntry('+index+')">Edit</button><button onclick="deleteEntry('+index+')">Delete</button></li>';
+				listData += '<li>' + JSON.stringify(element) + '<button onclick="editEntry(' + index + ')">Edit</button><button onclick="deleteEntry(' + index + ')">Delete</button></li>';
 			});
 			document.getElementById('userlist').innerHTML = listData;
 			userList = data;
@@ -64,8 +71,8 @@
 
 	function deleteEntry(index) {
 		$.ajax({
-			url: '/deleteUser', method: 'DELETE', data: {userid: userList[index].id}, success: res => {
-				if(res.update) getUser();
+			url: '/deleteUser', method: 'DELETE', data: { userid: userList[index].id }, success: res => {
+				if (res.update) getUser();
 			}
 		});
 	}
@@ -76,9 +83,9 @@
 		length = 3;
 		success = true;
 
-		for(let i=0; i < length; i++) {
+		for (let i = 0; i < length; i++) {
 			const currentValue = document.getElementById(datalist[i]).value;
-			if(!currentValue) {
+			if (!currentValue) {
 				success = false;
 				alert('Enter value for ' + datalist[i]);
 				break;
@@ -86,9 +93,9 @@
 			data[datalist[i]] = currentValue;
 		}
 
-		if(!success) return false;
+		if (!success) return false;
 
-		if(data.password != document.getElementById('pass2').value){
+		if (data.password != document.getElementById('pass2').value) {
 			alert('Password mismatch');
 			return false;
 		}
@@ -98,15 +105,17 @@
 
 	function edit() {
 		const data = getInputData();
-		if(!data) return;
+		if (!data) return;
 
 		data.userid = selectedUserId;
-		
+
 		$.ajax({
 			url: '/editUser', method: 'PUT', data: data, success: res => {
-				if(res.update) getUser();
+				if (res.update) getUser();
 				else alert(res.message);
 			}
 		});
 	}
-</script></html>
+</script>
+
+</html>
