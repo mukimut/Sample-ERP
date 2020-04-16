@@ -244,6 +244,11 @@
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script>
+	const fromDate = document.getElementById('fromDate');
+	fromDate.value=moment().format('YYYY-MM-DD')
+	const toDate = document.getElementById('toDate');
+	toDate.value=moment().format('YYYY-MM-DD')
+
 	const inputList = ['company', 'amount', 'paymentmethod', 'narration', 'receipt'];
 	const bankList = ['bank', 'brunch', 'checkno', 'checkdate'];
 	let supplierList = [], paymentList = [];
@@ -345,5 +350,10 @@
 				editId = null;
 			}
 		});
+	}
+
+	function searchPartyPayment(){
+
+
 	}
 </script>

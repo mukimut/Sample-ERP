@@ -70,6 +70,8 @@ module.exports.routes = {
   'get /api/group': {action: 'user/get-groups'},
   'post /api/payment': {action: 'expenses/save-payment'},
   'get /api/payment': {action: 'expenses/get-payment'},
+  'get /api/payment-report': {action: 'expenses/payment-report'},
+  'get /payment_report': {view: 'pages/payment-report', locals:{layout: 'layouts/dashboard'}},
 
 
   /***************************************************************************
