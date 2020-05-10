@@ -72,6 +72,7 @@ module.exports.routes = {
   'get /api/payment': {action: 'expenses/get-payment'},
   'get /api/payment-report': {action: 'expenses/payment-report'},
   'get /payment_report': {view: 'pages/payment-report', locals:{layout: 'layouts/dashboard'}},
+  'get /departmentalApproval': {view: 'pages/departmentalApproval', locals:{layout: 'layouts/dashboard'}},
 
 
   /***************************************************************************

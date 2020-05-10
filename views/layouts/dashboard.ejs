@@ -279,6 +279,7 @@
               <li id="Daily Expanse Dashboard"><a href="/dailyexpenses_dashboard"><i class="fa fa-circle-o"></i>Expenses Dashboard</a></li>
               <li id="Payment"><a href="/party_payment"><i class="fa fa-circle-o"></i>Party Payment</a></li>
               <li id="Payment Receive"><a href="/payment_receive"><i class="fa fa-circle-o"></i>Payment Receive</a></li>
+              <li id="Departmental Approval"><a href="/departmentalApproval"><i class="fa fa-circle-o"></i>Departmental Approval</a></li>
             </ul>
           </li>
           <!-- <li class="treeview">
@@ -515,6 +516,7 @@
     // for treeview
     $('ul.treeview-menu a').filter(function () {
       return this.href == url;
+      //console.log(this.href);
     }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
   });
 </script>

@@ -1,0 +1,186 @@
+<style>
+	.card {
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+		transition: 0.3s;
+	}
+
+	.boxbdymt {
+		margin-top: 25px;
+	}
+
+	.fa_edt {
+		font-size: 22px;
+		color: rgb(4, 117, 161);
+		font-weight: bold;
+	}
+
+	.fa_dlt {
+		font-size: 22px;
+		color: red;
+		font-weight: bold;
+	}
+
+	.fa_detail {
+		font-size: 24px;
+		color: rgb(202, 132, 3);
+		font-weight: bold;
+	}
+
+	.fa_chk {
+		font-size: 14px;
+		color: green;
+		font-weight: bold;
+	}
+
+	.fa_cros {
+		font-size: 14px;
+		color: red;
+		font-weight: bold;
+	}
+
+	input[type="date"].form-control,
+	input[type="datetime-local"].form-control,
+	input[type="month"].form-control,
+	input[type="time"].form-control {
+		line-height: 13px;
+	}
+
+	.nav-tabs-custom>.nav-tabs>li.active {
+		border-top-color:
+			#519f45;
+	}
+
+	.tab_display {
+		display: none !important;
+	}
+</style>
+<div class="content-wrapper">
+	<section class="invoice">
+		<div class="row">
+			<div class="col-xs-12">
+				<h4 class="box-title">Departmental Approval Details
+					<button type="button" onclick="print()" class="btn btn-default btn-sm">
+						<span class="glyphicon glyphicon-print"></span> Print
+					</button>
+				</h4>
+			</div>
+		</div>
+		<div class="row card">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>From</label>
+							<input type="date" class="form-control" name="bday" id="fromDate">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>To</label>
+							<input type="date" class="form-control" id="toDate">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<button class="btn btn-sm btn-flat btn-primary"> Search </button>
+					</div>
+				</div>
+				<br />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<table class="table table-hover">
+					<thead>
+						<th>Invoice</th>
+						<th>Purpose</th>
+						<th>Project</th>
+						<th>Type</th>
+						<th>Amount</th>
+						<th>Status</th>
+					</thead>
+					<tbody id="hdTable"></tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+	<div class="clearfix"></div>
+</div>
+
+<script src="/dependencies/jquery.js"></script>
+<script src="/js/dropdown.js"></script>
+<script src="/js/table.js"></script>
+<script>
+	let hdData = [];
+
+	setLovData('tov?type=Projects', 'project', 'Select Project');
+	const statuses = [0, 1, 3];// statuses = [];
+	const designation = localStorage.getItem('designation');
+	const department = localStorage.getItem('department');
+	
+	if (statuses.length) getExpenses();
+	
+
+	function getExpenses() {
+		hdData = [];
+		$.get('/api/expense?status=' + statuses.join(), (res) => {
+			const hdTable = document.getElementById('hdTable');
+			let hdIndex = 0;
+
+			hdTable.innerHTML = '';
+			res.forEach((element) => {
+
+				let row, buttonString, currentIndex;
+				
+						currentIndex = hdIndex;
+						hdData.push(element);
+						row = hdTable.insertRow();
+						console.log(element.approved);
+						if(element.approved=1)buttonString ='<span class="fa_chk">Approved</span>';
+						else if(element.approved=0) buttonString ='<span class="fa_dlt">Pending</span>';
+						hdIndex++;
+						
+
+				addCell(row, element.invoice);
+				addCell(row, element.purpose);
+				addCell(row, element.project);
+				addCell(row, element.type);
+
+				addCell(row, element.amount);
+
+				cell = row.insertCell();
+				cell.innerHTML = buttonString;
+			});
+		});
+	}
+
+
+	function search() {
+		const invoice = document.getElementById('invoice').value;
+		const fromDate = document.getElementById('fromDate').value;
+		const toDate = document.getElementById('toDate').value;
+		const project = getSelectedText('project');
+
+		let link = '/api/expense?';
+		if (invoice) link += 'invoice=' + invoice + '&';
+		if (project) link += 'project=' + project + '&';
+		if (fromDate) link += 'from=' + fromDate + '&';
+		if (toDate) link += 'to=' + toDate + '&';
+
+		$.get(link, (res) => {
+			const reportTable = document.getElementById('reportTable');
+			reportTable.innerHTML = '';
+
+			res.forEach(element => {
+				const row = reportTable.insertRow();
+
+				addCell(row, element.invoice);
+				addCell(row, element.purpose);
+				addCell(row, element.project);
+				addCell(row, element.type);
+				addCell(row, element.amount);
+			})
+		})
+	}
+</script>
