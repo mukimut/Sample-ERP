@@ -37,4 +37,25 @@ WITH (
 
 ALTER TABLE public.expenses
     OWNER to samin;
+
+
+---------------------------------------------
+
+statuses
+
+switch(element.approved) {
+					case 0: addCell(row, 'Waiting for Approval');
+						break;
+					case 1: addCell(row, 'Approved By Department Head');
+						break;
+					case 2: addCell(row, 'Rejected by Department Head');
+						break;
+					case 3: addCell(row, 'Approved by Management');
+						break;
+					case 4: addCell(row, 'Rejected by Management');
+						break;
+					case 5: const cell = row.insertCell();
+						cell.innerHTML = '<button onclick="varifyExpense(' + index + ', 6)">Varify</button>';
+						break;
+				}
     */

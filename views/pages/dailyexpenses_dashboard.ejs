@@ -183,6 +183,7 @@ display:none !important;
 																	<th>Project</th>
 																	<th>Type</th>
 																	<th>Amount</th>
+																	<th>Status</th>
 																</thead>
 																<tbody id="reportTable"></tbody>
 															</table>
@@ -331,7 +332,24 @@ display:none !important;
 				addCell(row, element.project);
 				addCell(row, element.type);
 				addCell(row, element.amount);
-			})
-		})
+
+				switch(element.approved) {
+					case 0: addCell(row, 'Waiting for Approval');
+						break;
+					case 1: addCell(row, 'Approved By Department Head');
+						break;
+					case 2: addCell(row, 'Rejected by Department Head');
+						break;
+					case 3: addCell(row, 'Approved by Management');
+						break;
+					case 4: addCell(row, 'Rejected by Management');
+						break;
+					case 5: addCell(row, 'Paid')
+						break;
+					case 6: addCell(row, 'Payment Received')
+						break;
+				}
+			});
+		});
 	}
 </script>
