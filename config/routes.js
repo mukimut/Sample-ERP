@@ -73,6 +73,9 @@ module.exports.routes = {
   'get /api/payment-report': {action: 'expenses/payment-report'},
   'get /payment_report': {view: 'pages/payment-report', locals:{layout: 'layouts/dashboard'}},
   'get /departmentalApproval': {view: 'pages/departmentalApproval', locals:{layout: 'layouts/dashboard'}},
+  'get /managementApproval': {view: 'pages/managementApproval', locals:{layout: 'layouts/dashboard'}},
+  'get /dailyPayment': {view: 'pages/dailyPayment', locals:{layout: 'layouts/dashboard'}},
+  'get /paymentReport': {view: 'pages/paymentReport', locals:{layout: 'layouts/dashboard'}},
 
 
   /***************************************************************************
