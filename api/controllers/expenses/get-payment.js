@@ -7,12 +7,8 @@ module.exports = async function getPayment(req, res) {
 		// const sql = `select company, bank, brunch, checkdate, created, checkno, receipt, amount from payment where 
     //     paymenttype='Party Payment' and 
     //     created between '` + fromDate + `' and '` + toDate + `'` ;
-    const sql = `select company, bank, brunch, checkdate, created, checkno, receipt, amount, paymentmethod from payment where 
+    const sql = `select company, bank, brunch, checkdate, created, checkno, receipt, amount, paymentmethod, paymentid as id, narration from payment where 
         paymenttype='Party Payment' order by paymentid desc offset 0 rows fetch next 20 rows only` ;
 		const searchData = await sails.sendNativeQuery(sql, []);
 		res.send(searchData.rows);
-
-    //res.send(searchData);
-    
-
 }

@@ -169,6 +169,7 @@ display:none !important;
 											<div class="row">
 												<div class="col-md-6">
 													<button class="btn btn-flat btn-primary" onclick="search()"> Search </button>
+													<button class="btn btn-flat btn-primary" onclick="downloadPdf()()"> Open as PDF </button>
 												</div>
 											</div>
 											<br />
@@ -207,6 +208,9 @@ display:none !important;
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script src="/js/table.js"></script>
+<script src="/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/plugins/pdfmake/vfs_fonts.min.js"></script>
+<script src="/js/pdf.js"></script>
 <script>
 	let cashData = [], approveData = [], hdData = [];
 
@@ -218,30 +222,12 @@ display:none !important;
 	const designation = localStorage.getItem('designation');
 	const department = localStorage.getItem('department');
 
-	// if(designation != 'Head of Department') {
-	// 	document.getElementById('deptHeadTab').classList.add('tab_display');
-	// }
-	// else {
-	// 	statuses.push(0);
-	// }
-	// if(designation != 'Manager') {
-	// 	document.getElementById('managerTab').classList.add('tab_display');
-	// }
-	// else{
-	// 	statuses.push(1);
-	// }
-	// if(department != 'Accounts') {
-	// 	document.getElementById('paymentTab').classList.add('tab_display');
-	// }
-	// else {
-	// 	statuses.push(3);
-	// }
 
 	if(statuses.length) getExpenses();
 
 
 	function getExpenses() {
-		cashData = [], approveData = [], hdData = [];
+		cashData = [], approveData = [], hdData = [], reportData = [];
 		$.get('/api/expense?status=' + statuses.join(), (res) => {
 			const cashTable = document.getElementById('cashTable');
 			const approveTable = document.getElementById('approveTable');
@@ -321,6 +307,7 @@ display:none !important;
 		if(toDate) link += 'to=' + toDate + '&';
 
 		$.get(link, (res) => {
+			reportData = res;
 			const reportTable = document.getElementById('reportTable');
 			reportTable.innerHTML = '';
 
@@ -332,24 +319,42 @@ display:none !important;
 				addCell(row, element.project);
 				addCell(row, element.type);
 				addCell(row, element.amount);
-
-				switch(element.approved) {
-					case 0: addCell(row, 'Waiting for Approval');
-						break;
-					case 1: addCell(row, 'Approved By Department Head');
-						break;
-					case 2: addCell(row, 'Rejected by Department Head');
-						break;
-					case 3: addCell(row, 'Approved by Management');
-						break;
-					case 4: addCell(row, 'Rejected by Management');
-						break;
-					case 5: addCell(row, 'Paid')
-						break;
-					case 6: addCell(row, 'Payment Received')
-						break;
-				}
+				addCell(row, getStatus(element.approved));
 			});
 		});
+	}
+
+	function downloadPdf() {
+		const title = 'Expense Report';
+		const description = 'From ' + document.getElementById('fromDate').value + ' To ' + document.getElementById('fromDate').value; 
+		const data = [['Invoice', 'Purpose', 'Project', 'Type', 'Amount', 'Status']];
+		reportData.forEach((element) => {
+			data.push(
+				[element.invoice, element.purpose, element.project, element.type, element.amount, getStatus(element.approved)]
+			);
+		});
+
+		pdfReport(data, title, 'portrait', description);
+	}
+
+	function getStatus(statusValue) {
+		let returnValue;
+		switch(statusValue) {
+			case 0: returnValue = 'Waiting for Approval';
+				break;
+			case 1: returnValue = 'Approved By Department Head';
+				break;
+			case 2: returnValue = 'Rejected by Department Head';
+				break;
+			case 3: returnValue = 'Approved by Management';
+				break;
+			case 4: returnValue = 'Rejected by Management';
+				break;
+			case 5: returnValue = 'Paid';
+				break;
+			case 6: returnValue = 'Payment Received';
+				break;
+		}
+		return returnValue;
 	}
 </script>
