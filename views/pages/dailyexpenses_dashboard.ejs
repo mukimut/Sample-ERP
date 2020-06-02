@@ -208,9 +208,6 @@ display:none !important;
 <script src="/dependencies/jquery.js"></script>
 <script src="/js/dropdown.js"></script>
 <script src="/js/table.js"></script>
-<script src="/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="/plugins/pdfmake/vfs_fonts.min.js"></script>
-<script src="/js/pdf.js"></script>
 <script>
 	let cashData = [], approveData = [], hdData = [];
 
@@ -227,7 +224,7 @@ display:none !important;
 
 
 	function getExpenses() {
-		cashData = [], approveData = [], hdData = [], reportData = [];
+		cashData = [], approveData = [], hdData = [];
 		$.get('/api/expense?status=' + statuses.join(), (res) => {
 			const cashTable = document.getElementById('cashTable');
 			const approveTable = document.getElementById('approveTable');
@@ -324,37 +321,5 @@ display:none !important;
 		});
 	}
 
-	function downloadPdf() {
-		const title = 'Expense Report';
-		const description = 'From ' + document.getElementById('fromDate').value + ' To ' + document.getElementById('fromDate').value; 
-		const data = [['Invoice', 'Purpose', 'Project', 'Type', 'Amount', 'Status']];
-		reportData.forEach((element) => {
-			data.push(
-				[element.invoice, element.purpose, element.project, element.type, element.amount, getStatus(element.approved)]
-			);
-		});
-
-		pdfReport(data, title, 'portrait', description);
-	}
-
-	function getStatus(statusValue) {
-		let returnValue;
-		switch(statusValue) {
-			case 0: returnValue = 'Waiting for Approval';
-				break;
-			case 1: returnValue = 'Approved By Department Head';
-				break;
-			case 2: returnValue = 'Rejected by Department Head';
-				break;
-			case 3: returnValue = 'Approved by Management';
-				break;
-			case 4: returnValue = 'Rejected by Management';
-				break;
-			case 5: returnValue = 'Paid';
-				break;
-			case 6: returnValue = 'Payment Received';
-				break;
-		}
-		return returnValue;
-	}
+	
 </script>
