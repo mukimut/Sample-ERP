@@ -140,89 +140,14 @@ display:none !important;
 	let cashData = [], approveData = [], hdData = [], currentRow = [];
 	const paymentRows = ['Company', 'Date', 'Payment Type', 'Amount'];
 	const expenseRows = ['Invoice', 'Purpose', 'Project', 'Type', 'Amount', 'Status'];
+	const expanseTitle = 'Expanse Report', paymentTitle = 'Payment Report';
+	let title;
 
 	setLovData('tov?type=Projects', 'project', 'Select Project');
-	// const statuses = [0, 1, 3];// statuses = [];
-	// const designation = localStorage.getItem('designation');
-	// const department = localStorage.getItem('department');
-
-	
-	// if(statuses.length) getExpenses();
-
-
-	// function getExpenses() {
-		
-	// 	cashData = [], approveData = [], hdData = [], reportData = [];;
-	// 	$.get('/api/expense?status=' + statuses.join(), (res) => {
-	// 		const cashTable = document.getElementById('cashTable');
-	// 		const approveTable = document.getElementById('approveTable');
-	// 		const hdTable = document.getElementById('hdTable');
-	// 		let approvedIndex = 0, cashIndex = 0, hdIndex = 0;
-
-	// 		cashTable.innerHTML = '', approveTable.innerHTML = '', hdTable.innerHTML = '';
-	// 		res.forEach((element) => {
-	// 			//if(element.approved === 0 && element.department != department) return;
-
-	// 			let row, buttonString, currentIndex;
-	// 			switch(element.approved) {
-	// 				case 0:
-	// 					currentIndex = hdIndex;
-	// 					hdData.push(element);
-	// 					row = hdTable.insertRow();
-	// 					buttonString = `<i class="fa fa-check fa_chk" onclick="varifyExpense(` + hdIndex + `, 1, ` + element.id + `, 0)">Approve</i>
-	// 													<i class="fa fa-times fa_cros" onclick="varifyExpense(` + hdIndex + `, 2, ` + element.id + `)">Reject</i>`;
-	// 					hdIndex++;
-	// 					break;
-
-	// 				case 1: 
-	// 					currentIndex = approvedIndex;
-	// 					approveData.push(element);
-	// 					row = approveTable.insertRow();
-	// 					buttonString = `<i class="fa fa-check fa_chk" onclick="varifyExpense(` + approvedIndex + `, 3, ` + element.id + `, 1)">Approve</i>
-	// 												<i class="fa fa-times fa_cros" onclick="varifyExpense(` + approvedIndex + `, 4, ` + element.id + `)">Reject</i>`;
-	// 					approvedIndex++;
-	// 					break;
-
-	// 				case 3: 
-	// 					cashData.push(element);
-	// 					row = cashTable.insertRow();
-	// 					buttonString = '<i class="fa fa-check fa_chk" onclick="varifyExpense(' + cashIndex + ', 5, ' + element.id + ')">Paid</i>';
-	// 					cashIndex++;
-	// 					break;
-	// 			}
-
-	// 			addCell(row, element.invoice);
-	// 			addCell(row, element.purpose);
-	// 			addCell(row, element.project);
-	// 			addCell(row, element.type);
-
-	// 			if(element.approved != 3) {
-	// 				let cell = row.insertCell();
-	// 				cell.innerHTML = '<input type="number" id="amount' + element.approved + '_' + currentIndex + '" value="' + element.amount + '">';
-	// 			}
-	// 			else addCell(row, element.amount);
-				
-	// 			cell = row.insertCell();
-	// 			cell.innerHTML = buttonString;
-	// 		});
-	// 	});
-	// }
-
-	// function varifyExpense(index, status, id, fieldSerial) {
-	// 	const data = {approved: status};
-	// 	if(status === 1 || status === 3) data.amount = document.getElementById('amount' + fieldSerial + '_' + index).value;
-	// 	$.ajax({
-	// 		url: '/api/expense', method: 'PUT', data: { data: data, id: id }, success: res => {
-	// 			cashData = [];
-	// 			getExpenses();
-	// 		}
-	// 	});
-	// }
 
 	function expense() {
 		currentRow = expenseRows;
 		addHeading();
-		// document.getElementById('tableHead').innerHTML = `<th>Invoice</th><th>Purpose</th><th>Project</th><th>Type</th><th>Amount</th><th>Status</th>`;
 		const invoice = document.getElementById('invoice').value;
 		const fromDate = document.getElementById('fromDate').value;
 		const toDate = document.getElementById('toDate').value;
@@ -255,13 +180,13 @@ display:none !important;
 	function payment() {
 		currentRow = paymentRows;
 		addHeading();
-		// document.getElementById('tableHead').innerHTML = `<th>Invoice</th><th>Purpose</th><th>Project</th><th>Type</th><th>Amount</th><th>Status</th>`;
 		const fromDate = document.getElementById('fromDate').value;
 		const toDate = document.getElementById('toDate').value;
 		const link = '/api/payment-report?fromDate=' + fromDate + '&toDate=' + toDate;
 
 		$.get(link, (res) => {
 			reportData = res;
+			reportData.push({"amount": res[0].total, "paymentmethod": "Total", "created": "", "company": ""});
 			const reportTable = document.getElementById('reportTable');
 			reportTable.innerHTML = '';
 
@@ -284,19 +209,22 @@ display:none !important;
 	}
 
 	function downloadPdf() {
-		const title = 'Expense Report';
 		const description = 'From ' + document.getElementById('fromDate').value + ' To ' + document.getElementById('fromDate').value; 
 		const data = [currentRow];
-		reportData.forEach((element) => {
-			if(currentRow == expenseRows) data.push(
-				[element.invoice, element.purpose, element.project, element.type, element.amount, getStatus(element.approved)]
-			);
-			else data.push(
-				[element.company, element.created, element.paymentmethod, element.amount]
-			);
-		});
+		if(currentRow == expenseRows) {
+			title = expanseTitle;
+			reportData.forEach(element => {
+				data.push([element.invoice, element.purpose, element.project, element.type, element.amount, getStatus(element.approved)]);
+			});
+		}
+		else {
+			title = paymentTitle;
+			reportData.forEach(element => {
+				data.push([element.company, element.created, element.paymentmethod, element.amount]);
+			});
+		}
 
-		pdfReport(data, title, 'portrait', description);
+		pdfReport(data, title, 'portrait', description, 10);
 	}
 
 	function getStatus(statusValue) {

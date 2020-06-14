@@ -35,6 +35,11 @@ module.exports = async function getExpenses(req, res) {
       added++;
       filterList.push(req.query.to);
     }
+    if(req.query.status) {
+      filter += ` AND status = $` + added;
+      added++;
+      filterList.push(req.query.status);
+    }
 
 
 // console.log(query + filter);
