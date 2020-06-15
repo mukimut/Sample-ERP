@@ -44,13 +44,49 @@
 	input[type="time"].form-control {
 		line-height: 13px;
 	}
+
 	.nav-tabs-custom>.nav-tabs>li.active {
 		border-top-color:
 			#519f45;
 	}
-.tab_display{
-display:none !important;
-}
+
+	.tab_display {
+		display: none !important;
+	}
+
+	.selectBox {
+		position: relative;
+	}
+
+	.selectBox select {
+		width: 100%;
+	}
+
+	.overSelect {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+	}
+
+	#checkboxes {
+		display: none;
+		border: 1px #dadada solid;
+	}
+
+	#checkboxes label {
+		display: block;
+	}
+
+	#checkboxes label:hover {
+		background-color: #1e90ff;
+	}
+
+	input[type=checkbox],
+	input[type=radio] {
+		margin: 5px 7px 0;
+	}
 </style>
 <div class="content-wrapper">
 	<section class="invoice">
@@ -64,7 +100,8 @@ display:none !important;
 									<div class="row">
 										<div class="col-xs-12">
 											<h4 class="box-title">Payment Report
-												<button type="button" onclick="downloadPdf()" class="btn btn-default btn-sm">Download as PDF</button>
+												<button type="button" onclick="downloadPdf()"
+													class="btn btn-default btn-sm">Download as PDF</button>
 											</h4>
 										</div>
 									</div>
@@ -90,21 +127,39 @@ display:none !important;
 										<div class="col-md-6">
 											<div class="form-group">
 												<div class="col-sm-12">
-													<input type="text" class="form-control" id="invoice" placeholder="Invoice No">
+													<input type="text" class="form-control" id="invoice"
+														placeholder="Invoice No">
 												</div>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<div class="col-sm-12 "><select id="project" class="form-control"></select>
+												<div class="col-sm-12 ">
+													<div class="selectBox" onclick="showCheckboxes()">
+														<select class="form-control">
+															<option>Select Project</option>
+														</select>
+														<div class="overSelect"></div>
+													</div>
+													<div id="checkboxes">
+														<label for="one"><input type="checkbox" id="status0" />Waiting for Approval/label>
+														<label for="two"><input type="checkbox" id="status1" />Approved by Department Head</label>
+														<label for="three"><input type="checkbox" id="status2" />Rejected by Department Head</label>
+														<label for="one"><input type="checkbox" id="status3" />Approved by Management</label>
+														<label for="two"><input type="checkbox" id="status4" />Rejected by Management</label>
+														<label for="three"><input type="checkbox" id="status5" />Paid</label>
+														<label for="three"><input type="checkbox" id="status6" />Payment Received</label>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6">
-											<button class="btn btn-flat btn-primary" onclick="payment()"> Payment Report </button>
-											<button class="btn btn-flat btn-primary" onclick="expense()"> Expense Report </button>
+											<button class="btn btn-flat btn-primary" onclick="payment()"> Payment Report
+											</button>
+											<button class="btn btn-flat btn-primary" onclick="expense()"> Expense Report
+											</button>
 										</div>
 									</div>
 									<br />
@@ -113,7 +168,8 @@ display:none !important;
 											<div class="box">
 												<div class="box-body table-responsive no-padding">
 													<table class="table table-hover">
-														<thead id="tableHead"></thead><tbody id="reportTable"></tbody>
+														<thead id="tableHead"></thead>
+														<tbody id="reportTable"></tbody>
 													</table>
 												</div>
 											</div>
@@ -154,10 +210,10 @@ display:none !important;
 		const project = getSelectedText('project');
 
 		let link = '/api/expense?';
-		if(invoice) link += 'invoice=' + invoice + '&';
-		if(project) link += 'project=' + project + '&';
-		if(fromDate) link += 'from=' + fromDate + '&';
-		if(toDate) link += 'to=' + toDate + '&';
+		if (invoice) link += 'invoice=' + invoice + '&';
+		if (project) link += 'project=' + project + '&';
+		if (fromDate) link += 'from=' + fromDate + '&';
+		if (toDate) link += 'to=' + toDate + '&';
 
 		$.get(link, (res) => {
 			reportData = res;
@@ -185,12 +241,23 @@ display:none !important;
 		const link = '/api/payment-report?fromDate=' + fromDate + '&toDate=' + toDate;
 
 		$.get(link, (res) => {
-			reportData = res;
-			reportData.push({"amount": res[0].total, "paymentmethod": "Total", "created": "", "company": ""});
-			const reportTable = document.getElementById('reportTable');
-			reportTable.innerHTML = '';
+			let creditTotal, debitToal;
+			reportData = [{company: 'Debit', created: '', paymentmethod: '', amount: ''}];
+			res.filter(e => e.amount > 0).forEach(e => {
+				debitToal = e.total;
+				reportData.push(e);
+			});
+			reportData.push({company: 'Total', created: '', paymentmethod: '', amount: debitToal + ''});
 
-			res.forEach(element => {
+			reportData.push({company: 'Credit', created: '', paymentmethod: '', amount: ''});
+			res.filter(e => e.amount < 0).forEach(e => {
+				creditTotal = e.total;
+				reportData.push(e);
+			});
+			reportData.push({company: 'Total', created: '', paymentmethod: '', amount: creditTotal + ''});
+			reportData.push({company: 'Grand Total', created: '', paymentmethod: '', amount: Number.parseFloat(debitToal) + Number.parseFloat(creditTotal)});
+
+			reportData.forEach(element => {
 				const row = reportTable.insertRow();
 
 				addCell(row, element.company);
@@ -209,9 +276,9 @@ display:none !important;
 	}
 
 	function downloadPdf() {
-		const description = 'From ' + document.getElementById('fromDate').value + ' To ' + document.getElementById('fromDate').value; 
+		const description = 'From ' + document.getElementById('fromDate').value + ' To ' + document.getElementById('fromDate').value;
 		const data = [currentRow];
-		if(currentRow == expenseRows) {
+		if (currentRow == expenseRows) {
 			title = expanseTitle;
 			reportData.forEach(element => {
 				data.push([element.invoice, element.purpose, element.project, element.type, element.amount, getStatus(element.approved)]);
@@ -229,7 +296,7 @@ display:none !important;
 
 	function getStatus(statusValue) {
 		let returnValue;
-		switch(statusValue) {
+		switch (statusValue) {
 			case 0: returnValue = 'Waiting for Approval';
 				break;
 			case 1: returnValue = 'Approved By Department Head';
@@ -247,4 +314,19 @@ display:none !important;
 		}
 		return returnValue;
 	}
+
+
+	var expanded = false;
+
+	function showCheckboxes() {
+		var checkboxes = document.getElementById("checkboxes");
+		if (!expanded) {
+			checkboxes.style.display = "block";
+			expanded = true;
+		} else {
+			checkboxes.style.display = "none";
+			expanded = false;
+		}
+	}
+
 </script>
